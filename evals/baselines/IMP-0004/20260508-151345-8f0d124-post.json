@@ -1,0 +1,55 @@
+{
+  "meta": {
+    "imp_id": "IMP-0004",
+    "eval_type": "structural",
+    "eval_id": "imp_0004",
+    "commit_sha": "8f0d124",
+    "timestamp": "2026-05-08T15:13:45.825941+00:00",
+    "phase": "post",
+    "model": null,
+    "temperature": null,
+    "seed": null,
+    "n_samples": 1,
+    "cost": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "wall_time_ms": 5,
+      "cost_usd": 0.0,
+      "pricing_source": "config.yaml@v1"
+    },
+    "trajectory": {},
+    "thresholds": {}
+  },
+  "metrics": {
+    "total_checks": 4,
+    "passed_checks": 2,
+    "pass_rate": 0.5,
+    "all_passed": false
+  },
+  "raw_results": [
+    {
+      "check_id": "single_tools_line",
+      "label": "Frontmatter has exactly one tools: line",
+      "passed": true,
+      "detail": "Found 1 tools line(s)"
+    },
+    {
+      "check_id": "expected_tool_set",
+      "label": "Tool list contains only orchestration + quality-gate tools",
+      "passed": false,
+      "detail": "Extra: ['browser/clickElement', 'browser/dragElement', 'browser/handleDialog', 'browser/hoverElement', 'browser/navigatePage', 'browser/openBrowserPage', 'browser/readPage', 'browser/runPlaywrightCode', 'browser/screenshotPage', 'browser/typeInPage', 'context7/query-docs', 'context7/resolve-library-id', 'edit/createDirectory', 'edit/createFile', 'edit/createJupyterNotebook', 'edit/editFiles', 'edit/editNotebook', 'edit/rename', 'execute/createAndRunTask', 'execute/getTerminalOutput', 'execute/killTerminal', 'execute/runNotebookCell', 'execute/sendToTerminal', 'ms-azuretools.vscode-azureresourcegroups/azureActivityLog', 'ms-python.python/configurePythonEnvironment', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'read/getNotebookSummary', 'read/problems', 'read/readNotebookCellOutput', 'read/terminalLastCommand', 'read/terminalSelection', 'read/viewImage', 'search/changes', 'search/listDirectory', 'search/searchSubagent', 'search/textSearch', 'search/usages', 'vscode.mermaid-chat-features/renderMermaidDiagram', 'vscode/extensions', 'vscode/getProjectSetupInfo', 'vscode/installExtension', 'vscode/newWorkspace', 'vscode/resolveMemoryFileUri', 'vscode/runCommand', 'vscode/vscodeAPI', 'web/githubTextSearch']"
+    },
+    {
+      "check_id": "no_forbidden_tools",
+      "label": "No tools QB rules forbid (edit/*, browser/*, notebook/*)",
+      "passed": false,
+      "detail": "Forbidden tools present: ['edit/createFile', 'edit/editNotebook', 'edit/editNotebook', 'browser/hoverElement', 'browser/clickElement', 'browser/openBrowserPage', 'edit/rename', 'browser/runPlaywrightCode', 'browser/handleDialog', 'edit/editFiles', 'browser/typeInPage', 'edit/createJupyterNotebook', 'edit/createJupyterNotebook', 'browser/readPage', 'execute/runNotebookCell', 'read/readNotebookCellOutput', 'browser/screenshotPage', 'browser/dragElement', 'read/getNotebookSummary', 'browser/navigatePage', 'edit/createDirectory']"
+    },
+    {
+      "check_id": "prompt_size",
+      "label": "Prompt size: 31569 chars (frontmatter: 3674)",
+      "passed": true,
+      "detail": "total=31569, frontmatter=3674"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "imp_id": "IMP-0006",
+    "eval_type": "structural",
+    "eval_id": "imp_0006",
+    "commit_sha": "12cf30f",
+    "timestamp": "2026-04-28T14:35:45.349940+00:00",
+    "phase": "baseline",
+    "model": null,
+    "temperature": null,
+    "seed": null,
+    "n_samples": 1,
+    "cost": {},
+    "trajectory": {}
+  },
+  "metrics": {
+    "total_checks": 4,
+    "passed_checks": 3,
+    "pass_rate": 0.75,
+    "all_passed": false
+  },
+  "raw_results": [
+    {
+      "check_id": "no_paste_brief_antipattern",
+      "label": "No 'paste BRIEF content into prompts' anti-pattern",
+      "passed": false,
+      "detail": "Anti-patterns found: ['reference BRIEF.md context in your prompts']"
+    },
+    {
+      "check_id": "brief_by_reference_present",
+      "label": "Subagent instructions say 'read BRIEF.md themselves'",
+      "passed": true,
+      "detail": "Found 2 reference-by-path pattern(s)"
+    },
+    {
+      "check_id": "context_section_exists",
+      "label": "Project Context (BRIEF.md) section exists",
+      "passed": true,
+      "detail": "Section length: 452 chars"
+    },
+    {
+      "check_id": "prompt_size",
+      "label": "Prompt size: 29424 chars",
+      "passed": true,
+      "detail": "total=29424"
+    }
+  ]
+}

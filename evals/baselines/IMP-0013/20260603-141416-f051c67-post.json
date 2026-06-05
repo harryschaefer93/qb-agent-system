@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "imp_id": "IMP-0013",
+    "eval_type": "structural",
+    "eval_id": "imp_0013",
+    "commit_sha": "f051c67",
+    "timestamp": "2026-06-03T14:14:16.112600+00:00",
+    "phase": "post",
+    "model": null,
+    "temperature": null,
+    "seed": null,
+    "n_samples": 1,
+    "cost": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "wall_time_ms": 8,
+      "cost_usd": 0.0,
+      "pricing_source": "config.yaml@v1"
+    },
+    "trajectory": {},
+    "thresholds": {}
+  },
+  "metrics": {
+    "total_checks": 3,
+    "passed_checks": 3,
+    "pass_rate": 1.0,
+    "all_passed": true
+  },
+  "raw_results": [
+    {
+      "check_id": "imp_creation_rule",
+      "label": "IMP file creation rule in retro instructions",
+      "passed": true,
+      "detail": "Found"
+    },
+    {
+      "check_id": "improvements_filed_section",
+      "label": "Report format includes 'Improvements Filed' section",
+      "passed": true,
+      "detail": "Improvements Filed: yes, Action Items still present: yes"
+    },
+    {
+      "check_id": "template_reference",
+      "label": "References _template.md or improvements/README.md",
+      "passed": true,
+      "detail": "Found"
+    }
+  ]
+}

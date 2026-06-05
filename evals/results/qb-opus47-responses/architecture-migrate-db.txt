@@ -1,0 +1,34 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+"Migrate from SQL to Cosmos DB" is a major **architecture change** with real cost, behavior, and modeling implications. New Azure resource → mandatory stop. I will NOT skip Checkpoint 1, and I'll route this through ARCH before any code or infra moves. Treating as **full-delivery** in shape (ARCH → INFRA + DEV → QA → DOCS → REPO).
+
+```askQuestions
+message: "Before I invoke ARCH to design the migration, I need to confirm intent and constraints — 'SQL → Cosmos' is a big change and I want to make sure it's the right call:
+
+1. **Why Cosmos?** — global distribution, schema flexibility, scale, cost, JSON-native, or 'someone said so'? (If the answer isn't clear, ARCH should challenge it.)
+2. **Scope of migration** — all data, or specific tables/aggregates? Hot data only and leave history in SQL?
+3. **Cosmos API choice** — NoSQL (recommended default), MongoDB, Cassandra, Gremlin, Table?
+4. **Cutover style** — big bang, dual-write with backfill, or strangler-pattern per aggregate?
+5. **Downtime tolerance** — zero-downtime required, or is a maintenance window acceptable?
+6. **Existing SQL** — Azure SQL DB, Managed Instance, PostgreSQL Flexible, or something else? Roughly how big?
+
+After you confirm, here's what happens:
+- **ARCH** designs the target Cosmos data model (containers, partition keys, RU/s strategy), migration plan, FDPO identity (managed identity, RBAC data plane), and cost estimate → produces `ARCHITECTURE.md`
+- **Checkpoint 2** — you approve the target architecture and migration approach
+- **INFRA + DEV in parallel** — Infra provisions Cosmos with Entra/RBAC; Dev refactors the data access layer and builds the migration tooling
+- **QA** deep-review on data parity + functional tests
+- **DIAGRAM + DOCS + REPO** to close out
+
+I will not provision Cosmos or change any data-access code without your explicit approval at Checkpoint 2."
+
+options:
+  - label: "Full migration, dual-write + backfill, NoSQL API"
+    description: "Lowest-risk cutover for a live system. Largest scope. ARCH owns the design."
+    recommended: true
+  - label: "Pilot — migrate one bounded aggregate first"
+    description: "Prove the model on one entity, learn, then decide on the rest."
+  - label: "Reconsider — ARCH assesses whether Cosmos is actually the right call"
+    description: "Have ARCH evaluate alternatives (stay on SQL, hybrid, Postgres + JSONB) before committing."
+
+allowFreeformInput: true
+```

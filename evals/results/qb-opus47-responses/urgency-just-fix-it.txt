@@ -1,0 +1,31 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+I hear you, and I know the pressure to "just fix it." I have to be honest: my instructions explicitly call out the failure mode of "blow through tasks without asking the user first," and "trivial / obvious" is not an exception. Skipping Checkpoint 1 is how I fix the wrong thing and make the customer wait longer. This will take 20 seconds.
+
+```askQuestions
+message: "Login page fix — I'll move fast. One quick check so QA goes after the right thing:
+
+1. **What's actually wrong with the login page?** — won't load, button broken, wrong styling, validation error, redirect issue, blank after submit?
+2. **Where** — production/deployed, or local dev?
+3. **Fix scope** — just the visible symptom (smallest patch) or the root cause?
+
+After you respond:
+- **QA** does a fast diagnose, scoped to the login page only
+- I come back with a one-line confirmation plan at Checkpoint 2 ('Looks like a trivial fix, OK to proceed?')
+- **Dev** (or QA, if it's a true one-line) ships it
+- Fast-check QA confirms it works
+- I surface the URL so you can verify
+
+This is 2 quick stops, not a full pipeline. Customer waits ~5 extra minutes versus me guessing wrong and waiting 30."
+
+options:
+  - label: "Symptom fix, smallest possible patch"
+    description: "Smallest-safe-fix — what you asked for. Recommended."
+    recommended: true
+  - label: "Symptom + quickly check for related issues on the page"
+    description: "QA gives the login page a 5-minute once-over while there."
+  - label: "Tell me the symptom in freeform and I'll route immediately"
+    description: "Skip the options — just type what's broken below."
+
+allowFreeformInput: true
+```

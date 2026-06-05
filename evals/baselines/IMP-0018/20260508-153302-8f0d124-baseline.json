@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "imp_id": "IMP-0018",
+    "eval_type": "rubric",
+    "eval_id": "imp_0018",
+    "commit_sha": "8f0d124",
+    "timestamp": "2026-05-08T15:33:02.321395+00:00",
+    "phase": "baseline",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "seed": 42,
+    "n_samples": 1,
+    "cost": {
+      "input_tokens": 1371,
+      "output_tokens": 399,
+      "wall_time_ms": 5990,
+      "cost_usd": 0.00570375,
+      "pricing_source": "config.yaml@v1"
+    },
+    "trajectory": {},
+    "thresholds": {}
+  },
+  "metrics": {
+    "weighted_score": 1.0,
+    "pass_rate": 0.0,
+    "all_passed": false,
+    "calibration_agreement": 1.0,
+    "calibration_passed": true,
+    "per_criterion_means": {
+      "customer_context": 1.0,
+      "acceptance_clarity": 1.0,
+      "fsi_domain_fit": 1.0
+    }
+  },
+  "raw_results": [
+    {
+      "scenario_id": "scope-Contoso-claims",
+      "prompt": "Scope a new POC for Contoso on claims automation. Customer has 80M policies and a $3B annual claims spend. Produce a BRIEF.md with sections: Customer Context, Acceptance Criteria, Constraints.",
+      "response": "",
+      "weighted_score": 1.0,
+      "passed": false,
+      "per_criterion": [
+        {
+          "name": "customer_context",
+          "score": 1.0,
+          "weight": 0.4
+        },
+        {
+          "name": "acceptance_clarity",
+          "score": 1.0,
+          "weight": 0.4
+        },
+        {
+          "name": "fsi_domain_fit",
+          "score": 1.0,
+          "weight": 0.2
+        }
+      ]
+    }
+  ]
+}

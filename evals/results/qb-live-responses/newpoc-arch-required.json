@@ -1,0 +1,44 @@
+{
+  "test_id": "newpoc-arch-required",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_ISlN7UM19rl1k4GFqUmlnX1e",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\": \"BRIEF.md\"}"
+      }
+    },
+    {
+      "id": "call_p77oYDRl44zb0NBSV7lQ02Z3",
+      "type": "function",
+      "function": {
+        "name": "askQuestions",
+        "arguments": "{\"questions\": [{\"header\": \"POC scope\", \"question\": \"Confirm the initial scope for the Fabrikam RAG chatbot POC so I can start the setup pipeline.\", \"message\": \"Planned flow after you confirm: **ARCH** will design the architecture and produce `ARCHITECTURE.md`, then I\u2019ll stop for your approval before fanning out **INFRA + DEV** work, run quality gates and **QA**, generate **DIAGRAM**s, package **DOCS**, and finish with **REPO** hygiene/push readiness.\", \"options\": [{\"label\": \"Quick demo POC\", \"description\": \"Fastest path: minimal RAG chatbot with basic ingestion and chat UI/API for demonstration use.\", \"recommended\": true}, {\"label\": \"Production-leaning POC\", \"description\": \"Adds stronger structure for security, observability, and deployment readiness while staying POC-sized.\"}, {\"label\": \"Need to customize scope\", \"description\": \"I\u2019ll wait for your specific requirements before invoking ARCH.\"}], \"allowFreeformInput\": true}, {\"header\": \"Stack preference\", \"question\": \"Which implementation preference should ARCH optimize for?\", \"options\": [{\"label\": \"Python-first\", \"description\": \"Optimize for Python backend and common Azure AI/RAG patterns.\", \"recommended\": true}, {\"label\": \"TypeScript-first\", \"description\": \"Optimize for Node/TypeScript services and frontend.\"}, {\"label\": \"No strong preference\", \"description\": \"Let ARCH choose the best-fit stack.\"}], \"allowFreeformInput\": true}, {\"header\": \"Azure constraints\", \"question\": \"What Azure/service constraints should ARCH assume?\", \"options\": [{\"label\": \"Microsoft-first managed services\", \"description\": \"Prefer Azure OpenAI, AI Search, managed identity, least privilege, and minimal custom ops.\", \"recommended\": true}, {\"label\": \"Keep cost minimal\", \"description\": \"Bias toward the cheapest viable POC footprint, even if less feature-rich.\"}, {\"label\": \"Need custom constraints\", \"description\": \"I\u2019ll provide required services, auth, region, or compliance constraints.\"}], \"allowFreeformInput\": true}]}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_ISlN7UM19rl1k4GFqUmlnX1e",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\": \"BRIEF.md\"}"
+        }
+      },
+      {
+        "id": "call_p77oYDRl44zb0NBSV7lQ02Z3",
+        "type": "function",
+        "function": {
+          "name": "askQuestions",
+          "arguments": "{\"questions\": [{\"header\": \"POC scope\", \"question\": \"Confirm the initial scope for the Fabrikam RAG chatbot POC so I can start the setup pipeline.\", \"message\": \"Planned flow after you confirm: **ARCH** will design the architecture and produce `ARCHITECTURE.md`, then I\u2019ll stop for your approval before fanning out **INFRA + DEV** work, run quality gates and **QA**, generate **DIAGRAM**s, package **DOCS**, and finish with **REPO** hygiene/push readiness.\", \"options\": [{\"label\": \"Quick demo POC\", \"description\": \"Fastest path: minimal RAG chatbot with basic ingestion and chat UI/API for demonstration use.\", \"recommended\": true}, {\"label\": \"Production-leaning POC\", \"description\": \"Adds stronger structure for security, observability, and deployment readiness while staying POC-sized.\"}, {\"label\": \"Need to customize scope\", \"description\": \"I\u2019ll wait for your specific requirements before invoking ARCH.\"}], \"allowFreeformInput\": true}, {\"header\": \"Stack preference\", \"question\": \"Which implementation preference should ARCH optimize for?\", \"options\": [{\"label\": \"Python-first\", \"description\": \"Optimize for Python backend and common Azure AI/RAG patterns.\", \"recommended\": true}, {\"label\": \"TypeScript-first\", \"description\": \"Optimize for Node/TypeScript services and frontend.\"}, {\"label\": \"No strong preference\", \"description\": \"Let ARCH choose the best-fit stack.\"}], \"allowFreeformInput\": true}, {\"header\": \"Azure constraints\", \"question\": \"What Azure/service constraints should ARCH assume?\", \"options\": [{\"label\": \"Microsoft-first managed services\", \"description\": \"Prefer Azure OpenAI, AI Search, managed identity, least privilege, and minimal custom ops.\", \"recommended\": true}, {\"label\": \"Keep cost minimal\", \"description\": \"Bias toward the cheapest viable POC footprint, even if less feature-rich.\"}, {\"label\": \"Need custom constraints\", \"description\": \"I\u2019ll provide required services, auth, region, or compliance constraints.\"}], \"allowFreeformInput\": true}]}"
+        }
+      }
+    ]
+  }
+}

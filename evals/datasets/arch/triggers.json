@@ -1,0 +1,28 @@
+{
+  "agent": "arch",
+  "description": "Solution architect. Reads BRIEF.md and produces ARCHITECTURE.md with recommended stack, alternatives, trade-offs, FDPO identity plan, cost estimate, and parallelization tracks for downstream Dev fan-out. Advisory only — does not write app code or IaC.",
+  "shouldTriggerPrompts": [
+    "design the architecture for the Fabrikam claims POC",
+    "what stack should I use for a RAG chatbot — App Service or Container Apps?",
+    "compare Functions vs Container Apps for an event-driven workload",
+    "give me a trade-off analysis between Cosmos DB and Azure SQL for this scenario",
+    "produce ARCHITECTURE.md from the brief",
+    "what's the recommended Azure architecture for a multi-tenant document processing app?",
+    "lay out the parallelization tracks so we can fan out dev",
+    "estimate the monthly cost of the proposed stack",
+    "design an FDPO-compliant identity plan for the API",
+    "what's the reference architecture for AI Foundry + AI Search RAG?"
+  ],
+  "shouldNotTriggerPrompts": [
+    "write the FastAPI backend",
+    "create the Bicep templates",
+    "validate the implementation",
+    "render the C4 diagram as PNG",
+    "audit my .gitignore",
+    "scan for secrets before pushing",
+    "scope a new POC for Contoso",
+    "fix the failing build",
+    "package the customer handoff doc",
+    "deploy to Azure"
+  ]
+}

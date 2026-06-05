@@ -1,0 +1,27 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This is a **feature-request** — adding caching to the API. There are several valid approaches (in-memory, Redis, CDN, response-level vs data-layer) and this is exactly the kind of "more than one valid way to do this" decision I should not make for you. Checkpoint 1 first.
+
+```askQuestions
+message: "Before I invoke QA to assess the current API and recommend a caching approach, I need to understand intent and constraints:
+
+1. **What problem are you solving?** — latency, cost (downstream API/DB calls), rate-limit pressure, or all of the above?
+2. **Cache layer preference?** — in-process (fast, per-instance), Azure Managed Redis (shared, FDPO-compliant), or HTTP/CDN-level (response caching)?
+3. **Scope** — cache one hot endpoint, all GETs, or design a reusable caching abstraction?
+4. **Invalidation requirements** — TTL-only is fine, or do you need event-driven invalidation on writes?
+
+After you confirm, I'll invoke **QA** to inventory the API surface and identify cache candidates, then come back with a fix plan (likely medium scope) for your approval before Dev/Infra do anything."
+
+options:
+  - label: "Azure Managed Redis, hot endpoints first"
+    description: "FDPO-compliant shared cache, Entra auth, scoped to the highest-value endpoints. Infra + Dev work."
+    recommended: true
+  - label: "In-process cache (e.g., MemoryCache / functools.lru_cache)"
+    description: "Smallest change, no new Azure resources. Per-instance only — fine for a POC."
+  - label: "HTTP response caching (Cache-Control / CDN)"
+    description: "Edge-level. Best for public, idempotent GETs. Needs Front Door or APIM."
+  - label: "Let QA recommend after surveying the API"
+    description: "I'm not sure — have QA assess hot paths and propose options."
+
+allowFreeformInput: true
+```

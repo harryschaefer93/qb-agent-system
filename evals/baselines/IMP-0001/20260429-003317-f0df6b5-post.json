@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "imp_id": "IMP-0001",
+    "eval_type": "structural",
+    "eval_id": "imp_0001",
+    "commit_sha": "f0df6b5",
+    "timestamp": "2026-04-29T00:33:17.130774+00:00",
+    "phase": "post",
+    "model": null,
+    "temperature": null,
+    "seed": null,
+    "n_samples": 1,
+    "cost": {},
+    "trajectory": {}
+  },
+  "metrics": {
+    "total_checks": 3,
+    "passed_checks": 3,
+    "pass_rate": 1.0,
+    "all_passed": true
+  },
+  "raw_results": [
+    {
+      "check_id": "return_discipline_section",
+      "label": "Subagent Return Discipline section exists",
+      "passed": true,
+      "detail": "Found"
+    },
+    {
+      "check_id": "token_cap_rule",
+      "label": "Token cap / bound on subagent returns referenced",
+      "passed": true,
+      "detail": "Found"
+    },
+    {
+      "check_id": "prompt_size",
+      "label": "Prompt size: 30364 chars",
+      "passed": true,
+      "detail": "total=30364"
+    }
+  ]
+}

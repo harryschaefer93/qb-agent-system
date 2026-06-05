@@ -1,0 +1,28 @@
+{
+  "agent": "qa",
+  "description": "QA engineer. Code review, functional testing via Playwright, infra validation, deployment readiness checks, diagram visual review.",
+  "shouldTriggerPrompts": [
+    "review the code for security issues before the demo",
+    "test the application end-to-end with Playwright",
+    "validate the Bicep templates compile and RBAC is correct",
+    "check if the app handles weird input gracefully",
+    "verify the deployment works with the documented steps",
+    "run a smoke test on the live app",
+    "check for hardcoded secrets in the codebase",
+    "do a visual review of the architecture diagram",
+    "test the API endpoints return expected responses",
+    "verify the frontend connects to the backend correctly"
+  ],
+  "shouldNotTriggerPrompts": [
+    "build a FastAPI backend",
+    "set up the Bicep templates",
+    "write the README",
+    "generate an architecture diagram",
+    "scope a new POC",
+    "triage my inbox",
+    "kick off full delivery",
+    "create Terraform for Azure resources",
+    "implement RAG with AI Search",
+    "create the customer handoff document"
+  ]
+}

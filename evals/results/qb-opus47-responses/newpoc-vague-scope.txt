@@ -1,0 +1,34 @@
+No BRIEF.md found at workspace root — flagging hard. "Top-5 US bank" is **wildly under-scoped** for a new POC — no use case, no customer (which bank?), no AI shape, no constraints. I will absolutely not start architecting on this.
+
+This is a **new-poc-setup** task that needs serious scoping before ARCH can produce anything useful. Checkpoint 1.
+
+```askQuestions
+message: "I have to push back — 'a new POC for a top-5 US bank' isn't enough scope to start. ARCH would be guessing, INFRA would be provisioning resources for a use case nobody has defined, and we'd burn cycles on something the customer didn't ask for. Strongly recommend invoking **scoper** to capture the actual brief.
+
+Either way, here are the things I need before ARCH can do meaningful work:
+
+1. **Which bank** — JPMorgan, BofA, Citi, Wells, Goldman? (Or 'don't know yet' — then this is a generic accelerator, not a customer POC.)
+2. **Use case** — what problem are we solving? RAG over policies, fraud detection, contact-center copilot, document processing, agentic workflow, code modernization, something else?
+3. **Persona** — who uses this (customer-facing, internal employee, developer, ops)?
+4. **Why now** — is there a meeting, a request, an RFP we're responding to, or are we proactively building?
+5. **Constraints** — banking regulatory posture (SOX, GLBA, OCC), data residency (US), known restrictions on cloud AI / data egress?
+6. **Timeline** — when do you need to show this?
+
+Recommended path forward:
+
+1. **Invoke scoper** — produces `BRIEF.md` with customer, use case, persona, scope, success criteria, constraints
+2. Then we run **new-poc-setup** properly: CHECKPOINT 1 → ARCH → CHECKPOINT 2 → INFRA + DEV fan-out → quality gates → QA → DIAGRAM → DOCS → REPO
+
+I am not going to ARCH a generic 'banking AI thing' and ship it as a POC. That's how we deliver something the customer didn't ask for."
+
+options:
+  - label: "Invoke scoper now (I'll provide answers in scoper's session)"
+    description: "Recommended. The right tool for this gap."
+    recommended: true
+  - label: "I'll paste the use case + customer + constraints here in freeform"
+    description: "Faster but rougher. ARCH only knows what you give me."
+  - label: "Generic banking AI accelerator (no specific customer) — ship as a reusable demo"
+    description: "Different intent — this becomes a demos/ project, not a clients/ project."
+
+allowFreeformInput: true
+```

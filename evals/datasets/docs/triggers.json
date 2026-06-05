@@ -1,0 +1,28 @@
+{
+  "agent": "docs",
+  "description": "Technical writer. README, architecture overview, deployment guides, customer handoff documents. Mermaid diagrams, copy-pasteable commands.",
+  "shouldTriggerPrompts": [
+    "write the README with quick start and architecture overview",
+    "create the customer handoff document with executive summary",
+    "write a deployment guide with step-by-step instructions",
+    "update the documentation to reflect the new API endpoints",
+    "package the docs for customer delivery",
+    "write the architecture overview section",
+    "create a configuration reference table",
+    "document the environment variables and setup steps",
+    "write HANDOFF.md for the Fabrikam engagement",
+    "add a troubleshooting section to the README"
+  ],
+  "shouldNotTriggerPrompts": [
+    "build a FastAPI backend",
+    "set up Bicep templates",
+    "review the code for bugs",
+    "generate an architecture diagram",
+    "scope a new POC",
+    "triage my inbox",
+    "test the application end-to-end",
+    "create Terraform for Azure resources",
+    "kick off full delivery",
+    "fix the bug in the /scores endpoint"
+  ]
+}

@@ -1,0 +1,39 @@
+No BRIEF.md found at workspace root — I'd normally read it for customer context, scope, and acceptance criteria. Flagging this gap.
+
+This is a **new-poc-setup** task — RAG chatbot from scratch. Checkpoint 1 first, with a preview of the multi-step plan.
+
+```askQuestions
+message: "Before I invoke ARCH to design the architecture, I need to clarify the POC scope. RAG chatbot is a well-trodden path but the choices still matter:
+
+1. **BRIEF.md gap** — there's no BRIEF.md. Do you want me to invoke **scoper** first (recommended), or paste customer/scope context here?
+2. **Customer & domain** — who's it for, and what kind of documents is the bot retrieving over (product docs, policies, PDFs, knowledge base)?
+3. **Stack preferences** — Python (default for AI/RAG) or TypeScript? Frontend framework?
+4. **Required Azure services** — Modern Microsoft Foundry for the model (default per workspace policy — NOT standalone Azure OpenAI, NOT hub-based AI Foundry), Azure AI Search for retrieval, anything else (Storage, Cosmos for chat history)?
+5. **Auth posture** — public demo (anonymous), Entra ID sign-in, or behind a corp gateway? (FDPO: managed identity + Entra everywhere, no API keys.)
+6. **Hosting** — Azure Container Apps, App Service, or Static Web App + Functions?
+
+After you confirm, here's the full pipeline you're approving the start of:
+
+1. **CHECKPOINT 1** (this) — confirm scope
+2. **ARCH** produces `ARCHITECTURE.md` (recommended stack, alternatives, FDPO identity plan, cost estimate, parallelization tracks — likely `frontend`, `backend-api`, `ai-pipeline`)
+3. **CHECKPOINT 2** — you approve the stack + cost (mandatory stop for new Azure resources)
+4. **INFRA + parallel DEV per track** (fan out)
+5. **Merge gate** + **quality gates**
+6. **QA deep-review**; iterate ≤2 cycles on blockers
+7. **DIAGRAM** as-built; **QA** reviews diagrams
+8. **DOCS** packages README + deployment guide + handoff docs
+9. **REPO** runs secret scan + commit + push
+
+I will stop at every checkpoint."
+
+options:
+  - label: "Invoke scoper first to capture customer + scope"
+    description: "Recommended. RAG chatbot has too many forks without grounded scope."
+    recommended: true
+  - label: "Skip scoper — I'll paste context in freeform input"
+    description: "Faster start. ARCH only knows what you give me."
+  - label: "Use the POC_Template starter and customize"
+    description: "Fastest path if there's an existing RAG starter in ~/repos/demos/POC_Template."
+
+allowFreeformInput: true
+```

@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "imp_id": "IMP-0019",
+    "eval_type": "composite",
+    "eval_id": null,
+    "commit_sha": "8f0d124",
+    "timestamp": "2026-05-08T15:28:45.265485+00:00",
+    "phase": "post",
+    "model": null,
+    "temperature": null,
+    "seed": null,
+    "n_samples": 2,
+    "cost": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "wall_time_ms": 2,
+      "cost_usd": 0.0,
+      "pricing_source": "config.yaml@v1"
+    },
+    "trajectory": {},
+    "thresholds": {
+      "speed_regression_pct": 50
+    }
+  },
+  "metrics": {
+    "weighted_score": 0.3,
+    "verdict": "fail",
+    "sub_verdicts": {
+      "structural:imp_0004": {
+        "passed": false,
+        "normalised_score": 0.5,
+        "weighted_contribution": 0.0,
+        "weight": 0.7,
+        "must_pass": true,
+        "note": "structural:imp_0004 FAIL score=0.500 weight=0.7 (must_pass override \u2192 0 contribution)"
+      },
+      "execution_metrics:default": {
+        "passed": true,
+        "normalised_score": 1.0,
+        "weighted_contribution": 0.3,
+        "weight": 0.3,
+        "must_pass": false,
+        "note": "execution_metrics PASS score=1.000 weight=0.3"
+      }
+    }
+  },
+  "raw_results": [],
+  "sub_snapshots": {
+    "structural:imp_0004": {
+      "meta": {
+        "imp_id": "IMP-0019",
+        "eval_type": "structural",
+        "eval_id": "imp_0004",
+        "commit_sha": "8f0d124",
+        "timestamp": "2026-05-08T15:28:45.265404+00:00",
+        "phase": "post",
+        "model": null,
+        "temperature": null,
+        "seed": null,
+        "n_samples": 1,
+        "cost": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "wall_time_ms": 2,
+          "cost_usd": 0.0,
+          "pricing_source": "config.yaml@v1"
+        },
+        "trajectory": {},
+        "thresholds": {
+          "speed_regression_pct": 50
+        }
+      },
+      "metrics": {
+        "total_checks": 4,
+        "passed_checks": 2,
+        "pass_rate": 0.5,
+        "all_passed": false
+      },
+      "raw_results": [
+        {
+          "check_id": "single_tools_line",
+          "label": "Frontmatter has exactly one tools: line",
+          "passed": true,
+          "detail": "Found 1 tools line(s)"
+        },
+        {
+          "check_id": "expected_tool_set",
+          "label": "Tool list contains only orchestration + quality-gate tools",
+          "passed": false,
+          "detail": "Extra: ['browser/clickElement', 'browser/dragElement', 'browser/handleDialog', 'browser/hoverElement', 'browser/navigatePage', 'browser/openBrowserPage', 'browser/readPage', 'browser/runPlaywrightCode', 'browser/screenshotPage', 'browser/typeInPage', 'context7/query-docs', 'context7/resolve-library-id', 'edit/createDirectory', 'edit/createFile', 'edit/createJupyterNotebook', 'edit/editFiles', 'edit/editNotebook', 'edit/rename', 'execute/createAndRunTask', 'execute/getTerminalOutput', 'execute/killTerminal', 'execute/runNotebookCell', 'execute/sendToTerminal', 'ms-azuretools.vscode-azureresourcegroups/azureActivityLog', 'ms-python.python/configurePythonEnvironment', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'read/getNotebookSummary', 'read/problems', 'read/readNotebookCellOutput', 'read/terminalLastCommand', 'read/terminalSelection', 'read/viewImage', 'search/changes', 'search/listDirectory', 'search/searchSubagent', 'search/textSearch', 'search/usages', 'vscode.mermaid-chat-features/renderMermaidDiagram', 'vscode/extensions', 'vscode/getProjectSetupInfo', 'vscode/installExtension', 'vscode/newWorkspace', 'vscode/resolveMemoryFileUri', 'vscode/runCommand', 'vscode/vscodeAPI', 'web/githubTextSearch']"
+        },
+        {
+          "check_id": "no_forbidden_tools",
+          "label": "No tools QB rules forbid (edit/*, browser/*, notebook/*)",
+          "passed": false,
+          "detail": "Forbidden tools present: ['edit/createDirectory', 'browser/dragElement', 'edit/editFiles', 'browser/navigatePage', 'browser/readPage', 'browser/hoverElement', 'browser/runPlaywrightCode', 'read/readNotebookCellOutput', 'browser/screenshotPage', 'execute/runNotebookCell', 'read/getNotebookSummary', 'browser/typeInPage', 'browser/clickElement', 'edit/createFile', 'edit/createJupyterNotebook', 'edit/createJupyterNotebook', 'edit/rename', 'edit/editNotebook', 'edit/editNotebook', 'browser/handleDialog', 'browser/openBrowserPage']"
+        },
+        {
+          "check_id": "prompt_size",
+          "label": "Prompt size: 31569 chars (frontmatter: 3674)",
+          "passed": true,
+          "detail": "total=31569, frontmatter=3674"
+        }
+      ]
+    },
+    "execution_metrics:default": {
+      "meta": {
+        "imp_id": "IMP-0019",
+        "eval_type": "execution_metrics",
+        "eval_id": null,
+        "commit_sha": "8f0d124",
+        "timestamp": "2026-05-08T15:28:45.265459+00:00",
+        "phase": "post",
+        "model": null,
+        "temperature": null,
+        "seed": null,
+        "n_samples": 1,
+        "cost": {
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "wall_time_ms": 0,
+          "cost_usd": 0.0,
+          "pricing_source": "config.yaml@v1"
+        },
+        "trajectory": {},
+        "thresholds": {
+          "speed_regression_pct": 50
+        }
+      },
+      "metrics": {
+        "all_passed": true,
+        "wall_time_ms": 0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0
+      },
+      "raw_results": []
+    }
+  }
+}

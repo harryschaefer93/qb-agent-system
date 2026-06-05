@@ -1,0 +1,60 @@
+"""
+IMP-0001 evaluator - validates QB has Subagent Return Discipline subsection.
+
+Tests:
+  1. 'Subagent Return Discipline' section exists in QB
+  2. Token cap rule present (~400 tokens or similar bound)
+  3. Prompt size (informational)
+"""
+
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+from evaluators.custom.imp_0004 import ImpResult, ImpReport, _parse_frontmatter
+
+
+def evaluate_imp_0001(agent_file: Path) -> ImpReport:
+    content = agent_file.read_text(encoding="utf-8")
+    _frontmatter, body = _parse_frontmatter(content)
+    results: list[ImpResult] = []
+
+    # Check 1: Subagent Return Discipline section exists
+    has_section = bool(re.search(r"subagent return discipline", body, re.IGNORECASE))
+    results.append(ImpResult(
+        imp_id="IMP-0001",
+        check_id="return_discipline_section",
+        label="Subagent Return Discipline section exists",
+        passed=has_section,
+        detail="Found" if has_section else "Missing",
+    ))
+
+    # Check 2: Token cap rule present
+    has_cap = bool(re.search(r"(cap|limit|bound).*(token|response|~?\d{2,3}\s*token)", body, re.IGNORECASE))
+    results.append(ImpResult(
+        imp_id="IMP-0001",
+        check_id="token_cap_rule",
+        label="Token cap / bound on subagent returns referenced",
+        passed=has_cap,
+        detail="Found" if has_cap else "No token cap/bound language detected",
+    ))
+
+    # Check 3: Prompt size (informational)
+    results.append(ImpResult(
+        imp_id="IMP-0001",
+        check_id="prompt_size",
+        label=f"Prompt size: {len(content)} chars",
+        passed=True,
+        detail=f"total={len(content)}",
+    ))
+
+    passed_count = sum(1 for r in results if r.passed)
+    return ImpReport(
+        imp_id="IMP-0001",
+        title="Enforce structured, bounded subagent returns",
+        total_checks=len(results),
+        passed_checks=passed_count,
+        passed=all(r.passed for r in results),
+        results=results,
+    )

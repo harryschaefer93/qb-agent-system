@@ -1,0 +1,10 @@
+I need confirm prior checkpoint? User says approved architecture. Need proceed to infra/dev parallel. But must read BRIEF? likely already in flow. Need invoke agents.
+**Invoking INFRA** to implement the infrastructure defined in `ARCHITECTURE.md`.
+
+**Invoking DEV** for track `frontend` to implement only the frontend-owned paths.
+
+**Invoking DEV** for track `backend-api` to implement only the backend API-owned paths.
+
+**Invoking DEV** for track `ai-pipeline` to implement only the AI pipeline-owned paths.
+
+I’ll proceed with those parallel build tracks now, then run the merge gate and quality gates before QA validation.

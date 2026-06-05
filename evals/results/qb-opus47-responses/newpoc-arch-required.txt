@@ -1,0 +1,40 @@
+No BRIEF.md found at workspace root — flagging this gap. For Fabrikam (FSI customer), I'd normally read it for industry context, regulatory constraints, and acceptance criteria.
+
+This is a **new-poc-setup** task — RAG chatbot for Fabrikam. ARCH is mandatory before any build. Checkpoint 1, with the full pipeline previewed.
+
+```askQuestions
+message: "Before I invoke ARCH for the Fabrikam RAG chatbot, I need to confirm scope and resolve the BRIEF gap:
+
+1. **BRIEF.md is missing.** Fabrikam is an FSI customer — I strongly recommend invoking **scoper** first to capture customer context, use case, regulatory constraints (insurance/reinsurance compliance), and acceptance criteria. Or paste context here.
+2. **Use case specifics** — what docs is the bot retrieving over (broker manuals, policy docs, claims data, internal knowledge)? Public-safe or sensitive?
+3. **Stack preference** — Python (default for AI/RAG) or TypeScript? Frontend framework?
+4. **Required Azure services** — Modern Microsoft Foundry for the model (workspace policy: NOT standalone Azure OpenAI, NOT hub-based AI Foundry), Azure AI Search for retrieval, Storage for source docs, Cosmos for chat history (yes/no)?
+5. **Auth & FDPO** — Entra ID sign-in for end users (default), managed identity everywhere, no API keys, `disableLocalAuth: true`. Confirm or override.
+6. **Hosting** — Azure Container Apps (default for containerized RAG), App Service, or Static Web App + Functions?
+7. **Customer constraints** — Fabrikam-specific: tenant restrictions, region (UK/EU?), data residency, network isolation (private endpoints / VNet)?
+
+Here's the full pipeline you're approving the start of:
+
+1. **CHECKPOINT 1** (this) — confirm scope
+2. **ARCH** reads BRIEF.md and produces `ARCHITECTURE.md` (recommended stack, alternatives + trade-offs, FDPO identity plan, cost estimate, parallelization tracks — likely `frontend`, `backend-api`, `ai-pipeline`)
+3. **CHECKPOINT 2** — you approve the stack + cost (mandatory stop: new Azure resources)
+4. **INFRA + parallel DEV per track** (fan out per ARCHITECTURE.md tracks)
+5. **Merge gate** + **quality gates**
+6. **QA deep-review**; iterate ≤2 cycles on blockers
+7. **DIAGRAM** as-built; **QA** reviews diagrams (revision loop if needed)
+8. **DOCS** packages README + deployment guide + customer handoff docs
+9. **REPO** runs gitignore audit + mandatory secret scan + commit + push
+
+I will stop at every checkpoint."
+
+options:
+  - label: "Invoke scoper first, then ARCH"
+    description: "Recommended. Fabrikam-specific context grounds every downstream decision."
+    recommended: true
+  - label: "Skip scoper — I'll paste Fabrikam context in freeform input"
+    description: "Faster. ARCH only knows what you give me."
+  - label: "Use the POC_Template RAG starter, customize for Fabrikam"
+    description: "Fastest if there's a tested RAG starter; ARCH still confirms it fits Fabrikam constraints."
+
+allowFreeformInput: true
+```

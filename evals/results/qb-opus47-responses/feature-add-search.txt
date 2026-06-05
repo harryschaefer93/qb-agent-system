@@ -1,0 +1,26 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This is a **feature-request** — search over documents. There's a wide solution space (keyword, vector/semantic, hybrid; Azure AI Search vs DB full-text vs in-app), and the right pick depends on your docs and your users. Checkpoint 1.
+
+```askQuestions
+message: "Before I invoke QA to assess the document corpus and current API, I need to understand what 'search' means here:
+
+1. **Search type** — keyword/full-text (BM25), semantic/vector (embeddings), or hybrid (both)?
+2. **Document characteristics** — how many docs, what formats (PDF/DOCX/HTML/MD), and how often do they change?
+3. **User experience** — search box returning hits with highlights, RAG-style Q&A over docs, or both?
+4. **Scale & budget** — POC scale (Azure AI Search Basic) or production scale?
+5. **Existing infra** — anything already in place (a DB with full-text, an existing index, embeddings pipeline)?
+
+After you confirm, I'll invoke **QA** to inventory current state and **ARCH** if a new service is needed (Azure AI Search is a new Azure resource → mandatory stop), then come back with a plan for approval."
+
+options:
+  - label: "Hybrid search via Azure AI Search (keyword + vector)"
+    description: "Strongest default for docs. FDPO-compliant (Entra auth, disableLocalAuth). Infra adds the service, Dev wires indexing + query."
+    recommended: true
+  - label: "Keyword-only via existing DB full-text"
+    description: "Smallest scope, no new Azure resources. Limited to lexical matches."
+  - label: "RAG Q&A over the docs (retrieve + generate)"
+    description: "Different shape — adds Foundry model deployment + chat UI. Bigger scope, talks to docs in natural language."
+
+allowFreeformInput: true
+```

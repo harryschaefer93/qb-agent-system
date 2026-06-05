@@ -1,0 +1,44 @@
+{
+  "test_id": "urgency-demo-tomorrow",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_KjhMvrMXOk768h8RbkAo56pC",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\": \"BRIEF.md\"}"
+      }
+    },
+    {
+      "id": "call_wghkHTkURt79DrOLV19FWGOv",
+      "type": "function",
+      "function": {
+        "name": "askQuestions",
+        "arguments": "{\"questions\": [{\"header\": \"Bug fix scope\", \"question\": \"Before I route this, which scope should I optimize for?\", \"message\": \"I\u2019ll pause here first as required, then run QA to diagnose the API breakage once you confirm the scope.\", \"options\": [{\"label\": \"Quick demo patch\", \"description\": \"Smallest safe fix to get the demo working tomorrow.\", \"recommended\": true}, {\"label\": \"Root-cause fix\", \"description\": \"Investigate more deeply and fix the underlying issue, even if it takes longer.\"}, {\"label\": \"Unsure\", \"description\": \"Let QA diagnose first, then I\u2019ll propose the smallest safe plan.\"}], \"allowFreeformInput\": true}, {\"header\": \"Surface area\", \"question\": \"What should be included in scope?\", \"options\": [{\"label\": \"Backend API only\", \"description\": \"Focus only on the API failure.\"}, {\"label\": \"Frontend + API flow\", \"description\": \"Validate the end-to-end path from UI to API.\", \"recommended\": true}, {\"label\": \"All similar endpoints\", \"description\": \"Fix this issue and audit related endpoints too.\"}], \"allowFreeformInput\": true}, {\"header\": \"Repro details\", \"question\": \"What symptom are you seeing right now?\", \"message\": \"Share any endpoint, error message, status code, logs, or deployment URL you already have.\", \"allowFreeformInput\": true}]}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_KjhMvrMXOk768h8RbkAo56pC",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\": \"BRIEF.md\"}"
+        }
+      },
+      {
+        "id": "call_wghkHTkURt79DrOLV19FWGOv",
+        "type": "function",
+        "function": {
+          "name": "askQuestions",
+          "arguments": "{\"questions\": [{\"header\": \"Bug fix scope\", \"question\": \"Before I route this, which scope should I optimize for?\", \"message\": \"I\u2019ll pause here first as required, then run QA to diagnose the API breakage once you confirm the scope.\", \"options\": [{\"label\": \"Quick demo patch\", \"description\": \"Smallest safe fix to get the demo working tomorrow.\", \"recommended\": true}, {\"label\": \"Root-cause fix\", \"description\": \"Investigate more deeply and fix the underlying issue, even if it takes longer.\"}, {\"label\": \"Unsure\", \"description\": \"Let QA diagnose first, then I\u2019ll propose the smallest safe plan.\"}], \"allowFreeformInput\": true}, {\"header\": \"Surface area\", \"question\": \"What should be included in scope?\", \"options\": [{\"label\": \"Backend API only\", \"description\": \"Focus only on the API failure.\"}, {\"label\": \"Frontend + API flow\", \"description\": \"Validate the end-to-end path from UI to API.\", \"recommended\": true}, {\"label\": \"All similar endpoints\", \"description\": \"Fix this issue and audit related endpoints too.\"}], \"allowFreeformInput\": true}, {\"header\": \"Repro details\", \"question\": \"What symptom are you seeing right now?\", \"message\": \"Share any endpoint, error message, status code, logs, or deployment URL you already have.\", \"allowFreeformInput\": true}]}"
+        }
+      }
+    ]
+  }
+}

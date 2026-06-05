@@ -1,0 +1,41 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This is a **compound, security-sensitive** ask: refactor auth → MSAL + update tests + migrate existing users. Auth + user data migration = mandatory stop, multiple decision points, real risk. I will be very careful at Checkpoint 1.
+
+```askQuestions
+message: "This is a big, risky compound ask. Before I invoke QA to assess the current auth module and the user data shape, I need to lock down scope and decisions — I won't make any of these for you:
+
+**Scope & approach:**
+1. **Current auth** — what's in place today (custom JWT, Auth0, ASP.NET Identity, Firebase, something else)? This shapes the migration plan.
+2. **Frontend stack** — which MSAL library applies (msal-react, msal-browser, MSAL .NET, MSAL Python)?
+3. **Tenant + Entra app registration** — does an Entra app reg already exist for this app, or does INFRA need to create one?
+4. **Token flow** — interactive sign-in users only, or also app-only / daemon flows?
+
+**User migration — the risky part:**
+5. **Existing users** — how many, and where do their identities live (local DB, third-party IdP)?
+6. **Migration strategy** — invite-flow (users re-onboard via Entra B2B/B2C), JIT-link on first login (match by email), bulk pre-create in Entra, or hybrid (keep legacy login working alongside MSAL during cutover)?
+7. **Data preservation** — must existing user IDs / records remain valid post-migration (referential integrity)?
+8. **Rollback plan** — if something goes wrong mid-migration, what's the recovery posture?
+
+Proposed pipeline (everything stops at every checkpoint):
+- **QA** deep-review on current auth + user data
+- **ARCH** designs the MSAL integration + user migration plan (this is more than a refactor — it's an identity migration)
+- **Checkpoint 2** — you approve the migration approach (mandatory: auth + data migration)
+- **Mixed track**: Infra (Entra app reg + RBAC + secrets in KV) || Dev (MSAL integration + test updates + migration tooling)
+- **Quality gates** + **QA deep-review**
+- **DOCS** updates security/auth runbook
+- **REPO** commit + push with mandatory secret scan
+
+I am not migrating any user data without an explicit approved plan."
+
+options:
+  - label: "Pilot — refactor + migrate a small test cohort first, then ramp"
+    description: "Strongly recommended for any real user migration. Lowest blast radius."
+    recommended: true
+  - label: "Full refactor + JIT-link migration on first login"
+    description: "Users re-authenticate via Entra; we match by email and link records. Lower data risk than bulk."
+  - label: "Refactor only — defer the user migration to a separate engagement"
+    description: "Cleanest separation of concerns. Two decisions, two pipelines."
+
+allowFreeformInput: true
+```

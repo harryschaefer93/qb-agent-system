@@ -1,0 +1,25 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This is a **bug-fix** task and it touches **auth** — which is on my mandatory-stop list (security-sensitive). I will not skip Checkpoint 1, and I'll be especially careful about scope here.
+
+```askQuestions
+message: "Auth is broken — before I invoke QA to diagnose, I need to confirm scope and constraints. Auth bugs touch identity, tokens, and possibly Entra ID config, so I want to be deliberate.
+
+1. Where is it broken — local dev, staging, or production?
+2. What's the failure mode users are seeing — login page won't load, credentials rejected, redirect loop, token error, blank page after login?
+3. Did anything change recently — a deploy, a config change, an Entra ID app-registration update, a secret/cert rotation?
+4. App-code only, infra/identity only, or should QA assume mixed?
+
+After you confirm, I'll invoke **QA** to reproduce and isolate (likely deep-review mode given the blast radius), then come back with a classified fix plan. I will NOT implement anything without your explicit approval at Checkpoint 2 — auth changes are risky."
+
+options:
+  - label: "Production outage — full diagnosis, treat as P1"
+    description: "QA in deep-review mode, captures logs + Entra sign-in logs, identifies root cause across app + infra."
+    recommended: true
+  - label: "Local/dev only — quick repro and fix"
+    description: "QA reproduces locally; likely a config or env-var issue."
+  - label: "Recent change suspected — bisect from last known good"
+    description: "QA focuses on what changed (deploy, config, secrets) rather than full code review."
+
+allowFreeformInput: true
+```

@@ -1,0 +1,44 @@
+{
+  "test_id": "handoff-public-readiness",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_HlIjwLiiHMjDxwTsWa2w0Otr",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\": \"BRIEF.md\"}"
+      }
+    },
+    {
+      "id": "call_X1tMDEPcWUw9m6bkG1CiFBBa",
+      "type": "function",
+      "function": {
+        "name": "askQuestions",
+        "arguments": "{\"questions\": [{\"header\": \"Handoff scope\", \"question\": \"What should the customer handoff package emphasize for the Travelers POC?\", \"message\": \"Plan preview: after you confirm scope, I\u2019ll invoke **QA** in deep-review mode, regenerate **DIAGRAM**s, package **DOCS**, and finally **REPO** will run the open-source/public-readiness checklist and prepare the handoff branch/tag/push.\", \"options\": [{\"label\": \"Standard handoff + open-source readiness\", \"description\": \"Validate current implementation, refresh diagrams/docs, and prepare for public release.\", \"recommended\": true}, {\"label\": \"Handoff only\", \"description\": \"Package customer-facing docs and validation, but do not optimize for open-source/public release.\"}, {\"label\": \"Open-source hardening focus\", \"description\": \"Prioritize public-readiness, repo hygiene, and removal of anything not suitable for public release.\"}], \"allowFreeformInput\": true}, {\"header\": \"Release visibility\", \"question\": \"Should I treat this as a public GitHub-ready release or a private customer handoff that is merely open-sourceable later?\", \"options\": [{\"label\": \"Public GitHub-ready now\", \"description\": \"Apply the stricter public-readiness bar now.\", \"recommended\": true}, {\"label\": \"Private handoff, open-sourceable later\", \"description\": \"Prepare artifacts so it can be open-sourced later, but don\u2019t optimize everything for immediate public release.\"}], \"allowFreeformInput\": true}, {\"header\": \"Deliverables\", \"question\": \"Any must-have deliverables beyond validation, diagrams, docs, and repo hygiene?\", \"options\": [{\"label\": \"Use the standard package\", \"description\": \"README, deployment guide, architecture diagrams, validation summary, and release notes.\", \"recommended\": true}, {\"label\": \"Add demo/runbook materials\", \"description\": \"Include demo script, sample prompts/test cases, and operator runbook.\"}, {\"label\": \"I\u2019ll specify extras\", \"description\": \"Provide custom deliverables in freeform input.\"}], \"allowFreeformInput\": true}]}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_HlIjwLiiHMjDxwTsWa2w0Otr",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\": \"BRIEF.md\"}"
+        }
+      },
+      {
+        "id": "call_X1tMDEPcWUw9m6bkG1CiFBBa",
+        "type": "function",
+        "function": {
+          "name": "askQuestions",
+          "arguments": "{\"questions\": [{\"header\": \"Handoff scope\", \"question\": \"What should the customer handoff package emphasize for the Travelers POC?\", \"message\": \"Plan preview: after you confirm scope, I\u2019ll invoke **QA** in deep-review mode, regenerate **DIAGRAM**s, package **DOCS**, and finally **REPO** will run the open-source/public-readiness checklist and prepare the handoff branch/tag/push.\", \"options\": [{\"label\": \"Standard handoff + open-source readiness\", \"description\": \"Validate current implementation, refresh diagrams/docs, and prepare for public release.\", \"recommended\": true}, {\"label\": \"Handoff only\", \"description\": \"Package customer-facing docs and validation, but do not optimize for open-source/public release.\"}, {\"label\": \"Open-source hardening focus\", \"description\": \"Prioritize public-readiness, repo hygiene, and removal of anything not suitable for public release.\"}], \"allowFreeformInput\": true}, {\"header\": \"Release visibility\", \"question\": \"Should I treat this as a public GitHub-ready release or a private customer handoff that is merely open-sourceable later?\", \"options\": [{\"label\": \"Public GitHub-ready now\", \"description\": \"Apply the stricter public-readiness bar now.\", \"recommended\": true}, {\"label\": \"Private handoff, open-sourceable later\", \"description\": \"Prepare artifacts so it can be open-sourced later, but don\u2019t optimize everything for immediate public release.\"}], \"allowFreeformInput\": true}, {\"header\": \"Deliverables\", \"question\": \"Any must-have deliverables beyond validation, diagrams, docs, and repo hygiene?\", \"options\": [{\"label\": \"Use the standard package\", \"description\": \"README, deployment guide, architecture diagrams, validation summary, and release notes.\", \"recommended\": true}, {\"label\": \"Add demo/runbook materials\", \"description\": \"Include demo script, sample prompts/test cases, and operator runbook.\"}, {\"label\": \"I\u2019ll specify extras\", \"description\": \"Provide custom deliverables in freeform input.\"}], \"allowFreeformInput\": true}]}"
+        }
+      }
+    ]
+  }
+}

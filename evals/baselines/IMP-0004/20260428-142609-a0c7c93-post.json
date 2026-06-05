@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "imp_id": "IMP-0004",
+    "eval_type": "structural",
+    "eval_id": "imp_0004",
+    "commit_sha": "a0c7c93",
+    "timestamp": "2026-04-28T14:26:09.307101+00:00",
+    "phase": "post",
+    "model": null,
+    "temperature": null,
+    "seed": null,
+    "n_samples": 1,
+    "cost": {},
+    "trajectory": {}
+  },
+  "metrics": {
+    "total_checks": 4,
+    "passed_checks": 4,
+    "pass_rate": 1.0,
+    "all_passed": true
+  },
+  "raw_results": [
+    {
+      "check_id": "single_tools_line",
+      "label": "Frontmatter has exactly one tools: line",
+      "passed": true,
+      "detail": "Found 1 tools line(s)"
+    },
+    {
+      "check_id": "expected_tool_set",
+      "label": "Tool list contains only orchestration + quality-gate tools",
+      "passed": true,
+      "detail": "10 tools, all expected"
+    },
+    {
+      "check_id": "no_forbidden_tools",
+      "label": "No tools QB rules forbid (edit/*, browser/*, notebook/*)",
+      "passed": true,
+      "detail": "Clean"
+    },
+    {
+      "check_id": "prompt_size",
+      "label": "Prompt size: 29424 chars (frontmatter: 2469)",
+      "passed": true,
+      "detail": "total=29424, frontmatter=2469"
+    }
+  ]
+}

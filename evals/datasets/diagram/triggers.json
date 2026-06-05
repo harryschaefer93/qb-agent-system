@@ -1,0 +1,28 @@
+{
+  "agent": "diagram",
+  "description": "Architecture diagram specialist. Python diagrams library + Mermaid. Cloud architecture with real provider icons, C4 models, sequence diagrams.",
+  "shouldTriggerPrompts": [
+    "generate an architecture diagram showing all Azure services",
+    "create a C4 context diagram for the claims system",
+    "draw the data flow diagram for the RAG pipeline",
+    "update the architecture diagram with the new services",
+    "create a network topology diagram",
+    "generate a sequence diagram for the auth flow",
+    "the diagram has overlapping nodes — fix it",
+    "create a diagram showing the hub-spoke network",
+    "draw the multi-region DR topology",
+    "generate a Mermaid diagram for the API flow"
+  ],
+  "shouldNotTriggerPrompts": [
+    "build a FastAPI backend",
+    "set up Bicep templates",
+    "review the code for bugs",
+    "write the README",
+    "scope a new POC",
+    "triage my inbox",
+    "test the application end-to-end",
+    "create Terraform for Azure resources",
+    "kick off full delivery",
+    "create the customer handoff document"
+  ]
+}

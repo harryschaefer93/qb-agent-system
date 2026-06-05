@@ -1,0 +1,31 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+"Get this ready for the customer demo tomorrow" — sounds like demo prep, which is closest to **customer-handoff** in pipeline shape (QA validation + ensuring the thing actually works), but probably without the full REPO push. The deadline pressure is noted — I will still do Checkpoint 1, briefly.
+
+```askQuestions
+message: "Demo tomorrow — I'll keep this tight. Two quick scope questions before I invoke QA:
+
+1. **What needs to work for the demo?** — full happy-path end-to-end, a specific scenario/script, or just 'don't crash'?
+2. **Where is it being demoed from?** — deployed Azure environment (live URL), local dev, or recorded walkthrough?
+3. **What's allowed to change tonight?** — bug fixes only, or is small polish (UI labels, sample data, demo seed) in scope?
+
+After you confirm, here's the plan:
+- **QA** deep-review focused on the demo path — reproduce the happy-path flow, surface any blockers
+- If blockers found: classify, come back to you with a fix plan (Checkpoint 2), then Dev/Infra fixes them
+- Refresh **DIAGRAM**s only if architecture has drifted (otherwise skip to save time)
+- **DOCS** updates the demo runbook / talk track if needed
+- **REPO** is optional for demo prep — usually skipped unless you want a clean tagged commit
+
+I will surface deployment URLs so you can click and verify before the demo."
+
+options:
+  - label: "Validate the demo happy path; fix only blockers"
+    description: "Tightest scope. QA runs through the demo script, we fix what breaks, no scope creep."
+    recommended: true
+  - label: "Validate + light polish (UI labels, seed data)"
+    description: "QA + small Dev pass. A bit more time, better demo polish."
+  - label: "Full deep-review like a real handoff"
+    description: "Only if you have the time tonight. Catches more, but slower."
+
+allowFreeformInput: true
+```

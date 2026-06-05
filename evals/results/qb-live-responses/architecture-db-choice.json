@@ -1,0 +1,28 @@
+{
+  "test_id": "architecture-db-choice",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_WDjd5AI8fbepDmnplosKW9uH",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\":\"**/BRIEF.md\"}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_WDjd5AI8fbepDmnplosKW9uH",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\":\"**/BRIEF.md\"}"
+        }
+      }
+    ]
+  }
+}

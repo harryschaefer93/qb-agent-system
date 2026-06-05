@@ -1,0 +1,41 @@
+No BRIEF.md found at workspace root — flagging the gap. For Contoso (FSI customer) underwriting, I'd normally read it for use case, regulatory framing, and acceptance criteria.
+
+This is a **full-delivery** task — Contoso underwriting POC. Full-delivery follows the new-poc-setup pipeline end-to-end (12 steps). Checkpoint 1 with the full preview.
+
+```askQuestions
+message: "Before I kick off full-delivery for the Contoso underwriting POC, I need to confirm scope and resolve the BRIEF gap:
+
+1. **BRIEF.md is missing.** Underwriting is a regulated, high-context insurance use case. Strongly recommend invoking **scoper** first to capture: who's the underwriter persona, what data does the POC operate on, what decisions does it inform vs. automate, regulatory framing (insurance compliance), and acceptance criteria. Or paste context here.
+2. **Build target** — net-new POC, or is there existing Contoso underwriting code in this workspace that full-delivery should validate, package, and deploy?
+3. **AI shape** — RAG over underwriting guidelines, agentic decision support, document/form extraction, or risk-scoring?
+4. **Stack preferences** — Python (default for AI) or TypeScript? Frontend framework?
+5. **Required Azure services** — Modern Microsoft Foundry (workspace policy), Azure AI Search, Document Intelligence (likely for forms), Storage, Cosmos for case state?
+6. **Auth & FDPO** — Entra ID sign-in for underwriters, managed identity everywhere, `disableLocalAuth: true`, no API keys.
+7. **Contoso-specific constraints** — tenant, region (US East default), private endpoints, data residency, network isolation?
+8. **Hosting** — Container Apps (default), App Service, or other?
+
+Here's the full-delivery pipeline you're approving the start of:
+
+1. **CHECKPOINT 1** (this) — confirm scope
+2. **ARCH** reads BRIEF.md and produces `ARCHITECTURE.md` (recommended stack, alternatives + trade-offs, FDPO identity plan, cost estimate, parallelization tracks)
+3. **CHECKPOINT 2** — you approve stack + cost (mandatory: new Azure resources)
+4. **INFRA + parallel DEV per track** (fan out per ARCH tracks)
+5. **Merge gate** + **quality gates** (build, lint, type-check, IaC compile/lint)
+6. **QA deep-review**; iterate ≤2 cycles on blockers
+7. **DIAGRAM** as-built; **QA** reviews diagrams (revision loop if needed)
+8. **DOCS** packages README + deployment guide + customer handoff docs
+9. **REPO** runs gitignore audit + mandatory secret scan + commit + push (block on findings)
+
+I will stop at every checkpoint."
+
+options:
+  - label: "Invoke scoper first, then ARCH"
+    description: "Recommended. Underwriting is too high-context to architect blind."
+    recommended: true
+  - label: "Skip scoper — I'll paste Contoso context in freeform input"
+    description: "Faster. ARCH only knows what you give me."
+  - label: "Validate + ship existing Contoso code in this repo (skip ARCH redesign)"
+    description: "Treat as packaging + validation pass rather than green-field."
+
+allowFreeformInput: true
+```

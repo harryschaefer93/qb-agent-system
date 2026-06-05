@@ -1,0 +1,1 @@
+I’ll first check for `BRIEF.md` context, then I’ll pause for your required scope choices before invoking QA.

@@ -1,0 +1,37 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This is a **compound feature-request** — new user profile page + API wiring + tests + deploy to staging. Treating as **bug-fix** task type in shape (it's a feature on an existing app, not a new POC), but with medium-to-large scope. Checkpoint 1.
+
+```askQuestions
+message: "Before I invoke QA to assess current state and recommend a plan, I need to nail down what 'user profile page' means:
+
+1. **Profile contents** — display only (name, email, avatar) or editable (update profile, change password, upload avatar)?
+2. **Backing API** — does a profile endpoint already exist that we wire up, or does Dev need to build it?
+3. **Where in the app** — new top-level route (e.g., /profile), nested in settings, or a modal?
+4. **Frontend stack** — confirm framework so I scope Dev correctly (React/Vue/Angular/other)?
+5. **Auth context** — does the user have to be signed in already (assumed yes) and does the API need a token attached?
+6. **Test scope** — unit + integration, or also E2E (Playwright) for the profile flow?
+7. **Staging target** — existing Azure environment or does Infra need to provision/configure?
+
+Here's the proposed pipeline:
+- **QA** assesses the current frontend, API, and test setup; identifies the smallest correct integration path
+- **Checkpoint 2** with the plan (likely **medium** scope, possibly **mixed** if Infra changes are needed for staging)
+- **Dev** builds the profile page + wires the API + writes tests (single track — this is one feature, no fan-out)
+- **Quality gates** (build, lint, type-check, startup)
+- **QA deep-review** validates functionality
+- **Dev** runs the staging deploy (`azd deploy` or equivalent); I surface the staging URL
+- **REPO** handles commit + push (secret scan first)
+
+Staging deploys are not on the always-stop list, but I'll still confirm the target env at Checkpoint 2."
+
+options:
+  - label: "Display + edit, new /profile route, unit + E2E tests, deploy to existing staging"
+    description: "Full-featured. Recommended for a real feature."
+    recommended: true
+  - label: "Display only first, no edit (ship the read path, edit later)"
+    description: "Smaller scope, lower risk, faster to staging."
+  - label: "Display + edit but unit tests only (skip E2E for speed)"
+    description: "Faster CI. Less safety on the user flow."
+
+allowFreeformInput: true
+```

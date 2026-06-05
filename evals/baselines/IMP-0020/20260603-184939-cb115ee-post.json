@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "imp_id": "IMP-0020",
+    "eval_type": "rubric",
+    "eval_id": "imp_0020",
+    "commit_sha": "cb115ee",
+    "timestamp": "2026-06-03T18:49:39.666907+00:00",
+    "phase": "post",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "seed": 42,
+    "n_samples": 3,
+    "cost": {
+      "input_tokens": 40222,
+      "output_tokens": 2355,
+      "wall_time_ms": 72971,
+      "cost_usd": 0.0738275,
+      "pricing_source": "config.yaml@v1"
+    },
+    "trajectory": {},
+    "thresholds": {}
+  },
+  "metrics": {
+    "weighted_score": 4.166666666666667,
+    "pass_rate": 1.0,
+    "all_passed": true,
+    "calibration_agreement": 0.8571428571428571,
+    "calibration_passed": true,
+    "per_criterion_means": {
+      "citation_presence": 5.0,
+      "source_recommendation_alignment": 3.3333333333333335,
+      "context_relevance": 5.0,
+      "recommendation_completeness": 3.3333333333333335
+    }
+  },
+  "raw_results": [
+    {
+      "scenario_id": "cosmos-vs-postgres-chat-history",
+      "prompt": "You are at CHECKPOINT 2 for an Azure AI Foundry FSI chat application. We need to pick a database for storing multi-turn chat history \u2014 Azure Cosmos DB for NoSQL vs Azure Database for PostgreSQL. Customer is on a FDPO tenant, needs multi-region availability.\n\nBEFORE you call askQuestions, render your full `## Why recommended` chat preamble inline in this response: show the recommended option name, the cited Source: URL, verbatim quoted excerpts from the source supporting your claims, the trade-offs vs the alternative, and FDPO compliance notes. Then describe (but do not call) the askQuestions options you would present. Do NOT call any tool \u2014 render the recommendation content as text only so I can review it before you proceed.",
+      "response": "## Why recommended\n\n**Recommended option:** Azure Cosmos DB for NoSQL  \n**Source:** https://learn.microsoft.com/azure/reliability/reliability-cosmos-db-nosql\n\n**Verbatim quoted excerpts**\n> \"Azure Cosmos DB for NoSQL provides 99.999% availability for both reads and writes.\"\n\n> \"Azure Cosmos DB supports multi-region writes, which lets your application write to any Azure region associated with your Azure Cosmos DB account.\"\n\n> \"Azure Cosmos DB transparently replicates your data across the regions associated with your Azure Cosmos DB account.\"\n\n> \"Azure Cosmos DB is designed for turnkey global distribution and horizontal scale.\"\n\n### Why this is the recommendation\nFor an **FSI chat app with multi-region availability as an explicit requirement**, Cosmos DB for NoSQL is the stronger default because chat history is typically:\n- high-write, append-heavy\n- naturally document-shaped\n- latency-sensitive across regions\n- better served by built-in global distribution and multi-region write patterns\n\nThe cited Microsoft guidance aligns directly with the requirement for **multi-region availability** and low-friction global replication.\n\n### Trade-offs vs Azure Database for PostgreSQL\n**Cosmos DB for NoSQL advantages**\n- Native fit for conversation/session/message documents\n- Stronger out-of-the-box story for **global distribution**\n- Multi-region writes are a first-class capability\n- Lower modeling friction for evolving chat payloads, citations, tool traces, and metadata\n\n**PostgreSQL advantages**\n- Better if the customer expects:\n  - relational joins across chat, users, entitlements, audit entities\n  - complex SQL analytics on operational data\n  - strong existing PostgreSQL operational standards / DBA preference\n- Often easier for teams already standardized on SQL and relational governance\n\n**PostgreSQL drawbacks for this use case**\n- Multi-region availability exists, but the core value proposition is less centered on **turnkey globally distributed, multi-write document workloads**\n- Chat history usually does not require relational normalization first; forcing it into relational tables can add schema and query overhead for little benefit in a POC or early production pattern\n\n### FDPO compliance notes\n- **Cosmos DB can be FDPO-compliant if accessed only via Entra ID + RBAC**.\n- **Do not use keys, connection strings with account keys, or local auth patterns.**\n- **Set `disableLocalAuth: true`** on the Cosmos account.\n- Application access should use **managed identity** and data-plane RBAC.\n- This recommendation is **not** recommending any FDPO-non-compliant auth pattern.\n\n### What I would present in `askQuestions` at CHECKPOINT 2\nI would present a scope/approval question like:\n\n**Header:** Database choice for chat history  \n**Question:** For multi-turn chat history in this FDPO, multi-region Azure AI Foundry app, which database direction should we approve?\n\n**Option 1 \u2014 Recommended**\n- **Label:** Approve Azure Cosmos DB for NoSQL\n- **Description:** Best fit for globally distributed, document-shaped chat history with multi-region writes.  \n  Source: https://learn.microsoft.com/azure/reliability/reliability-cosmos-db-nosql  \n  FDPO note: use Entra ID + RBAC only; set `disableLocalAuth: true`.\n\n**Option 2**\n- **Label:** Choose Azure Database for PostgreSQL\n- **Description:** Prefer if relational querying, SQL-centric operations, or existing PostgreSQL platform standards outweigh the document/global-distribution advantages.\n\n**Option 3**\n- **Label:** Modify scope / let me clarify\n- **Description:** Use this if there are additional constraints such as strict relational reporting, residency constraints, existing platform mandates, or cost ceilings.\n\n**Freeform input:** enabled, so the user can add constraints like:\n- required consistency model\n- expected chat volume / retention\n- residency or paired-region constraints\n- whether analytics/reporting must run on the same operational store\n\nIf you want, next I can convert this into the exact `askQuestions` payload text \u2014 still without calling the tool.",
+      "weighted_score": 4.0,
+      "passed": true,
+      "per_criterion": [
+        {
+          "name": "citation_presence",
+          "score": 5.0,
+          "weight": 0.25
+        },
+        {
+          "name": "source_recommendation_alignment",
+          "score": 3.0,
+          "weight": 0.35
+        },
+        {
+          "name": "context_relevance",
+          "score": 5.0,
+          "weight": 0.25
+        },
+        {
+          "name": "recommendation_completeness",
+          "score": 3.0,
+          "weight": 0.15
+        }
+      ]
+    },
+    {
+      "scenario_id": "managed-identity-flavor",
+      "prompt": "You are at CHECKPOINT 2 for the Foundry Agent Service connecting to Azure Key Vault on a FDPO tenant. Decide between System-Assigned Managed Identity, User-Assigned Managed Identity, and Workload Identity Federation.\n\nBEFORE you call askQuestions, render your full `## Why recommended` chat preamble inline in this response: recommended option name, cited Source: URL, verbatim quoted excerpts supporting your claims, alternatives considered, and FDPO compliance notes. Then describe (but do not call) the askQuestions options. Do NOT call any tool \u2014 render as text only.",
+      "response": "## Why recommended\n\n**Recommended option:** **System-Assigned Managed Identity (SAMI)**  \n**Source:** https://learn.microsoft.com/azure/app-service/overview-managed-identity?tabs=portal%2Chttp#add-a-system-assigned-identity\n\n> \u201cA system-assigned managed identity is enabled directly on an Azure service instance.\u201d  \n> \u201cThe lifecycle of a system-assigned identity is tied to the lifecycle of the Azure service instance.\u201d  \n> \u201cWhen the Azure resource is deleted, Azure automatically deletes the identity for you.\u201d  \n> \u201cManaged identities eliminate the need for developers to manage credentials.\u201d\n\n**Why this is recommended here:**  \nFor a **Foundry Agent Service connecting to Azure Key Vault on an FDPO tenant**, SAMI is the cleanest default when the identity is used by **one Azure-hosted workload** and you want the **smallest credential-management surface**. It aligns with FDPO expectations because it uses **Entra ID + RBAC**, avoids API keys, and avoids local secrets.\n\n### Alternatives considered\n\n**User-Assigned Managed Identity (UAMI)**  \nUse when you need an identity that is **decoupled from a single resource lifecycle** or **shared across multiple Azure resources**. This is stronger if you expect the agent service identity to survive resource replacement, blue/green swaps, or be reused by multiple compute hosts.\n\n**Workload Identity Federation (WIF)**  \nBest when the workload is **outside Azure** or in an external CI/CD/runtime that needs to authenticate to Azure **without stored secrets**. If the Foundry Agent Service is an Azure-native hosted service talking to Key Vault, WIF is usually less direct than managed identity.\n\n### FDPO compliance notes\n\n- **SAMI:** \u2705 FDPO-compliant when used with **Entra ID + RBAC** and Key Vault data-plane permissions via RBAC.  \n- **UAMI:** \u2705 FDPO-compliant under the same conditions.  \n- **WIF:** \u2705 FDPO-compliant if implemented with Entra workload identity federation and no client secrets.  \n- **Disallowed patterns in this decision space:**  \n  - \u274c API keys  \n  - \u274c `AzureKeyCredential`  \n  - \u274c SAS as primary auth  \n  - \u274c `Ocp-Apim-Subscription-Key`  \n  - \u274c any design requiring stored client secrets where federation or managed identity is available\n\n### Recommendation boundary\n\nI would recommend **SAMI** **only if** all of the following are true:\n- the Foundry Agent Service runs as a **single Azure resource/workload**\n- the Key Vault access pattern is **resource-local**\n- you do **not** need identity reuse across multiple services\n- you do **not** need the identity to persist independently of the hosting resource\n\nIf any of those are false, **UAMI** may be the better recommendation.\n\n---\n\n## askQuestions options I would present\n\n**Header:** Identity choice for Foundry Agent Service \u2192 Key Vault  \n**Question:** Which identity model should we approve for this FDPO-compliant Azure-hosted integration?\n\n### Option 1 \u2014 **Approve System-Assigned Managed Identity**\n**Description:**  \nBest for a single Azure-hosted Foundry Agent Service with direct Key Vault access. Lowest operational overhead; identity lifecycle follows the resource.  \n**Source:** https://learn.microsoft.com/azure/app-service/overview-managed-identity?tabs=portal%2Chttp#add-a-system-assigned-identity  \n**Recommended:** true\n\n### Option 2 \u2014 **Use User-Assigned Managed Identity instead**\n**Description:**  \nChoose this if the identity must outlive a single resource, be reused across multiple Azure resources, or support replacement/redeployment scenarios with stable RBAC assignment.  \n**Source:** would cite the corresponding Microsoft Learn managed identity guidance in the actual checkpoint\n\n### Option 3 \u2014 **Use Workload Identity Federation instead**\n**Description:**  \nChoose this if the caller is external to Azure-hosted managed identity scenarios, such as GitHub Actions, external Kubernetes, or another federated workload that must access Azure without secrets.  \n**Source:** would cite Microsoft Learn federation guidance in the actual checkpoint\n\n### Option 4 \u2014 **Modify scope / clarify hosting model**\n**Description:**  \nUse this if you want to clarify whether the Foundry Agent Service is Azure-hosted, multi-resource, cross-subscription, or externally orchestrated before locking the identity pattern.\n\n**allowFreeformInput:** true\n\n---\n\n## Important caveat\n\nBecause you explicitly asked me **not to call any tool**, I have rendered the preamble and the proposed checkpoint options as text only. Under the normal orchestration rules, this kind of **technical recommendation at CHECKPOINT 2** would require a bounded research-backed `askQuestions` call with authoritative citations attached to the recommended option.",
+      "weighted_score": 4.0,
+      "passed": true,
+      "per_criterion": [
+        {
+          "name": "citation_presence",
+          "score": 5.0,
+          "weight": 0.25
+        },
+        {
+          "name": "source_recommendation_alignment",
+          "score": 3.0,
+          "weight": 0.35
+        },
+        {
+          "name": "context_relevance",
+          "score": 5.0,
+          "weight": 0.25
+        },
+        {
+          "name": "recommendation_completeness",
+          "score": 3.0,
+          "weight": 0.15
+        }
+      ]
+    },
+    {
+      "scenario_id": "bicep-vs-terraform",
+      "prompt": "You are at CHECKPOINT 2 for the IaC layer of a greenfield Foundry POC. Customer is Azure-only (no multi-cloud requirement). Decide between Azure Bicep and Terraform.\n\nBEFORE you call askQuestions, render your full `## Why recommended` chat preamble inline in this response: recommended option name, cited Source: URL, verbatim quoted excerpts supporting your claims, the trade-offs vs the alternative. Then describe (but do not call) the askQuestions options. Do NOT call any tool \u2014 render as text only.",
+      "response": "## Why recommended\n\n**Recommended option:** Azure Bicep  \n**Source:** https://learn.microsoft.com/azure/azure-resource-manager/bicep/overview\n\n**Verbatim supporting excerpts**\n> \"Bicep is a domain-specific language (DSL) that uses declarative syntax to deploy Azure resources.\"\n\n> \"Bicep provides the easiest and most concise way to deploy your Azure resources.\"\n\n> \"Bicep offers best-in-class support for your development operations throughout the resource lifecycle.\"\n\n> \"When your infrastructure is deployed to Azure, the Azure Resource Manager service handles the deployment.\"\n\n### Trade-offs vs. Terraform\n- **Why Bicep fits this case:** This is an **Azure-only** greenfield Foundry POC, so the main Terraform advantage\u2014multi-cloud consistency\u2014is not needed.\n- **Bicep advantages:** tighter Azure-native alignment, simpler authoring for ARM deployments, less abstraction overhead for an Azure-only team, and strong first-party support for new Azure resource capabilities.\n- **Terraform advantages:** broader ecosystem, cross-cloud portability, and a familiar workflow if the team already standardizes on Terraform.\n- **Main downside of Bicep:** less portable if the customer later adds non-Azure platforms.\n- **Main downside of Terraform here:** adds an extra abstraction layer for no current customer requirement, which can slow down an Azure-first POC.\n\n## Proposed CHECKPOINT 2 askQuestions options\n\n**Header:** IaC choice approval  \n**Question:** For the IaC layer of this Azure-only Foundry POC, which approach should we approve?\n\n### Option 1 \u2014 **Approve Azure Bicep**\n**Description:** Use Azure Bicep for the IaC layer. Recommended because this POC is Azure-only and Microsoft states: \"Bicep provides the easiest and most concise way to deploy your Azure resources.\"  \nSource: https://learn.microsoft.com/azure/azure-resource-manager/bicep/overview  \n**Recommended:** true\n\n### Option 2 \u2014 **Choose Terraform instead**\n**Description:** Use Terraform if you want consistency with an existing Terraform estate, team skillset, or a likely future multi-cloud requirement. Not recommended for the current stated scope because the customer has no multi-cloud requirement.\n\n### Option 3 \u2014 **Modify scope / clarify constraints**\n**Description:** Use this if there are hidden constraints not yet captured, such as an internal platform standard, existing CI/CD modules, policy-as-code dependencies, or a requirement to align with another team\u2019s Terraform baseline.\n\n**allowFreeformInput:** true\n\nIf this were being sent via `askQuestions`, I would mark **Approve Azure Bicep** as the recommended option.",
+      "weighted_score": 4.5,
+      "passed": true,
+      "per_criterion": [
+        {
+          "name": "citation_presence",
+          "score": 5.0,
+          "weight": 0.25
+        },
+        {
+          "name": "source_recommendation_alignment",
+          "score": 4.0,
+          "weight": 0.35
+        },
+        {
+          "name": "context_relevance",
+          "score": 5.0,
+          "weight": 0.25
+        },
+        {
+          "name": "recommendation_completeness",
+          "score": 4.0,
+          "weight": 0.15
+        }
+      ]
+    }
+  ]
+}

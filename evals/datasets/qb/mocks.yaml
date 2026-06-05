@@ -1,0 +1,129 @@
+# QB mock tool configuration for tool_loop evals.
+# See ../../EVAL-SYSTEM-PLAN.md Phase A for schema docs.
+#
+# Strategies:
+#   static      — always return the same response
+#   conditional — match args against rules, return first match
+#   echo        — return the tool name + args back (default for unmocked)
+
+defaults:
+  on_unmocked: echo
+
+mocks:
+  # --- askQuestions: always returns approval (simulates user confirming) ---
+  - name: askQuestions
+    strategy: static
+    response:
+      answers:
+        - label: "Approve"
+          selected: true
+
+  # --- runSubagent: echo back agent name + prompt summary ---
+  - name: runSubagent
+    strategy: echo
+    # echo returns: {"tool": "runSubagent", "args": {...}, "result": "mock echo for runSubagent"}
+    # This lets us inspect which agent was picked and what prompt was sent
+
+  # --- readFile: conditional on path ---
+  - name: readFile
+    strategy: conditional
+    rules:
+      - when: { filePath: "BRIEF.md" }
+        then:
+          content: |
+            # POC Brief — Contoso Insurance Claims Portal
+            ## Customer Context
+            Contoso Insurance needs a claims submission portal with Azure AD auth.
+            ## POC Scope
+            - Claims API (Python FastAPI)
+            - React frontend
+            - Azure SQL backend
+            - Entra ID authentication
+            ## Architecture Guidance
+            Use Azure App Service for hosting, Azure SQL for persistence.
+            ## Acceptance Criteria
+            - User can submit a claim via the frontend
+            - Claims are persisted to Azure SQL
+            - Auth via Entra ID works end-to-end
+      - when: { filePath: "ARCHITECTURE.md" }
+        then:
+          content: |
+            # Architecture — Contoso Claims Portal
+            ## Stack
+            - Frontend: React + Vite on Azure Static Web Apps
+            - API: Python FastAPI on Azure App Service
+            - DB: Azure SQL
+            - Auth: Entra ID (MSAL)
+            ## Tracks
+            tracks:
+              - name: api
+                agent: DEV
+                files: [api/]
+              - name: frontend
+                agent: DEV
+                files: [frontend/]
+              - name: infra
+                agent: INFRA
+                files: [infra/]
+      - when: { filePath: "*" }
+        then:
+          content: "stubbed file contents"
+    response: "stubbed file contents"
+
+  # --- fileSearch: return plausible results ---
+  - name: fileSearch
+    strategy: conditional
+    rules:
+      - when: { query: "BRIEF.md" }
+        then: { files: ["BRIEF.md"] }
+      - when: { query: "ARCHITECTURE.md" }
+        then: { files: ["ARCHITECTURE.md"] }
+      - when: { query: "*" }
+        then: { files: [] }
+    response: { files: [] }
+
+  # --- searchCodebase: return generic results ---
+  - name: searchCodebase
+    strategy: static
+    response:
+      snippets:
+        - file: "api/main.py"
+          line: 42
+          content: "app = FastAPI()"
+
+  # --- manageTodoList: always succeed ---
+  - name: manageTodoList
+    strategy: static
+    response:
+      status: "ok"
+      message: "Todo list updated"
+
+  # --- memory: always succeed ---
+  - name: memory
+    strategy: static
+    response:
+      status: "ok"
+
+  # --- runInTerminal: return success for quality gates ---
+  - name: runInTerminal
+    strategy: conditional
+    rules:
+      - when: { command: "*build*" }
+        then:
+          exit_code: 0
+          output: "Build succeeded"
+      - when: { command: "*lint*" }
+        then:
+          exit_code: 0
+          output: "Lint passed, no issues"
+      - when: { command: "*git status*" }
+        then:
+          exit_code: 0
+          output: "On branch main\nnothing to commit, working tree clean"
+      - when: { command: "*" }
+        then:
+          exit_code: 0
+          output: "Command completed successfully"
+    response:
+      exit_code: 0
+      output: "Command completed successfully"

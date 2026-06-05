@@ -1,0 +1,24 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This looks like a **bug-fix** task: the `/scores` endpoint is returning 500 errors. Before I invoke QA to diagnose, I need to clarify scope (Checkpoint 1).
+
+```askQuestions
+message: "Before I invoke QA to diagnose the /scores 500s, a few quick scope questions:
+
+1. Is this happening in production, staging, or local dev?
+2. Should QA audit only /scores, or sweep all related endpoints for similar failure patterns?
+3. Quick patch (get it green for a demo) or root-cause fix (tests + regression coverage)?
+
+After you confirm, I'll invoke **QA** to reproduce, capture logs/stack traces, and produce a structured validation report. Then I'll come back with a classified fix plan (app-code vs infra, scope) for your approval before any code changes."
+
+options:
+  - label: "Production — root-cause fix, /scores only"
+    description: "Treat as a real incident. QA captures logs, identifies root cause, then Dev/Infra fixes with tests."
+    recommended: true
+  - label: "Local/dev — quick patch, /scores only"
+    description: "Just unblock me. QA reproduces locally, smallest safe fix."
+  - label: "Audit all related endpoints"
+    description: "Likely systemic — QA sweeps similar routes for the same failure pattern."
+
+allowFreeformInput: true
+```

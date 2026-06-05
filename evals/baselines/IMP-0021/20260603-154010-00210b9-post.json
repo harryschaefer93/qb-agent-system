@@ -1,0 +1,1108 @@
+{
+  "meta": {
+    "imp_id": "IMP-0021",
+    "eval_type": "subagent_routing",
+    "eval_id": "imp_0021",
+    "commit_sha": "00210b9",
+    "timestamp": "2026-06-03T15:40:10.054308+00:00",
+    "phase": "post",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "seed": 42,
+    "n_samples": 2,
+    "cost": {
+      "input_tokens": 1538086,
+      "output_tokens": 22638,
+      "wall_time_ms": 405521,
+      "cost_usd": 2.1489875,
+      "pricing_source": "config.yaml@v1"
+    },
+    "trajectory": {
+      "tool_call_count": 3,
+      "tool_call_sequence": [
+        "askQuestions",
+        "askQuestions",
+        "askQuestions"
+      ],
+      "unique_tools_used": [
+        "askQuestions"
+      ],
+      "redundant_call_rate": 0.667,
+      "max_turns_hit": false,
+      "stopped_reason": "final_answer",
+      "turns_used": 4,
+      "agents_invoked": [],
+      "unique_agents": [],
+      "agent_count": 0,
+      "agent_order": [],
+      "first_agent": null
+    },
+    "thresholds": {}
+  },
+  "metrics": {
+    "total_scenarios": 17,
+    "overall_pass_rate": 1.0,
+    "all_passed": true,
+    "n_samples": 2,
+    "per_scenario": {
+      "bugfix_1": 1.0,
+      "bugfix_2": 1.0,
+      "newpoc_1": 1.0,
+      "newpoc_2": 1.0,
+      "handoff_1": 1.0,
+      "handoff_2": 1.0,
+      "fulldeliv_1": 1.0,
+      "fulldeliv_2": 1.0,
+      "feature_1": 1.0,
+      "feature_2": 1.0,
+      "refactor_1": 1.0,
+      "refactor_2": 1.0,
+      "optim_1": 1.0,
+      "optim_2": 1.0,
+      "ambig_1": 1.0,
+      "ambig_2": 1.0,
+      "ambig_3": 1.0
+    }
+  },
+  "raw_results": [
+    {
+      "scenario_id": "bugfix_1",
+      "prompt": "The /healthz endpoint returns HTTP 500 \u2014 fix it. Backend only.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'bug-fix'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'bug-fix'",
+          "trajectory": {
+            "tool_call_count": 2,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.5,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 3,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "bugfix_2",
+      "prompt": "Login is broken on production. Debug and patch it.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'bug-fix'",
+          "trajectory": {
+            "tool_call_count": 2,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.5,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 3,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'bug-fix'",
+          "trajectory": {
+            "tool_call_count": 2,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.5,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 3,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "newpoc_1",
+      "prompt": "Build a new POC for Contoso Insurance \u2014 FSI chatbot with Cosmos persistence and Entra auth, from scratch.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'new-poc-setup'",
+          "trajectory": {
+            "tool_call_count": 2,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch"
+            ],
+            "redundant_call_rate": 0.0,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 2,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'new-poc-setup'",
+          "trajectory": {
+            "tool_call_count": 4,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions",
+              "readFile",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile"
+            ],
+            "redundant_call_rate": 0.25,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "newpoc_2",
+      "prompt": "Spin up a RAG demo using Foundry agents and Azure AI Search. New project.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'new-poc-setup'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'new-poc-setup'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch"
+            ],
+            "redundant_call_rate": 0.333,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 3,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "handoff_1",
+      "prompt": "Package this POC for delivery to Contoso. Customer handoff.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'customer-handoff'",
+          "trajectory": {
+            "tool_call_count": 5,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions",
+              "readFile",
+              "memory",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "memory",
+              "readFile"
+            ],
+            "redundant_call_rate": 0.2,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'customer-handoff'",
+          "trajectory": {
+            "tool_call_count": 5,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions",
+              "memory",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "memory"
+            ],
+            "redundant_call_rate": 0.4,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "handoff_2",
+      "prompt": "Run public-release readiness on this repo and prepare the handoff branch.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'customer-handoff'",
+          "trajectory": {
+            "tool_call_count": 10,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions",
+              "readFile",
+              "memory",
+              "memory",
+              "runSubagent",
+              "memory",
+              "askQuestions",
+              "memory",
+              "runSubagent"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "memory",
+              "readFile",
+              "runSubagent"
+            ],
+            "redundant_call_rate": 0.5,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 4,
+            "agents_invoked": [
+              "QA",
+              "QA"
+            ],
+            "unique_agents": [
+              "QA"
+            ],
+            "agent_count": 2,
+            "agent_order": [
+              "QA",
+              "QA"
+            ],
+            "first_agent": "QA"
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'customer-handoff'",
+          "trajectory": {
+            "tool_call_count": 5,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions",
+              "memory",
+              "memory",
+              "runSubagent"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "memory",
+              "runSubagent"
+            ],
+            "redundant_call_rate": 0.2,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 4,
+            "agents_invoked": [
+              "QA"
+            ],
+            "unique_agents": [
+              "QA"
+            ],
+            "agent_count": 1,
+            "agent_order": [
+              "QA"
+            ],
+            "first_agent": "QA"
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "fulldeliv_1",
+      "prompt": "End-to-end build the claims video analyzer. Full delivery \u2014 infra, code, validation, diagrams, docs.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'full-delivery'",
+          "trajectory": {
+            "tool_call_count": 4,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions",
+              "memory",
+              "memory"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "memory"
+            ],
+            "redundant_call_rate": 0.25,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'full-delivery'",
+          "trajectory": {
+            "tool_call_count": 4,
+            "tool_call_sequence": [
+              "fileSearch",
+              "readFile",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile"
+            ],
+            "redundant_call_rate": 0.25,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "fulldeliv_2",
+      "prompt": "Deliver the live claim assist POC top to bottom for the customer.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'full-delivery'",
+          "trajectory": {
+            "tool_call_count": 2,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch"
+            ],
+            "redundant_call_rate": 0.0,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 2,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'full-delivery'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch"
+            ],
+            "redundant_call_rate": 0.333,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 3,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "feature_1",
+      "prompt": "Add a /metrics endpoint that returns p50/p95 latency. New feature, not a bug.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'feature-request'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'feature-request'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "feature_2",
+      "prompt": "Support CSV export on the dashboard. Implement this new capability.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'feature-request'",
+          "trajectory": {
+            "tool_call_count": 1,
+            "tool_call_sequence": [
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.0,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 2,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'feature-request'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "refactor_1",
+      "prompt": "Extract chat persistence into its own module. Behavior must be preserved.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'refactor'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'refactor'",
+          "trajectory": {
+            "tool_call_count": 2,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.5,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 3,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "refactor_2",
+      "prompt": "Rename getUser to fetchUser across the codebase. Same behavior, just clearer naming.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'refactor'",
+          "trajectory": {
+            "tool_call_count": 2,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.5,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 3,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'refactor'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "optim_1",
+      "prompt": "Reduce backend cold start time by half. Performance optimization.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'optimization'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'optimization'",
+          "trajectory": {
+            "tool_call_count": 1,
+            "tool_call_sequence": [
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.0,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 2,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "optim_2",
+      "prompt": "Harden all POST endpoints with input validation. Security hardening.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "CORRECT: classified as 'optimization'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "CORRECT: classified as 'optimization'",
+          "trajectory": {
+            "tool_call_count": 4,
+            "tool_call_sequence": [
+              "askQuestions",
+              "fileSearch",
+              "readFile",
+              "memory"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "memory",
+              "readFile"
+            ],
+            "redundant_call_rate": 0.0,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "ambig_1",
+      "prompt": "The export button doesn't have a CSV option.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "AMBIG_OK: askQuestions called 1x, no silent classification",
+          "trajectory": {
+            "tool_call_count": 1,
+            "tool_call_sequence": [
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.0,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 2,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "AMBIG_OK: askQuestions called 1x, no silent classification",
+          "trajectory": {
+            "tool_call_count": 1,
+            "tool_call_sequence": [
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.0,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 2,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "ambig_2",
+      "prompt": "Rename getUser to fetchUser and also support email lookup.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "AMBIG_OK_WITH_CLASS: asked AND noted tentative class='feature-request'",
+          "trajectory": {
+            "tool_call_count": 2,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.5,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 3,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "AMBIG_OK_WITH_CLASS: asked AND noted tentative class='feature-request'",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "askQuestions",
+              "askQuestions",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 4,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "ambig_3",
+      "prompt": "Improve this endpoint.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 2,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "AMBIG_OK: askQuestions called 1x, no silent classification",
+          "trajectory": {
+            "tool_call_count": 1,
+            "tool_call_sequence": [
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.0,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 2,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "AMBIG_OK: askQuestions called 1x, no silent classification",
+          "trajectory": {
+            "tool_call_count": 1,
+            "tool_call_sequence": [
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions"
+            ],
+            "redundant_call_rate": 0.0,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 2,
+            "agents_invoked": [],
+            "unique_agents": [],
+            "agent_count": 0,
+            "agent_order": [],
+            "first_agent": null
+          }
+        }
+      ]
+    }
+  ]
+}

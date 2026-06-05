@@ -1,0 +1,1 @@
+I'll first check for BRIEF.md to ground the work, then I need your scope confirmation before invoking QA/ARCH.

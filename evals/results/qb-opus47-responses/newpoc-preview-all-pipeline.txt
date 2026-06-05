@@ -1,0 +1,41 @@
+No BRIEF.md found at workspace root — flagging. For real-time fraud detection I'd normally read it for customer, data scale, latency targets, and acceptance criteria.
+
+This is a **new-poc-setup** task — real-time fraud detection. Real-time + fraud = latency-sensitive + security-sensitive, with several architectural choices I won't make for you. Checkpoint 1 with the full pipeline previewed.
+
+```askQuestions
+message: "Before I invoke **ARCH**, I need to confirm scope and resolve gaps. Real-time fraud detection has tightly-coupled requirements that drive the entire architecture:
+
+1. **BRIEF.md is missing.** Strongly recommend invoking **scoper** first to capture: customer, transaction type (card payments / wire / claims / something else), volume/sec target, latency budget (p50/p95/p99), false-positive tolerance, and acceptance criteria. Or paste context here.
+2. **Detection approach** — rules engine, classical ML (gradient boosting), deep learning, LLM-based reasoning, or hybrid? Each implies a very different stack.
+3. **Real-time definition** — sub-100ms inline scoring (block transaction), sub-second async scoring (alert workflow), or near-real-time (seconds-to-minutes batch microbatches)?
+4. **Data shape** — single transaction at decision time, or transaction + historical context (graph features, account behavior)?
+5. **Required Azure services** — Modern Microsoft Foundry (if LLM-in-loop), **Event Hubs** or **Service Bus** for streaming, **Stream Analytics** or **Azure Functions** for stream processing, **Cosmos DB** (low-latency state) or **Redis Enterprise** for hot features, **Azure ML** (if classical ML)?
+6. **Auth & FDPO** — Entra + managed identity everywhere, `disableLocalAuth: true`, no API keys. Confirm.
+7. **Compliance posture** — PCI, SOC2, regional data residency? Affects networking and logging.
+8. **Hosting** — Azure Container Apps (default), Functions (event-driven default for streams), or AKS (if scale demands)?
+
+Here's the full pipeline you're approving the start of:
+
+1. **CHECKPOINT 1** (this) — confirm scope
+2. **ARCH** produces `ARCHITECTURE.md` (recommended stack, alternatives + trade-offs, FDPO identity plan, cost estimate including throughput-based cost, parallelization tracks — likely `ingestion`, `scoring-service`, `feature-store`, `dashboard`)
+3. **CHECKPOINT 2** — you approve stack + cost (mandatory: multiple new Azure resources)
+4. **INFRA + parallel DEV per track** (fan out per ARCH tracks)
+5. **Merge gate** + **quality gates**
+6. **QA deep-review** — including a load/latency check if real-time SLA is in scope
+7. **DIAGRAM** as-built; **QA** reviews diagrams
+8. **DOCS** packages README + deployment guide + handoff docs
+9. **REPO** runs gitignore audit + mandatory secret scan + commit + push
+
+I will stop at every checkpoint."
+
+options:
+  - label: "Invoke scoper first, then ARCH"
+    description: "Recommended. Latency + compliance + detection-approach choices need a grounded brief."
+    recommended: true
+  - label: "Skip scoper — I'll paste context in freeform input"
+    description: "Faster. ARCH only knows what you give me."
+  - label: "Start with rules-engine baseline, ML/LLM later"
+    description: "Smaller initial scope. Proves the pipeline shape; detection sophistication can grow."
+
+allowFreeformInput: true
+```

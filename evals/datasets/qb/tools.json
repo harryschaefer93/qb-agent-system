@@ -1,0 +1,158 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "askQuestions",
+      "description": "Ask the user clarifying questions with selectable options. Use this for all checkpoints and approval gates.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "questions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "header": {"type": "string", "description": "Short identifier for the question"},
+                "question": {"type": "string", "description": "The question text"},
+                "message": {"type": "string", "description": "Additional context markdown"},
+                "options": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "label": {"type": "string"},
+                      "description": {"type": "string"},
+                      "recommended": {"type": "boolean"}
+                    },
+                    "required": ["label"]
+                  }
+                },
+                "allowFreeformInput": {"type": "boolean"}
+              },
+              "required": ["header", "question"]
+            }
+          }
+        },
+        "required": ["questions"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "runSubagent",
+      "description": "Invoke a subagent to perform a task. Available agents: QA, DEV, INFRA, ARCH, DIAGRAM, DOCS, REPO.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "agentName": {"type": "string", "description": "Name of the agent to invoke (e.g., QA, DEV, INFRA, ARCH, DIAGRAM, DOCS, REPO)"},
+          "prompt": {"type": "string", "description": "Detailed task description for the subagent"},
+          "description": {"type": "string", "description": "Short 3-5 word description of the task"}
+        },
+        "required": ["prompt", "description"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "readFile",
+      "description": "Read the contents of a file from the workspace.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "filePath": {"type": "string", "description": "Absolute path to the file to read"},
+          "startLine": {"type": "integer"},
+          "endLine": {"type": "integer"}
+        },
+        "required": ["filePath"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "searchCodebase",
+      "description": "Semantic search across the workspace codebase.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string", "description": "Natural language search query"}
+        },
+        "required": ["query"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "fileSearch",
+      "description": "Search for files by glob pattern.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string", "description": "Glob pattern to match files"}
+        },
+        "required": ["query"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "manageTodoList",
+      "description": "Create or update a structured todo list for task tracking.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "todoList": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {"type": "number"},
+                "title": {"type": "string"},
+                "status": {"type": "string", "enum": ["not-started", "in-progress", "completed"]}
+              },
+              "required": ["id", "title", "status"]
+            }
+          }
+        },
+        "required": ["todoList"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "memory",
+      "description": "Read or write to persistent memory files for session state.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "command": {"type": "string", "enum": ["view", "create", "str_replace", "insert", "delete"]},
+          "path": {"type": "string"},
+          "file_text": {"type": "string"}
+        },
+        "required": ["command"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "runInTerminal",
+      "description": "Run a command in a terminal session. Used for quality gates (build, lint, git status).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "command": {"type": "string", "description": "The command to run"},
+          "explanation": {"type": "string"},
+          "goal": {"type": "string"},
+          "mode": {"type": "string", "enum": ["sync", "async"]}
+        },
+        "required": ["command", "explanation", "goal", "mode"]
+      }
+    }
+  }
+]

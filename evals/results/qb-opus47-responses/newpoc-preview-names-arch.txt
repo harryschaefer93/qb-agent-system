@@ -1,0 +1,40 @@
+No BRIEF.md found at workspace root — flagging. For Lloyd's of London (specialist insurance / syndicate market), I'd normally read it for customer context, use case framing, and FCA regulatory considerations.
+
+This is a **new-poc-setup** task — agentic invoice processor for Lloyd's of London. Checkpoint 1 with the full pipeline previewed.
+
+```askQuestions
+message: "Before I invoke **ARCH** to design this, I need to confirm scope and resolve the BRIEF gap:
+
+1. **BRIEF.md is missing.** Lloyd's is a high-context FSI customer (London market, syndicates, brokers, FCA-regulated). Strongly recommend invoking **scoper** first to capture customer context, the agentic workflow definition, regulatory constraints, and acceptance criteria. Or paste context here.
+2. **'Agentic' shape** — single agent with tool calls, multi-agent orchestration (planner + workers), or human-in-the-loop approval flow at each step?
+3. **Invoice characteristics** — formats (PDF / scanned image / EDI / XML), volume/day, languages, complexity (simple bills vs. multi-line broker statements with deductions)?
+4. **What does the agent DO** — extract → validate → route → post to a downstream system (which one)? Or extract → flag exceptions for human review?
+5. **Required Azure services** — Modern Microsoft Foundry (workspace policy), Azure AI Search (if RAG over policies/contracts), **Azure AI Document Intelligence** (almost certainly for invoices), Storage, Cosmos for case state?
+6. **Auth & FDPO** — Entra ID sign-in for ops users, managed identity everywhere, `disableLocalAuth: true`, no API keys.
+7. **Lloyd's-specific** — region (UK South), data residency, private endpoints, network isolation requirements?
+
+Here's the full pipeline you're approving the start of:
+
+1. **CHECKPOINT 1** (this) — confirm scope
+2. **ARCH** produces `ARCHITECTURE.md` (recommended stack, alternatives + trade-offs, FDPO identity plan, cost estimate, parallelization tracks — likely `frontend`, `backend-api`, `agent-orchestration`, possibly `doc-pipeline`)
+3. **CHECKPOINT 2** — you approve stack + cost (mandatory: new Azure resources)
+4. **INFRA + parallel DEV per track** (fan out per ARCH tracks)
+5. **Merge gate** + **quality gates**
+6. **QA deep-review**; iterate ≤2 cycles on blockers
+7. **DIAGRAM** as-built; **QA** reviews diagrams
+8. **DOCS** packages README + deployment guide + customer handoff docs
+9. **REPO** runs gitignore audit + mandatory secret scan + commit + push
+
+I will stop at every checkpoint."
+
+options:
+  - label: "Invoke scoper first to capture Lloyd's context, then ARCH"
+    description: "Recommended. London-market invoice processing has too many forks without grounded scope."
+    recommended: true
+  - label: "Skip scoper — I'll paste Lloyd's context in freeform input"
+    description: "Faster. ARCH only knows what you give me."
+  - label: "Use a multi-agent orchestration starter (if one exists in ~/repos/demos)"
+    description: "Fastest path if there's a tested agentic starter; ARCH still confirms it fits Lloyd's."
+
+allowFreeformInput: true
+```

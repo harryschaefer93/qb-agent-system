@@ -1,0 +1,25 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This is a **feature-request** — add a new `/health` endpoint. Sounds small, but health endpoints have real design choices (shallow vs deep, what dependencies to probe, auth requirements). Checkpoint 1.
+
+```askQuestions
+message: "Before I invoke QA to scope the /health endpoint, a few quick design questions:
+
+1. **Depth** — shallow ('I'm alive, return 200') or deep (probe DB, downstream APIs, dependencies and report each)?
+2. **Auth** — public (for load-balancer / Azure App Service health probes) or behind auth?
+3. **Response shape** — plain `{status: 'ok'}`, or richer (version, uptime, dependency statuses, build SHA)?
+4. **Standard?** — should I follow ASP.NET HealthChecks / FastAPI health pattern / Spring Actuator / a custom convention you already use?
+
+After you confirm, I'll invoke **QA** to inspect the existing API conventions and identify where the route belongs, then come back with a fix plan for approval."
+
+options:
+  - label: "Shallow + public, for platform health probes"
+    description: "Returns 200 + minimal JSON. Smallest scope. Perfect for App Service / Container Apps liveness."
+    recommended: true
+  - label: "Deep + public, with dependency checks"
+    description: "Probes DB, AI services, etc. Returns per-dependency status. Useful for ops dashboards."
+  - label: "Deep + auth-protected, /health/live + /health/ready split"
+    description: "Production-grade — separate liveness vs readiness, internal-only deep probe."
+
+allowFreeformInput: true
+```

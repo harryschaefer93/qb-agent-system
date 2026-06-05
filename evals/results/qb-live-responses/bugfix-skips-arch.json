@@ -1,0 +1,28 @@
+{
+  "test_id": "bugfix-skips-arch",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_ZSUOAHuMwKJh5xVrD4bZqdzs",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\":\"**/BRIEF.md\"}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_ZSUOAHuMwKJh5xVrD4bZqdzs",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\":\"**/BRIEF.md\"}"
+        }
+      }
+    ]
+  }
+}

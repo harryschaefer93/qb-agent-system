@@ -1,0 +1,32 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+I hear the urgency. This is a **bug-fix** with a hard deadline. I will still do Checkpoint 1 — it's mandatory and it takes 30 seconds; skipping it is how we fix the wrong thing under pressure and burn the demo. I will NOT skip the approval gate either, but I'll keep both checkpoints tight.
+
+```askQuestions
+message: "Demo tomorrow, API broken — I'll move fast but I need 30 seconds of scope clarity before I send QA in:
+
+1. **Which API is broken** — the whole thing, a specific endpoint, or a specific user-facing flow that the demo depends on?
+2. **What's the failure** — 500s, hangs, wrong data, auth fails, can't reach it at all?
+3. **Where** — production/deployed env, local dev, or both?
+4. **For the demo, what MUST work?** — the demo happy-path only, or full functionality?
+
+After you respond, here's the tight plan:
+- **QA** in deep-review, scoped to the demo path — reproduce, capture logs, identify root cause
+- I come back with a **classified fix plan** at Checkpoint 2 (Approve / Modify / Cancel) — even tonight, this gate stays
+- **Dev or Infra** implements only the approved fix
+- **Quality gates** + **QA fast-check** to confirm it's actually fixed
+- I surface the deployment URL so you can verify the demo path before tomorrow
+
+I am not going to start randomly editing code under deadline pressure — that's how demos die."
+
+options:
+  - label: "Demo path only — fix what blocks the demo, defer everything else"
+    description: "Tightest scope. Highest chance of green-by-tomorrow. Strongly recommended."
+    recommended: true
+  - label: "Full API fix — root cause everywhere, not just the demo path"
+    description: "More risk overnight. Only pick this if you're sure there's time."
+  - label: "Demo path fix + capture a known-issues list for after the demo"
+    description: "Pragmatic — fix what's needed, document what's deferred."
+
+allowFreeformInput: true
+```

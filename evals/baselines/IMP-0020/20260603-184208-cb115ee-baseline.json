@@ -1,0 +1,125 @@
+{
+  "meta": {
+    "imp_id": "IMP-0020",
+    "eval_type": "rubric",
+    "eval_id": "imp_0020",
+    "commit_sha": "cb115ee",
+    "timestamp": "2026-06-03T18:42:08.771237+00:00",
+    "phase": "baseline",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "seed": 42,
+    "n_samples": 3,
+    "cost": {
+      "input_tokens": 166114,
+      "output_tokens": 3888,
+      "wall_time_ms": 74352,
+      "cost_usd": 0.2465225,
+      "pricing_source": "config.yaml@v1"
+    },
+    "trajectory": {},
+    "thresholds": {}
+  },
+  "metrics": {
+    "weighted_score": 1.0,
+    "pass_rate": 0.0,
+    "all_passed": false,
+    "calibration_agreement": 1.0,
+    "calibration_passed": true,
+    "per_criterion_means": {
+      "citation_presence": 1.0,
+      "source_recommendation_alignment": 1.0,
+      "context_relevance": 1.0,
+      "recommendation_completeness": 1.0
+    }
+  },
+  "raw_results": [
+    {
+      "scenario_id": "cosmos-vs-postgres-chat-history",
+      "prompt": "Checkpoint 2: For our Azure AI Foundry FSI chat application, we need to pick a database for storing multi-turn chat history. Should we use Azure Cosmos DB for NoSQL or Azure Database for PostgreSQL? Customer is FDPO tenant, needs multi-region availability. Present a recommendation with cited authoritative source(s).",
+      "response": "",
+      "weighted_score": 1.0,
+      "passed": false,
+      "per_criterion": [
+        {
+          "name": "citation_presence",
+          "score": 1.0,
+          "weight": 0.25
+        },
+        {
+          "name": "source_recommendation_alignment",
+          "score": 1.0,
+          "weight": 0.35
+        },
+        {
+          "name": "context_relevance",
+          "score": 1.0,
+          "weight": 0.25
+        },
+        {
+          "name": "recommendation_completeness",
+          "score": 1.0,
+          "weight": 0.15
+        }
+      ]
+    },
+    {
+      "scenario_id": "managed-identity-flavor",
+      "prompt": "Checkpoint 2: For the Foundry Agent Service connecting to Azure Key Vault on a FDPO tenant, which identity model \u2014 System-Assigned Managed Identity, User-Assigned Managed Identity, or Workload Identity Federation? Present a recommendation with cited authoritative source(s).",
+      "response": "",
+      "weighted_score": 1.0,
+      "passed": false,
+      "per_criterion": [
+        {
+          "name": "citation_presence",
+          "score": 1.0,
+          "weight": 0.25
+        },
+        {
+          "name": "source_recommendation_alignment",
+          "score": 1.0,
+          "weight": 0.35
+        },
+        {
+          "name": "context_relevance",
+          "score": 1.0,
+          "weight": 0.25
+        },
+        {
+          "name": "recommendation_completeness",
+          "score": 1.0,
+          "weight": 0.15
+        }
+      ]
+    },
+    {
+      "scenario_id": "bicep-vs-terraform",
+      "prompt": "Checkpoint 2: For the IaC layer of this greenfield Foundry POC, should we use Azure Bicep or Terraform? Customer is Azure-only (no multi-cloud requirement). Present a recommendation with cited authoritative source(s).",
+      "response": "",
+      "weighted_score": 1.0,
+      "passed": false,
+      "per_criterion": [
+        {
+          "name": "citation_presence",
+          "score": 1.0,
+          "weight": 0.25
+        },
+        {
+          "name": "source_recommendation_alignment",
+          "score": 1.0,
+          "weight": 0.35
+        },
+        {
+          "name": "context_relevance",
+          "score": 1.0,
+          "weight": 0.25
+        },
+        {
+          "name": "recommendation_completeness",
+          "score": 1.0,
+          "weight": 0.15
+        }
+      ]
+    }
+  ]
+}

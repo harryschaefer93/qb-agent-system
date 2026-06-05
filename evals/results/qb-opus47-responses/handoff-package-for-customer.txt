@@ -1,0 +1,33 @@
+No BRIEF.md found at workspace root — proceeding without project context (I'd normally read it for Contoso context — flag this if you have it).
+
+This is a **customer-handoff** task for Contoso. Checkpoint 1 — I need to confirm what's in the package before invoking QA.
+
+```askQuestions
+message: "Before I run the handoff pipeline for Contoso, I need to confirm scope and deliverables:
+
+1. **Package contents** — code only, code + IaC, or full bundle (code + IaC + diagrams + runbook + handoff slides)?
+2. **Release posture** — private (internal/customer-only repo) or open-sourceable (public-readiness checklist applies — strict secret scan, license, contributor docs, no internal references)?
+3. **Delivery format** — push to a customer-handoff branch + tag in this repo, fork to a customer-owned repo, or zip + shared drive?
+4. **Diagrams** — regenerate as-built from current state, or trust whatever's already in `docs/diagrams/`?
+5. **Anything to exclude** — internal notes, scratch scripts, dev-only configs?
+
+After you confirm, here's the plan:
+- **QA** deep-review for final validation of the existing implementation
+- **DIAGRAM** regenerates as-built architecture diagrams
+- **QA** reviews the diagrams (revision loop if needed)
+- **DOCS** packages README + deployment guide + customer handoff doc
+- **REPO** with task=handoff: gitignore audit, mandatory secret scan, public-readiness checklist (if applicable), creates customer-handoff branch + tag + release notes, final push
+
+I will block on any secret-scan findings or unresolved checklist items."
+
+options:
+  - label: "Full bundle, private customer repo, customer-handoff branch + tag"
+    description: "Standard FSI handoff posture. Recommended unless Contoso has asked for something different."
+    recommended: true
+  - label: "Full bundle, open-sourceable (public-readiness gate)"
+    description: "Stricter secret scan, license/contributor docs, scrub internal references. Adds time."
+  - label: "Code + IaC only (no diagrams/docs regen)"
+    description: "Faster — assumes existing docs/diagrams are already current."
+
+allowFreeformInput: true
+```

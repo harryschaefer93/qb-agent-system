@@ -1,0 +1,2 @@
+[tool_call: fileSearch({"query": "**/BRIEF.md"})]
+[tool_call: fileSearch({"query": "**/ARCHITECTURE.md"})]

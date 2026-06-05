@@ -1,0 +1,37 @@
+No BRIEF.md found at workspace root — I'd normally read it for Northwind context. **Flagging this**: full-delivery without BRIEF.md means we're missing customer context, POC scope, architecture guidance, and acceptance criteria. I'd recommend invoking **scoper** to fill that gap first, but I'll let you decide.
+
+This is a **full-delivery** task for the Northwind POC. Full-delivery follows the new-poc-setup pipeline end-to-end. Checkpoint 1.
+
+```askQuestions
+message: "Before I kick off full-delivery for Northwind, I need to resolve the context gap and confirm scope:
+
+1. **BRIEF.md is missing.** Do you want me to invoke **scoper** first to produce one (recommended — gives ARCH and every downstream agent a single source of truth), or do you have project context you'll paste in here that I can hand to ARCH?
+2. **Build target** — net-new POC from scratch, or is there existing code in this workspace that full-delivery should validate, package, and deploy?
+3. **Azure environment** — provision new resources (mandatory stop on Checkpoint 2 for new resources), or deploy into an existing subscription/RG that's already set up?
+4. **Anything explicitly out of scope** — auth, observability, CI/CD, public-readiness, customer-handoff branch?
+
+Here's the full-delivery plan you're approving the start of:
+
+1. **CHECKPOINT 1** (this one) — confirm scope
+2. **ARCH** reads BRIEF.md and produces `ARCHITECTURE.md` (stack, alternatives, FDPO identity plan, cost estimate, parallelization tracks)
+3. **CHECKPOINT 2** — you approve ARCH's recommended stack + cost (mandatory stop for new Azure resources)
+4. **INFRA + parallel DEV per track** (fan out by tracks declared in ARCHITECTURE.md)
+5. **Merge gate** + **quality gates** (build, lint, type-check, IaC compile/lint)
+6. **QA deep-review** for validation; iterate up to 2 cycles on blockers
+7. **DIAGRAM** generates as-built diagrams; **QA** reviews them (revision loop if needed)
+8. **DOCS** packages README + deployment guide + handoff docs
+9. **REPO** runs gitignore audit + mandatory secret scan + commit + push
+
+I will stop and wait at every checkpoint."
+
+options:
+  - label: "Invoke scoper first to produce BRIEF.md, then ARCH"
+    description: "Recommended. Closes the context gap before architecture work starts."
+    recommended: true
+  - label: "Skip scoper — I'll provide context in freeform input"
+    description: "Faster start, but ARCH only knows what you tell me here."
+  - label: "There's existing Northwind code in this repo — validate + ship, don't redesign"
+    description: "Treat as a packaging + validation pass rather than green-field. Skips ARCH redesign."
+
+allowFreeformInput: true
+```

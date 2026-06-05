@@ -1,0 +1,26 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This is a **feature-request** that touches **auth** — security-sensitive, mandatory stop, and there are several valid approaches I will not pick for you. Checkpoint 1.
+
+```askQuestions
+message: "Before I invoke QA to assess the frontend and plan the auth integration, I need to confirm scope and approach:
+
+1. **Identity provider** — Microsoft Entra ID (default per FDPO policy here) via MSAL, or something else?
+2. **Frontend stack** — React/Vue/Angular/other? (affects MSAL library choice: msal-react, msal-browser, etc.)
+3. **Flow** — interactive sign-in for end users, or app-only / silent SSO behind a corporate gateway?
+4. **Backend API protection** — does the frontend need to acquire tokens to call a protected backend, or is auth UI-only for now?
+5. **App registration** — does an Entra app registration already exist, or does INFRA need to create one?
+
+After you confirm, I'll invoke **QA** to inventory the current frontend and any existing auth code, then come back with a classified plan (almost certainly **medium** scope, likely **mixed** — Dev for frontend integration, Infra for app registration + RBAC) for your approval. I will NOT implement until you approve at Checkpoint 2 — auth is on the always-stop list."
+
+options:
+  - label: "Entra ID + MSAL, interactive sign-in, frontend + backend tokens"
+    description: "Full FDPO-compliant pattern. Mixed scope: Infra creates app registration + RBAC; Dev wires MSAL + token-attach for API calls."
+    recommended: true
+  - label: "Entra ID + MSAL, frontend-only (no backend token flow yet)"
+    description: "Smaller first step. Just sign-in UX; backend integration follows later."
+  - label: "Easy Auth (App Service built-in auth), no SDK changes"
+    description: "Platform-level auth — Infra-only change, no frontend code. Good for quick demos."
+
+allowFreeformInput: true
+```

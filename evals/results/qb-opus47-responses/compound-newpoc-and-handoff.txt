@@ -1,0 +1,42 @@
+No BRIEF.md found at workspace root — and here we have **two separate engagements**: Geico handoff (this week) and Munich Re new POC (next week). I will not bundle these into one giant pipeline. They have different task types, different customers, different timelines, and different deliverables.
+
+```askQuestions
+message: "Two separate engagements — I'll treat them as two independent pipelines, queued in your stated order, with their own checkpoints. Pushing back on the 'just queue both' phrasing — both still need their own Checkpoint 1 (and Munich Re needs scoper unless you have a brief already).
+
+Here's how I'd sequence it:
+
+**This week — Geico (customer-handoff task type):**
+1. **Geico CHECKPOINT 1** — confirm handoff scope (private vs open-source, delivery format, regen diagrams, exclusions)
+2. **QA** deep-review on existing Geico implementation
+3. **DIAGRAM** regenerates as-built; **QA** reviews
+4. **DOCS** packages handoff materials
+5. **REPO with task=handoff** — gitignore audit + secret scan + branch/tag + push
+
+**Next week — Munich Re (new-poc-setup task type):**
+1. **Munich Re CHECKPOINT 1** — confirm POC scope. Likely **scoper** first (Munich Re is reinsurance — high context, regulatory framing). BRIEF.md will be needed.
+2. **ARCH** produces `ARCHITECTURE.md`
+3. **CHECKPOINT 2** — approve stack + cost (mandatory: new Azure resources)
+4. **INFRA + parallel DEV per track** (fan out per ARCH tracks)
+5. **Merge gate** + **quality gates** + **QA deep-review**
+6. **DIAGRAM** + **QA** review of diagrams
+7. **DOCS** + **REPO** with secret scan + push
+
+A few clarifying questions to start the queue:
+
+1. **Geico handoff** — anything special (open-sourceable?, customer-owned repo?, US data residency callouts?), or is this the standard private FSI handoff?
+2. **Munich Re POC** — do you have any starting context (use case, customer contact's ask), or do we wait until next week to invoke scoper fresh?
+3. **Hard deadlines** — when does Geico need to be in customer's hands, and when does Munich Re need to be demo-ready?
+
+I will not start Munich Re ARCH until Geico handoff is complete and you've explicitly cleared Munich Re's Checkpoint 1."
+
+options:
+  - label: "Standard Geico handoff this week, scoper-first for Munich Re next week"
+    description: "Cleanest sequencing. Standard FSI patterns for both. Recommended."
+    recommended: true
+  - label: "Same plan, but pre-stage Munich Re scoper conversation now"
+    description: "I can start gathering Munich Re context in parallel via scoper while Geico runs, without invoking ARCH yet."
+  - label: "Pause Munich Re entirely until Geico is shipped + customer confirms receipt"
+    description: "Safer. Avoids context-switching mid-handoff."
+
+allowFreeformInput: true
+```

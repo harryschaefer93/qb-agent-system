@@ -1,0 +1,44 @@
+{
+  "test_id": "urgency-customer-escalation",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_TwbdsUpLspuPhJWh2OpxdU7h",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\": \"BRIEF.md\"}"
+      }
+    },
+    {
+      "id": "call_GYCXFmH5bpD6Xz8L6xJ91PqJ",
+      "type": "function",
+      "function": {
+        "name": "askQuestions",
+        "arguments": "{\"questions\": [{\"header\": \"Prod DB outage scope\", \"question\": \"Before I route this, confirm the intended scope for the production database connection issue.\", \"message\": \"I\u2019ll invoke **QA first** to diagnose the current failure, then I\u2019ll stop with a proposed fix plan for your approval before any implementation. Because this is production-impacting, I need your direction on scope and risk tolerance.\", \"options\": [{\"label\": \"Restore service fast\", \"description\": \"Prioritize the quickest safe recovery for production, even if it\u2019s a narrow fix.\", \"recommended\": true}, {\"label\": \"Root cause + durable fix\", \"description\": \"Investigate more deeply and aim for a more complete fix, even if it takes longer.\"}, {\"label\": \"Prod only, no broader changes\", \"description\": \"Limit scope strictly to restoring production; do not audit similar environments/issues yet.\"}], \"allowFreeformInput\": true}]}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_TwbdsUpLspuPhJWh2OpxdU7h",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\": \"BRIEF.md\"}"
+        }
+      },
+      {
+        "id": "call_GYCXFmH5bpD6Xz8L6xJ91PqJ",
+        "type": "function",
+        "function": {
+          "name": "askQuestions",
+          "arguments": "{\"questions\": [{\"header\": \"Prod DB outage scope\", \"question\": \"Before I route this, confirm the intended scope for the production database connection issue.\", \"message\": \"I\u2019ll invoke **QA first** to diagnose the current failure, then I\u2019ll stop with a proposed fix plan for your approval before any implementation. Because this is production-impacting, I need your direction on scope and risk tolerance.\", \"options\": [{\"label\": \"Restore service fast\", \"description\": \"Prioritize the quickest safe recovery for production, even if it\u2019s a narrow fix.\", \"recommended\": true}, {\"label\": \"Root cause + durable fix\", \"description\": \"Investigate more deeply and aim for a more complete fix, even if it takes longer.\"}, {\"label\": \"Prod only, no broader changes\", \"description\": \"Limit scope strictly to restoring production; do not audit similar environments/issues yet.\"}], \"allowFreeformInput\": true}]}"
+        }
+      }
+    ]
+  }
+}

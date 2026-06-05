@@ -1,0 +1,40 @@
+ARCHITECTURE.md is approved with three tracks (frontend, backend-api, ai-pipeline) — meaning we've cleared Checkpoint 1 and Checkpoint 2 already. Per the **new-poc-setup** workflow, the next step is the **DEV fan-out + INFRA in parallel**.
+
+Quick gate before I fan out: I want to confirm the tracks have non-overlapping owned paths (per the DEV Fan-Out anti-patterns — fanning out across shared files = guaranteed conflicts). Assuming `ARCHITECTURE.md` declares them properly, here's the parallel invocation set:
+
+**Invoking INFRA + 3 DEV agents in the same response (parallel `agent/runSubagent` calls):**
+
+1. **Invoking INFRA** with task: "Provision Azure resources per `ARCHITECTURE.md`. FDPO mandatory: managed identity everywhere, `disableLocalAuth: true` on all supporting resources, RBAC role assignments scoped to least privilege, no API keys, no connection strings with embedded secrets. Use modern Microsoft Foundry resource type (`Microsoft.Foundry/projects` or equivalent) — NOT standalone Azure OpenAI, NOT hub-based AI Foundry. Produce env-var outputs that DEV tracks will consume per the env-var contract in `ARCHITECTURE.md`."
+
+2. **Invoking DEV (track: frontend)** with track-scoped prompt:
+   - **Track**: `frontend`
+   - **Owned paths**: per ARCHITECTURE.md (e.g., `web/`)
+   - **Framework**: per ARCHITECTURE.md
+   - **Env-var contract**: vars produced by INFRA outputs (per ARCHITECTURE.md)
+   - **Hard rule**: Do NOT touch files outside owned paths. If you need a change in `api/` or `ai/`, return early and report what you need from the other track.
+
+3. **Invoking DEV (track: backend-api)** with track-scoped prompt:
+   - **Track**: `backend-api`
+   - **Owned paths**: per ARCHITECTURE.md (e.g., `api/`)
+   - **Framework**: per ARCHITECTURE.md
+   - **Env-var contract**: vars produced by INFRA outputs
+   - **Hard rule**: Do NOT touch files outside owned paths.
+
+4. **Invoking DEV (track: ai-pipeline)** with track-scoped prompt:
+   - **Track**: `ai-pipeline`
+   - **Owned paths**: per ARCHITECTURE.md (e.g., `ai/`)
+   - **Framework**: per ARCHITECTURE.md
+   - **Env-var contract**: Foundry endpoint, Search endpoint, Storage URI, etc. — managed identity (no keys)
+   - **Hard rule**: Do NOT touch files outside owned paths.
+
+**After all four complete, I will run (in this order):**
+1. **Merge gate** — `git status` + project build across the merged tree. Bounce only the responsible track on failure.
+2. **Quality gates** — build, lint, type-check, startup per language; IaC compile + lint for Infra.
+3. **QA in deep-review mode** to validate the implementation end-to-end. Iterate ≤2 cycles on blockers.
+4. **DIAGRAM** generates as-built architecture diagrams; **QA** reviews diagrams (revision loop if needed).
+5. **DOCS** packages README + deployment guide + handoff docs.
+6. **REPO** runs gitignore audit + mandatory secret scan + commit + push (block on any secret findings).
+
+I'll surface deployment URLs as soon as INFRA + Dev complete a deploy.
+
+Kicking off the parallel fan-out now.

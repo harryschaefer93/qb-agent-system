@@ -1,0 +1,1 @@
+I’ll first check for `BRIEF.md` to ground the handoff in project context, then I’ll pause for your scope confirmation before invoking QA.

@@ -1,0 +1,50 @@
+# --- Secrets / credentials ---
+mcp-config.json
+mcp-backups/
+mcp-oauth-config/
+config.json
+
+# --- Session / history (private chat & command logs) ---
+session-state/
+session-store.db
+session-store.db-shm
+session-store.db-wal
+command-history-state.json
+
+# --- Runtime caches / binaries ---
+logs/
+crash-context/
+ide/
+pkg/
+tmp/
+embedding-cache.db*
+vscode.session.metadata.cache.json
+mcp-config.json.bak.*
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.py[cod]
+*.egg-info/
+*.egg
+.eggs/
+dist/
+build/
+.venv/
+venv/
+
+# --- Environment / secrets ---
+.env
+
+# --- Auto-generated agent artifacts ---
+agents/files/tool-usage-report.md
+
+# --- Eval evidence artifacts (raw session data; keep README + schema only) ---
+evals/evidence/**/*.json
+!evals/evidence/_schema.json
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*~

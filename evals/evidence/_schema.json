@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://copilot.local/evidence/_schema.json",
+  "title": "EvidenceEntry",
+  "description": "One scored observation of a real Copilot session against a single IMP. Produced by runner/telemetry.py.",
+  "type": "object",
+  "required": ["imp_id", "session_id", "captured_at", "verdict", "fingerprint_matches", "observations", "notes"],
+  "additionalProperties": false,
+  "properties": {
+    "imp_id": {
+      "type": "string",
+      "pattern": "^IMP-\\d{4}$"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "Full UUID from the Copilot session-store (sessions.id)."
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["pass", "fail", "inconclusive"]
+    },
+    "fingerprint_matches": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Names of regex fingerprints (from telemetry.py ALL_FINGERPRINTS) that matched in this session."
+    },
+    "observations": {
+      "type": "object",
+      "description": "Full QBObservations dataclass dump. Schema not enforced here; see telemetry.py for fields.",
+      "additionalProperties": true
+    },
+    "notes": {
+      "type": "string",
+      "description": "Human-readable scorer explanation. Becomes the 'notes' field of the IMP manual_evidence YAML line."
+    },
+    "redactions_applied": {
+      "type": "array",
+      "items": {"type": "string"},
+      "default": []
+    }
+  }
+}

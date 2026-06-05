@@ -1,0 +1,1 @@
+I’ll first check for `BRIEF.md` to ground the scope, then I’ll pause for your required checkpoint questions before invoking any subagent.

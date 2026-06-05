@@ -1,0 +1,26 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This is an **architecture decision** that I will not make for you — picking a store for user preferences has multiple valid answers (Cosmos DB, PostgreSQL, App Configuration, Table Storage) with real trade-offs. Treating this as a **new-poc-setup**-style flow because we'll need ARCH input. Checkpoint 1.
+
+```askQuestions
+message: "Before I invoke ARCH to compare options and produce a recommendation, I need to understand the requirements:
+
+1. **Shape of the data** — small key/value flags per user, or rich nested JSON profiles?
+2. **Scale** — how many users (hundreds, thousands, millions) and read/write ratio?
+3. **Access pattern** — read-heavy (load on every page), write-heavy (frequent updates), or balanced?
+4. **Query needs** — simple get-by-user-id, or do you need to query across users (e.g., 'all users with feature X enabled')?
+5. **Existing stack** — do you already have a database in this POC I should extend, or are we adding a new store?
+
+After you confirm scope, I'll invoke **ARCH** to evaluate options (Cosmos DB, Azure SQL/Postgres, App Configuration, Table Storage) against FDPO constraints and produce `ARCHITECTURE.md` with a recommendation, alternatives, trade-offs, and cost. Then we'll have a second checkpoint to approve the stack before Infra provisions anything — adding a new Azure resource is a mandatory stop."
+
+options:
+  - label: "Small per-user JSON, read-heavy, POC scale"
+    description: "Likely Cosmos DB (serverless) or Table Storage. ARCH compares both."
+    recommended: true
+  - label: "Extend existing DB if one exists"
+    description: "QA inventories first; if there's already a relational DB, just add a `user_preferences` table."
+  - label: "Feature flags only (boolean / string toggles)"
+    description: "Likely Azure App Configuration. Different shape entirely."
+
+allowFreeformInput: true
+```

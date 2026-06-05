@@ -1,0 +1,41 @@
+No BRIEF.md found at workspace root — flagging. For Adatum (FSI customer) claims triage, I'd normally read it for use case framing, customer constraints, and acceptance criteria.
+
+This is a **full-delivery** task — Adatum claims triage POC, end-to-end. Full-delivery follows the new-poc-setup pipeline (12 steps). Checkpoint 1 with the full preview.
+
+```askQuestions
+message: "Before I kick off full-delivery for Adatum claims triage, I need to confirm scope and resolve the BRIEF gap:
+
+1. **BRIEF.md is missing.** Claims triage is a high-context insurance use case (FNOL, severity scoring, routing to adjusters). Strongly recommend **scoper** first to capture: customer persona, claim types in scope (auto / property / both), data inputs (text + photos + structured?), what 'triage' produces (priority score, routing decision, summary, all of the above), and acceptance criteria. Or paste context here.
+2. **Build target** — net-new POC, or existing Adatum code in this workspace that full-delivery should validate + package + deploy?
+3. **AI shape** — LLM summarization + classification (most common), agentic workflow with tool calls, or hybrid with classical ML for severity?
+4. **Inputs** — text-only claim notes, multimodal (claim photos via Azure AI Vision / Document Intelligence), or audio (FNOL call transcripts)?
+5. **Stack preference** — Python (default for AI) or TypeScript? Frontend framework?
+6. **Required Azure services** — Modern Microsoft Foundry (workspace policy), Azure AI Search (RAG over playbooks?), Document Intelligence (claim forms?), Storage, Cosmos for case state?
+7. **Auth & FDPO** — Entra ID sign-in for adjusters, managed identity everywhere, `disableLocalAuth: true`, no API keys.
+8. **Adatum-specific** — region (US East default for them), private endpoints, data residency, network isolation?
+
+Full-delivery pipeline you're approving the start of:
+
+1. **CHECKPOINT 1** (this) — confirm scope
+2. **ARCH** reads BRIEF.md and produces `ARCHITECTURE.md` (stack, alternatives + trade-offs, FDPO identity plan, cost estimate, parallelization tracks)
+3. **CHECKPOINT 2** — you approve stack + cost (mandatory: new Azure resources)
+4. **INFRA + parallel DEV per track** (fan out per ARCH tracks)
+5. **Merge gate** + **quality gates** (build, lint, type-check, IaC compile/lint)
+6. **QA deep-review**; iterate ≤2 cycles on blockers
+7. **DIAGRAM** as-built; **QA** reviews diagrams (revision loop if needed)
+8. **DOCS** packages README + deployment guide + customer handoff docs
+9. **REPO** runs gitignore audit + mandatory secret scan + commit + push (block on findings)
+
+I will stop at every checkpoint."
+
+options:
+  - label: "Invoke scoper first to ground claims-triage scope, then ARCH"
+    description: "Recommended. Claims triage is too domain-specific to architect blind."
+    recommended: true
+  - label: "Skip scoper — I'll paste Adatum context in freeform input"
+    description: "Faster. ARCH only knows what you give me."
+  - label: "Validate + ship existing Adatum code in this repo (no ARCH redesign)"
+    description: "Treat as packaging + validation pass rather than green-field."
+
+allowFreeformInput: true
+```

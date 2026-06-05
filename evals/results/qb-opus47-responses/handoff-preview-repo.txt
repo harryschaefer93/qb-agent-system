@@ -1,0 +1,40 @@
+No BRIEF.md found at workspace root — flagging. For Aviva (UK insurer) handoff, I'd normally read it for customer-specific delivery requirements.
+
+This is a **customer-handoff** task for Aviva. REPO with task=`handoff` is mandatory at the end. Checkpoint 1 with the plan preview.
+
+```askQuestions
+message: "Before I run the Aviva handoff pipeline, a few quick scope questions:
+
+1. **Release posture** — private (Aviva-internal / customer-only) or open-sourceable? Open-source triggers the strict public-readiness checklist (license, contributor docs, no internal references, stricter secret scan).
+2. **Delivery format** — push to a `customer-handoff` branch + tag in this repo (default), fork to an Aviva-owned repo, or zip + secure share?
+3. **Diagrams** — regenerate as-built from current code (recommended) or trust whatever's in `docs/diagrams/`?
+4. **Anything to exclude** — internal notes, scratch scripts, dev-only configs, sample/test data?
+5. **UK-specific** — region callouts (UK South), GDPR posture, data residency, anything in the docs that Aviva has specifically asked for?
+
+Here's the plan you're approving the start of:
+
+1. **CHECKPOINT 1** (this) — confirm scope
+2. **QA** deep-review for final validation of the existing Aviva implementation
+3. **DIAGRAM** regenerates as-built architecture diagrams
+4. **QA** reviews diagrams (revision loop if needed, max 2 cycles)
+5. **DOCS** packages README + deployment guide + customer handoff doc
+6. **REPO with task=handoff** (mandatory):
+   - gitignore audit
+   - mandatory secret scan (BLOCKS on findings)
+   - public-readiness checklist if applicable
+   - creates `customer-handoff` branch + tag + release notes
+   - final push
+
+I will block on any secret findings or unresolved checklist items."
+
+options:
+  - label: "Private customer-handoff branch + tag, regen diagrams"
+    description: "Standard FSI handoff. Recommended unless Aviva has asked for open-source."
+    recommended: true
+  - label: "Open-sourceable (public-readiness gate, license, contributor docs)"
+    description: "Stricter, slower. Only if Aviva has authorized public release."
+  - label: "Push to Aviva-owned fork instead of branch in this repo"
+    description: "If Aviva has provided a destination repo / org for the handoff."
+
+allowFreeformInput: true
+```

@@ -1,0 +1,28 @@
+{
+  "test_id": "compound-scope-creep-oh-also",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_BHsRepG0XBFQUTbTxF2VHZi5",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\":\"BRIEF.md\"}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_BHsRepG0XBFQUTbTxF2VHZi5",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\":\"BRIEF.md\"}"
+        }
+      }
+    ]
+  }
+}

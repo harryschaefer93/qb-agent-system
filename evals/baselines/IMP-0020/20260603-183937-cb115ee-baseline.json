@@ -1,0 +1,145 @@
+{
+  "meta": {
+    "imp_id": "IMP-0020",
+    "eval_type": "rubric",
+    "eval_id": "imp_0020",
+    "commit_sha": "cb115ee",
+    "timestamp": "2026-06-03T18:39:37.361413+00:00",
+    "phase": "baseline",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "seed": 42,
+    "n_samples": 0,
+    "cost": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "wall_time_ms": 0,
+      "cost_usd": 0.0,
+      "pricing_source": "config.yaml@v1"
+    },
+    "trajectory": {},
+    "thresholds": {}
+  },
+  "metrics": {
+    "calibration_passed": false,
+    "calibration_agreement": 0.7142857142857143,
+    "weighted_score": 0.0,
+    "pass_rate": 0.0,
+    "all_passed": false,
+    "per_criterion_means": {}
+  },
+  "raw_results": [
+    {
+      "example_id": "p1_cosmos_full_pass",
+      "expected": {
+        "citation_presence": 5,
+        "source_recommendation_alignment": 5,
+        "context_relevance": 5,
+        "recommendation_completeness": 5
+      },
+      "judge": {
+        "citation_presence": 5,
+        "source_recommendation_alignment": 3,
+        "context_relevance": 5,
+        "recommendation_completeness": 3
+      },
+      "fully_agreed": false
+    },
+    {
+      "example_id": "p2_managed_identity_pass",
+      "expected": {
+        "citation_presence": 5,
+        "source_recommendation_alignment": 5,
+        "context_relevance": 4,
+        "recommendation_completeness": 5
+      },
+      "judge": {
+        "citation_presence": 5,
+        "source_recommendation_alignment": 4,
+        "context_relevance": 5,
+        "recommendation_completeness": 4
+      },
+      "fully_agreed": true
+    },
+    {
+      "example_id": "p3_bicep_borderline_complete",
+      "expected": {
+        "citation_presence": 5,
+        "source_recommendation_alignment": 4,
+        "context_relevance": 4,
+        "recommendation_completeness": 2
+      },
+      "judge": {
+        "citation_presence": 4,
+        "source_recommendation_alignment": 4,
+        "context_relevance": 4,
+        "recommendation_completeness": 2
+      },
+      "fully_agreed": true
+    },
+    {
+      "example_id": "f1_no_citation",
+      "expected": {
+        "citation_presence": 1,
+        "source_recommendation_alignment": 1,
+        "context_relevance": 4,
+        "recommendation_completeness": 2
+      },
+      "judge": {
+        "citation_presence": 1,
+        "source_recommendation_alignment": 1,
+        "context_relevance": 4,
+        "recommendation_completeness": 2
+      },
+      "fully_agreed": true
+    },
+    {
+      "example_id": "f2_contradicting_citation",
+      "expected": {
+        "citation_presence": 5,
+        "source_recommendation_alignment": 1,
+        "context_relevance": 4,
+        "recommendation_completeness": 2
+      },
+      "judge": {
+        "citation_presence": 4,
+        "source_recommendation_alignment": 1,
+        "context_relevance": 3,
+        "recommendation_completeness": 1
+      },
+      "fully_agreed": true
+    },
+    {
+      "example_id": "m1_wrong_doc",
+      "expected": {
+        "citation_presence": 4,
+        "source_recommendation_alignment": 2,
+        "context_relevance": 3,
+        "recommendation_completeness": 2
+      },
+      "judge": {
+        "citation_presence": 4,
+        "source_recommendation_alignment": 3,
+        "context_relevance": 4,
+        "recommendation_completeness": 2
+      },
+      "fully_agreed": true
+    },
+    {
+      "example_id": "m2_sami_completeness_gap",
+      "expected": {
+        "citation_presence": 5,
+        "source_recommendation_alignment": 5,
+        "context_relevance": 4,
+        "recommendation_completeness": 2
+      },
+      "judge": {
+        "citation_presence": 5,
+        "source_recommendation_alignment": 3,
+        "context_relevance": 4,
+        "recommendation_completeness": 2
+      },
+      "fully_agreed": false
+    }
+  ]
+}

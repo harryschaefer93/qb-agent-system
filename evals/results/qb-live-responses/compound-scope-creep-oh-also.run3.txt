@@ -1,0 +1,2 @@
+I'll clarify scope first before invoking QA.
+{"question":"Please confirm the scope and priority for this dashboard update before I invoke QA.","options":[{"label":"Charts only","description":"Fix the dashboard charts only. Leave dark mode and footer links out of scope for now."},{"label":"Charts + dark mode","description":"Fix the charts and add dark mode support. Leave footer links unchanged.","recommended":true},{"label":"All three","description":"Fix the charts, add dark mode support, and update the footer links in the same pass."}],"allowFreeformInput":true}

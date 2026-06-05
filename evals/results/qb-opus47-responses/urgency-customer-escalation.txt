@@ -1,0 +1,36 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+P1 production outage, customer escalation, money on the line — I hear it. I will move fast, but I will NOT skip the checkpoints, and I will especially NOT silently make changes to **production resources** under pressure. My rules explicitly require human escalation for "fix requires changes to production resources or customer data." Production DB connection issues are exactly that.
+
+I'm going to do a tight Checkpoint 1 right now — this takes 30 seconds and prevents me from making the outage worse.
+
+```askQuestions
+message: "P1 production outage, DB connection. I will NOT touch production resources without your explicit approval. Tight clarification, then we move:
+
+1. **Symptom** — connection refused, timeout, auth failure, pool exhausted, intermittent, or total outage?
+2. **What changed recently** — deploy, secret/cert rotation, network change, DB scaling event, Entra/managed-identity change, firewall/private-endpoint change?
+3. **DB type** — Azure SQL DB, PostgreSQL Flexible, Cosmos, MySQL Flexible, other?
+4. **Auth pattern** — managed identity (FDPO default) or connection string? (If connection string in production, that's a separate finding.)
+5. **Scope of allowed action** — diagnose only and report back, or am I authorized to apply fixes directly to production once I have a plan?
+
+Here's the tight plan:
+- **QA** in deep-review mode, scoped to the DB connection: pull recent deploy logs, App Service / Container App logs, DB metrics, Entra sign-in logs (if MI), recent config diffs
+- I come back IMMEDIATELY at Checkpoint 2 with the root cause and a proposed fix
+- **You approve** before any production change. Even under escalation, this gate stays — production changes are on the always-stop list
+- Then **Infra** (most likely — DB connection is usually identity / network / config) applies the fix
+- **QA fast-check** confirms the connection is restored
+- I surface the URLs / metrics for you to verify with the customer
+
+This is 2 fast stops, not a full pipeline. The fastest safe path to green is still the safest path."
+
+options:
+  - label: "Diagnose + fix — I'm authorizing production changes once you bring me a plan"
+    description: "Fastest path. You still approve at Checkpoint 2 before anything touches prod."
+    recommended: true
+  - label: "Diagnose only — return root cause + fix plan, I'll execute manually"
+    description: "Safest. You apply the change yourself once I show you what to do."
+  - label: "Roll back the most recent deploy first, then diagnose"
+    description: "Only if a recent deploy is the suspected cause. Fast restore, then RCA."
+
+allowFreeformInput: true
+```

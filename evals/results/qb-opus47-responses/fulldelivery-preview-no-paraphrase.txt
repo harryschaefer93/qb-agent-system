@@ -1,0 +1,40 @@
+No BRIEF.md found at workspace root — flagging.
+
+This is a **full-delivery** task — Q&A bot over PDF policy documents. Standard RAG shape, but "policy docs" implies regulatory framing I shouldn't assume. Checkpoint 1 with the full pipeline preview.
+
+```askQuestions
+message: "Before I kick off full-delivery for the PDF policy-doc Q&A bot, I need to confirm scope and resolve the BRIEF gap:
+
+1. **BRIEF.md is missing.** 'Policy docs' could mean insurance policies, HR/internal policy, government/regulatory, security policy, or other. Strongly recommend **scoper** first to capture: customer (if any), domain, who uses it, what 'good answers' look like, and acceptance criteria. Or paste context here.
+2. **Doc characteristics** — how many PDFs, total pages, scanned images vs. native PDF text, languages, refresh cadence (static set vs. updated regularly)?
+3. **Q&A shape** — single-turn Q&A, multi-turn chat with history, or with citations / extractive answers (pointing to source page)?
+4. **Required Azure services** — Modern Microsoft Foundry (workspace policy: NOT standalone Azure OpenAI, NOT hub-based AI Foundry), Azure AI Search (vector + hybrid), Storage (PDFs), Document Intelligence (if scanned PDFs), Cosmos (if chat history)?
+5. **Auth & FDPO** — Entra ID sign-in (default), managed identity everywhere, `disableLocalAuth: true`, no API keys.
+6. **Hosting** — Azure Container Apps (default for RAG), App Service, or Static Web App + Functions?
+7. **Public or internal** — anonymous demo, behind Entra, or behind a corporate gateway?
+
+Here's the full-delivery pipeline you're approving the start of:
+
+1. **CHECKPOINT 1** (this) — confirm scope
+2. **ARCH** produces `ARCHITECTURE.md` (recommended stack, alternatives + trade-offs, FDPO identity plan, cost estimate, parallelization tracks — likely `frontend`, `backend-api`, `ai-pipeline` for ingest + retrieval)
+3. **CHECKPOINT 2** — you approve stack + cost (mandatory: new Azure resources)
+4. **INFRA + parallel DEV per track** (fan out per ARCH tracks)
+5. **Merge gate** + **quality gates**
+6. **QA deep-review**; iterate ≤2 cycles on blockers
+7. **DIAGRAM** as-built; **QA** reviews diagrams
+8. **DOCS** packages README + deployment guide + handoff docs
+9. **REPO** runs gitignore audit + mandatory secret scan + commit + push
+
+I will stop at every checkpoint."
+
+options:
+  - label: "Invoke scoper first, then ARCH"
+    description: "Recommended. 'Policy docs' is too ambiguous to architect blind."
+    recommended: true
+  - label: "Skip scoper — I'll paste context in freeform input"
+    description: "Faster. ARCH only knows what you give me."
+  - label: "Use the POC_Template RAG starter"
+    description: "Fastest path if there's a tested starter; ARCH still confirms fit."
+
+allowFreeformInput: true
+```

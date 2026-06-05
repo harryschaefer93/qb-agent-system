@@ -1,0 +1,33 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This is a **bug-fix** task: `/scores` returns 500 — fix it. Bug-fix doesn't go through ARCH (ARCH is for new-poc-setup / full-delivery). Checkpoint 1 — mandatory even for "obvious" fixes.
+
+```askQuestions
+message: "Before I invoke QA to diagnose the /scores 500s, quick scope check:
+
+1. **Where** — production, staging, or local dev?
+2. **Failure mode** — every request 500s, intermittent, only certain inputs, or only after a recent deploy/change?
+3. **Audit scope** — only /scores, or should QA sweep similar endpoints for the same root cause?
+4. **Fix style** — quick patch (unblock now) or root-cause fix (with regression test)?
+
+After you confirm, here's the bug-fix flow:
+- **QA** reproduces, captures logs/stack, identifies root cause, classifies as app-code / infra / mixed
+- **Checkpoint 2** — I come back with the classified scope (trivial / small / medium / large) + fix plan for your approval (Approve / Modify / Add / Cancel)
+- **Dev or Infra** (whichever QA's findings point to) implements only the approved fix
+- **Quality gates** (build, lint, type-check, startup as applicable)
+- **QA fast-check** confirms the fix
+- **REPO** for commit + push (secret scan first)
+
+No ARCH for bug-fix. Tight loop."
+
+options:
+  - label: "Production — root-cause fix with regression test, /scores only"
+    description: "Real incident posture. Recommended if it's user-facing."
+    recommended: true
+  - label: "Local/dev — quick patch, /scores only"
+    description: "Smallest scope. Just unblock me."
+  - label: "Sweep similar endpoints for the same pattern"
+    description: "If the cause is likely shared (auth middleware, shared service)."
+
+allowFreeformInput: true
+```

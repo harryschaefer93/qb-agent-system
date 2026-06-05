@@ -1,0 +1,2 @@
+I'll confirm the exact scope before I do anything.
+{"question":"Before I proceed, which scope do you want for the loading spinner?","options":[{"label":"Dashboard only","description":"Add a quick spinner just for the main dashboard load state. Fastest option.","recommended":true},{"label":"Dashboard + key widgets","description":"Add spinner to the dashboard and the main widget/data panels too."},{"label":"Audit all similar loading states","description":"Check the app for other missing loading states and make them consistent."}],"allowFreeformInput":true}

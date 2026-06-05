@@ -1,0 +1,44 @@
+{
+  "test_id": "bugfix-auth-broken",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_QPTsvmgqRlgod4YoZiiMLJvO",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\": \"BRIEF.md\"}"
+      }
+    },
+    {
+      "id": "call_XoVBflHgnJcuTftuCcWbD3QF",
+      "type": "function",
+      "function": {
+        "name": "askQuestions",
+        "arguments": "{\"questions\": [{\"header\": \"Login scope\", \"question\": \"What scope should I use for this auth issue?\", \"message\": \"I\u2019ll confirm scope first, then invoke **QA** to diagnose the current auth failure before proposing a fix plan for your approval.\", \"options\": [{\"label\": \"Login flow only\", \"description\": \"Focus only on the immediate sign-in failure.\", \"recommended\": true}, {\"label\": \"Login + signup/session\", \"description\": \"Check adjacent auth flows too in case the break is broader.\"}, {\"label\": \"Unsure \u2014 let QA determine\", \"description\": \"Let QA assess the blast radius around authentication.\"}], \"allowFreeformInput\": true}, {\"header\": \"Fix depth\", \"question\": \"What kind of fix do you want if QA finds the cause?\", \"options\": [{\"label\": \"Quick restore\", \"description\": \"Prioritize getting users logging in again fast.\"}, {\"label\": \"Root-cause fix\", \"description\": \"Prioritize a durable fix and identify why auth regressed.\", \"recommended\": true}, {\"label\": \"Need options after QA\", \"description\": \"Decide after seeing QA findings.\"}], \"allowFreeformInput\": true}, {\"header\": \"Environment\", \"question\": \"Where is the broken login happening?\", \"options\": [{\"label\": \"Local/dev only\", \"description\": \"Issue is in local development or test environment.\"}, {\"label\": \"Deployed environment\", \"description\": \"Issue is in a hosted/staging/prod-like environment.\", \"recommended\": true}, {\"label\": \"Both local and deployed\", \"description\": \"The failure reproduces in both places.\"}], \"allowFreeformInput\": true}]}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_QPTsvmgqRlgod4YoZiiMLJvO",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\": \"BRIEF.md\"}"
+        }
+      },
+      {
+        "id": "call_XoVBflHgnJcuTftuCcWbD3QF",
+        "type": "function",
+        "function": {
+          "name": "askQuestions",
+          "arguments": "{\"questions\": [{\"header\": \"Login scope\", \"question\": \"What scope should I use for this auth issue?\", \"message\": \"I\u2019ll confirm scope first, then invoke **QA** to diagnose the current auth failure before proposing a fix plan for your approval.\", \"options\": [{\"label\": \"Login flow only\", \"description\": \"Focus only on the immediate sign-in failure.\", \"recommended\": true}, {\"label\": \"Login + signup/session\", \"description\": \"Check adjacent auth flows too in case the break is broader.\"}, {\"label\": \"Unsure \u2014 let QA determine\", \"description\": \"Let QA assess the blast radius around authentication.\"}], \"allowFreeformInput\": true}, {\"header\": \"Fix depth\", \"question\": \"What kind of fix do you want if QA finds the cause?\", \"options\": [{\"label\": \"Quick restore\", \"description\": \"Prioritize getting users logging in again fast.\"}, {\"label\": \"Root-cause fix\", \"description\": \"Prioritize a durable fix and identify why auth regressed.\", \"recommended\": true}, {\"label\": \"Need options after QA\", \"description\": \"Decide after seeing QA findings.\"}], \"allowFreeformInput\": true}, {\"header\": \"Environment\", \"question\": \"Where is the broken login happening?\", \"options\": [{\"label\": \"Local/dev only\", \"description\": \"Issue is in local development or test environment.\"}, {\"label\": \"Deployed environment\", \"description\": \"Issue is in a hosted/staging/prod-like environment.\", \"recommended\": true}, {\"label\": \"Both local and deployed\", \"description\": \"The failure reproduces in both places.\"}], \"allowFreeformInput\": true}]}"
+        }
+      }
+    ]
+  }
+}

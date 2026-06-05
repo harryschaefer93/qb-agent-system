@@ -1,0 +1,61 @@
+"""
+IMP-0012 evaluator - validates QB has self-prune rule after reading subagent reports.
+
+Tests:
+  1. Self-prune rule documented
+  2. References summarizing into bullets or scratchpad
+  3. Mentions not re-quoting original report
+"""
+
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+from evaluators.custom.imp_0004 import ImpResult, ImpReport, _parse_frontmatter
+
+
+def evaluate_imp_0012(agent_file: Path) -> ImpReport:
+    content = agent_file.read_text(encoding="utf-8")
+    _frontmatter, body = _parse_frontmatter(content)
+    results: list[ImpResult] = []
+
+    # Check 1: Self-prune rule documented
+    has_prune = bool(re.search(r"self.?prune|prune.*after|after.*reading.*report", body, re.IGNORECASE))
+    results.append(ImpResult(
+        imp_id="IMP-0012",
+        check_id="self_prune_rule",
+        label="Self-prune rule documented",
+        passed=has_prune,
+        detail="Found" if has_prune else "Missing",
+    ))
+
+    # Check 2: References summarizing into bullets or scratchpad
+    has_summarize = bool(re.search(r"summarize.*(bullet|scratchpad)|bullet.*summar", body, re.IGNORECASE))
+    results.append(ImpResult(
+        imp_id="IMP-0012",
+        check_id="summarize_ref",
+        label="References summarizing reports into bullets/scratchpad",
+        passed=has_summarize,
+        detail="Found" if has_summarize else "Missing",
+    ))
+
+    # Check 3: Mentions not re-quoting
+    has_no_requote = bool(re.search(r"(do not|don.t|never).*(re.?quote|re.?paste|repeat.*report)", body, re.IGNORECASE))
+    results.append(ImpResult(
+        imp_id="IMP-0012",
+        check_id="no_requote",
+        label="Mentions not re-quoting original report",
+        passed=has_no_requote,
+        detail="Found" if has_no_requote else "Missing",
+    ))
+
+    passed_count = sum(1 for r in results if r.passed)
+    return ImpReport(
+        imp_id="IMP-0012",
+        title="QB self-prunes after reading subagent reports",
+        total_checks=len(results),
+        passed_checks=passed_count,
+        passed=all(r.passed for r in results),
+        results=results,
+    )

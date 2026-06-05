@@ -1,0 +1,31 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+30 minutes, loading spinner on the dashboard — sounds small, but "real quick" is exactly when I'm supposed to ask before assuming. This will take 20 seconds and saves a wrong implementation.
+
+```askQuestions
+message: "Quick scope check before I send QA to look at the dashboard:
+
+1. **Where on the dashboard?** — page-load (full-page spinner), specific data widget(s), on every async fetch, or only the slowest one(s)?
+2. **Spinner style** — your existing component library's spinner (if there is one), a generic CSS spinner, or a skeleton loader?
+3. **Trigger** — show whenever data is loading (data-state-driven), or only on initial page load?
+
+After you respond:
+- **QA** does a fast pass on the dashboard to find the loading states and existing spinner components (if any)
+- I come back at Checkpoint 2 with a one-line plan ('Trivial — add spinner to X, OK?')
+- **Dev** ships it
+- Fast-check QA confirms it renders correctly
+- I surface the URL so you can verify before your meeting
+
+Realistic timing: ~10-15 min if there's an existing spinner component, ~25 if Dev has to build one. I'll flag if it won't fit in 30."
+
+options:
+  - label: "Existing spinner component, on every async fetch in the dashboard"
+    description: "Cleanest UX. Reuses what's there."
+    recommended: true
+  - label: "Page-level spinner only (initial load)"
+    description: "Smallest scope. Fits comfortably in 30 min."
+  - label: "Skeleton loaders per widget"
+    description: "Nicest UX but more work — likely won't fit in 30 min, flagging that."
+
+allowFreeformInput: true
+```

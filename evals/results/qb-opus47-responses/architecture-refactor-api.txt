@@ -1,0 +1,26 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+"The API is getting messy — refactor it" is open-ended and risky. "Messy" can mean many things, and a refactor without a defined target is how we end up rewriting everything. Treating this as a **bug-fix / refactor** task that needs heavy clarification. Checkpoint 1.
+
+```askQuestions
+message: "Before I invoke QA to assess the API, I need to pin down what 'messy' and 'cleaner' mean here — otherwise the scope can balloon:
+
+1. **What hurts most right now?** — duplicated handlers, fat controllers, no separation of layers, inconsistent error handling, missing tests, slow endpoints, or something else?
+2. **Target shape** — keep the current framework and just clean up, or restructure (e.g., adopt a layered/hexagonal pattern, split monolith into modules)?
+3. **Scope ceiling** — bounded refactor (one or two known sore spots), or full audit + multi-PR cleanup?
+4. **Behavior preservation** — strict no-behavior-change refactor (tests must still pass identically), or are small behavior fixes welcome along the way?
+5. **Risk tolerance** — is this API in production, demo-only, or under active development?
+
+After you confirm, I'll invoke **QA** in deep-review mode to inventory the API's actual state and identify concrete sore spots with evidence, then come back with a scoped plan. I will not start a 'big rewrite' without a tightly scoped, approved target."
+
+options:
+  - label: "Bounded cleanup — QA finds top 3 sore spots, we fix only those"
+    description: "Minimizes risk and scope creep. Strongly recommended for any production-adjacent API."
+    recommended: true
+  - label: "Pattern adoption — restructure to a defined target architecture"
+    description: "Larger scope. Requires ARCH to define the target shape first."
+  - label: "Quality-only — add tests, lint, types, error handling consistency"
+    description: "No structural changes. Lowest-risk improvement track."
+
+allowFreeformInput: true
+```

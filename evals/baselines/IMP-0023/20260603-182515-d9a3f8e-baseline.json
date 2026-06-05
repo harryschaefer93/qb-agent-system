@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "imp_id": "IMP-0023",
+    "eval_type": "structural",
+    "eval_id": "imp_0023",
+    "commit_sha": "d9a3f8e",
+    "timestamp": "2026-06-03T18:25:15.574728+00:00",
+    "phase": "baseline",
+    "model": null,
+    "temperature": null,
+    "seed": null,
+    "n_samples": 1,
+    "cost": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "wall_time_ms": 11,
+      "cost_usd": 0.0,
+      "pricing_source": "config.yaml@v1"
+    },
+    "trajectory": {},
+    "thresholds": {}
+  },
+  "metrics": {
+    "total_checks": 5,
+    "passed_checks": 4,
+    "pass_rate": 0.8,
+    "all_passed": false
+  },
+  "raw_results": [
+    {
+      "check_id": "line_count",
+      "label": "QB.agent.md line count <= 680",
+      "passed": false,
+      "detail": "Actual: 696 lines (target: <=680)"
+    },
+    {
+      "check_id": "pipelines_present",
+      "label": "All 7 task-type pipeline names present",
+      "passed": true,
+      "detail": "Found 7/7"
+    },
+    {
+      "check_id": "qa_modes_present",
+      "label": "All 6 QA mode names present",
+      "passed": true,
+      "detail": "Found 6/6"
+    },
+    {
+      "check_id": "checkpoint_references",
+      "label": "Each pipeline has CHECKPOINT 1 + CHECKPOINT 2 references",
+      "passed": true,
+      "detail": "CHECKPOINT 1 count: 15 (expect >=7), CHECKPOINT 2 count: 7 (expect >=7)"
+    },
+    {
+      "check_id": "repo_references",
+      "label": "Each pipeline references REPO for commit + push",
+      "passed": true,
+      "detail": "REPO mention count: 17 (expect >=7)"
+    }
+  ]
+}

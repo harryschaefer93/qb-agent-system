@@ -1,0 +1,28 @@
+{
+  "agent": "infra",
+  "description": "Azure infrastructure specialist. Provisions cloud resources, networking, IAM, CI/CD. Bicep, Terraform, azd.",
+  "shouldTriggerPrompts": [
+    "set up the Bicep templates for Container Apps with Key Vault",
+    "create Terraform for Azure AI Foundry with private endpoints",
+    "provision the VNet, subnets, and NSGs",
+    "write the azure.yaml and configure azd",
+    "set up GitHub Actions CI/CD pipeline",
+    "create managed identity and RBAC assignments",
+    "set up the Key Vault with secret references",
+    "configure the App Service plan and deployment slots",
+    "add private endpoints for Cosmos DB and Storage",
+    "create the Bicep modules for the AI resources"
+  ],
+  "shouldNotTriggerPrompts": [
+    "build a FastAPI backend",
+    "add a React frontend",
+    "review the code for bugs",
+    "write the README",
+    "generate architecture diagram",
+    "triage my inbox",
+    "scope a new POC",
+    "test the application end-to-end",
+    "create the customer handoff document",
+    "implement MSAL authentication in the app"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "test_id": "handoff-preview-repo",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_gYUCvUjVJyCuMvz7wTiGowz3",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\": \"**/BRIEF.md\"}"
+      }
+    },
+    {
+      "id": "call_KO4pMVVElnoZb8TM5YVIr5GZ",
+      "type": "function",
+      "function": {
+        "name": "askQuestions",
+        "arguments": "{\"questions\": [{\"header\": \"Handoff scope\", \"question\": \"Confirm the customer handoff packaging scope for the Aviva POC.\", \"message\": \"Plan after you confirm: I\u2019ll invoke **QA** in deep-review mode, regenerate/update **DIAGRAM**s, package **DOCS**, and finally invoke **REPO** for handoff hygiene, release notes, and push readiness.\", \"options\": [{\"label\": \"Standard handoff package\", \"description\": \"QA validation + diagrams + docs + repo handoff packaging\", \"recommended\": true}, {\"label\": \"Docs-only handoff\", \"description\": \"Skip validation/diagram refresh and package documentation only\"}, {\"label\": \"Public-ready release\", \"description\": \"Prepare for broader/public sharing with stricter readiness expectations\"}], \"allowFreeformInput\": true}]}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_gYUCvUjVJyCuMvz7wTiGowz3",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\": \"**/BRIEF.md\"}"
+        }
+      },
+      {
+        "id": "call_KO4pMVVElnoZb8TM5YVIr5GZ",
+        "type": "function",
+        "function": {
+          "name": "askQuestions",
+          "arguments": "{\"questions\": [{\"header\": \"Handoff scope\", \"question\": \"Confirm the customer handoff packaging scope for the Aviva POC.\", \"message\": \"Plan after you confirm: I\u2019ll invoke **QA** in deep-review mode, regenerate/update **DIAGRAM**s, package **DOCS**, and finally invoke **REPO** for handoff hygiene, release notes, and push readiness.\", \"options\": [{\"label\": \"Standard handoff package\", \"description\": \"QA validation + diagrams + docs + repo handoff packaging\", \"recommended\": true}, {\"label\": \"Docs-only handoff\", \"description\": \"Skip validation/diagram refresh and package documentation only\"}, {\"label\": \"Public-ready release\", \"description\": \"Prepare for broader/public sharing with stricter readiness expectations\"}], \"allowFreeformInput\": true}]}"
+        }
+      }
+    ]
+  }
+}

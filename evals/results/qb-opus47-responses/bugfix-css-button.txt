@@ -1,0 +1,24 @@
+No BRIEF.md found at workspace root — proceeding without project context.
+
+This is a **bug-fix** task — the submit button color is wrong on the login page. Even though it sounds like a one-line CSS change, I still owe you Checkpoint 1 before I invoke QA.
+
+```askQuestions
+message: "Quick scope check before I send QA to look at the login button:
+
+1. Should QA fix only this button, or audit the whole login page (and any other pages using the same button component) for color consistency?
+2. Is there a design system / theme token for 'primary blue' I should use, or should QA pick a sensible blue?
+3. Just this instance, or should we sweep the app for any other gray-where-should-be-blue buttons?
+
+After you confirm, I'll invoke **QA** to locate the button and identify whether the fix is a one-line CSS tweak or a shared-component change, then come back with a fix plan for your approval."
+
+options:
+  - label: "Just this button, use existing theme primary"
+    description: "Smallest safe fix. QA finds the rule, Dev changes it, done."
+    recommended: true
+  - label: "Fix the shared component (affects all instances)"
+    description: "If it's a shared Button component, fix at the source — QA flags any visual side-effects."
+  - label: "Full login-page color audit"
+    description: "Sweep the login page for any other off-brand colors while we're in there."
+
+allowFreeformInput: true
+```

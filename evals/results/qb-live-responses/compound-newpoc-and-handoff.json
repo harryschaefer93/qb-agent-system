@@ -1,0 +1,28 @@
+{
+  "test_id": "compound-newpoc-and-handoff",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_ZWyR6YG9MWou2ZxJQkvqhJRs",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\":\"BRIEF.md\"}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_ZWyR6YG9MWou2ZxJQkvqhJRs",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\":\"BRIEF.md\"}"
+        }
+      }
+    ]
+  }
+}

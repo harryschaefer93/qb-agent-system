@@ -1,0 +1,413 @@
+{
+  "meta": {
+    "imp_id": "IMP-0001",
+    "eval_type": "tool_loop",
+    "eval_id": "imp_0001",
+    "commit_sha": "3c54cb4",
+    "timestamp": "2026-04-29T01:52:27.161375+00:00",
+    "phase": "post",
+    "model": "gpt-5.4",
+    "temperature": 0,
+    "seed": 42,
+    "n_samples": 5,
+    "cost": {
+      "input_tokens": 600319,
+      "output_tokens": 14679,
+      "wall_time_ms": 315597
+    },
+    "trajectory": {
+      "tool_call_count": 9,
+      "tool_call_sequence": [
+        "fileSearch",
+        "readFile",
+        "askQuestions",
+        "runSubagent",
+        "askQuestions",
+        "runSubagent",
+        "searchCodebase",
+        "runInTerminal",
+        "runInTerminal"
+      ],
+      "unique_tools_used": [
+        "askQuestions",
+        "fileSearch",
+        "readFile",
+        "runInTerminal",
+        "runSubagent",
+        "searchCodebase"
+      ],
+      "redundant_call_rate": 0.333,
+      "max_turns_hit": true,
+      "stopped_reason": "max_turns",
+      "turns_used": 8
+    }
+  },
+  "metrics": {
+    "total_scenarios": 2,
+    "overall_pass_rate": 1.0,
+    "all_passed": true,
+    "n_samples": 5,
+    "per_scenario": {
+      "bugfix_qa_invocation": 1.0,
+      "new_poc_arch_invocation": 1.0
+    }
+  },
+  "raw_results": [
+    {
+      "scenario_id": "bugfix_qa_invocation",
+      "prompt": "The /api/claims endpoint returns HTTP 500 with a ValueError when payload size exceeds 1MB. Backend only \u2014 do not investigate the frontend. Just patch this single endpoint, no broader audit. Quick patch is fine; root-cause investigation is not needed. The error logs already point to `api/claims_handler.py:42` where payload is parsed. Proceed directly with the standard QA \u2192 Dev pipeline.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 5,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "COMPLIANT: all 2 subagent prompt(s) include the directive (>= 2 markers each)",
+          "trajectory": {
+            "tool_call_count": 9,
+            "tool_call_sequence": [
+              "fileSearch",
+              "readFile",
+              "askQuestions",
+              "runSubagent",
+              "askQuestions",
+              "runSubagent",
+              "searchCodebase",
+              "runInTerminal",
+              "runInTerminal"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile",
+              "runInTerminal",
+              "runSubagent",
+              "searchCodebase"
+            ],
+            "redundant_call_rate": 0.333,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 8
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "COMPLIANT: all 2 subagent prompt(s) include the directive (>= 2 markers each)",
+          "trajectory": {
+            "tool_call_count": 13,
+            "tool_call_sequence": [
+              "fileSearch",
+              "askQuestions",
+              "runSubagent",
+              "askQuestions",
+              "runSubagent",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "askQuestions",
+              "searchCodebase"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "runSubagent",
+              "searchCodebase"
+            ],
+            "redundant_call_rate": 0.692,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 8
+          }
+        },
+        {
+          "sample": 2,
+          "passed": true,
+          "detail": "COMPLIANT: all 2 subagent prompt(s) include the directive (>= 2 markers each)",
+          "trajectory": {
+            "tool_call_count": 12,
+            "tool_call_sequence": [
+              "fileSearch",
+              "readFile",
+              "askQuestions",
+              "runSubagent",
+              "askQuestions",
+              "runSubagent",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "runInTerminal",
+              "runInTerminal"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile",
+              "runInTerminal",
+              "runSubagent"
+            ],
+            "redundant_call_rate": 0.583,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 8
+          }
+        },
+        {
+          "sample": 3,
+          "passed": true,
+          "detail": "INCONCLUSIVE: QB never invoked a subagent within 4 turn(s); rule was not exercised. tool_call_sequence=['fileSearch', 'readFile', 'askQuestions']",
+          "trajectory": {
+            "tool_call_count": 3,
+            "tool_call_sequence": [
+              "fileSearch",
+              "readFile",
+              "askQuestions"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile"
+            ],
+            "redundant_call_rate": 0.0,
+            "max_turns_hit": false,
+            "stopped_reason": "error",
+            "turns_used": 4
+          }
+        },
+        {
+          "sample": 4,
+          "passed": true,
+          "detail": "COMPLIANT: all 2 subagent prompt(s) include the directive (>= 2 markers each)",
+          "trajectory": {
+            "tool_call_count": 12,
+            "tool_call_sequence": [
+              "fileSearch",
+              "readFile",
+              "askQuestions",
+              "runSubagent",
+              "askQuestions",
+              "runSubagent",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile",
+              "runSubagent"
+            ],
+            "redundant_call_rate": 0.667,
+            "max_turns_hit": false,
+            "stopped_reason": "final_answer",
+            "turns_used": 8
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "new_poc_arch_invocation",
+      "prompt": "Kick off a new POC for Contoso Insurance \u2014 claims submission portal with FastAPI backend, React frontend, Azure SQL, and Entra ID auth. Scope is approved as-is, no further clarification needed. Proceed directly with the standard new-poc-setup pipeline.",
+      "mean_pass_rate": 1.0,
+      "stddev": 0.0,
+      "n_samples": 5,
+      "per_sample": [
+        {
+          "sample": 0,
+          "passed": true,
+          "detail": "COMPLIANT: all 4 subagent prompt(s) include the directive (>= 2 markers each)",
+          "trajectory": {
+            "tool_call_count": 17,
+            "tool_call_sequence": [
+              "fileSearch",
+              "readFile",
+              "askQuestions",
+              "runSubagent",
+              "askQuestions",
+              "runSubagent",
+              "runSubagent",
+              "runSubagent",
+              "runInTerminal",
+              "runInTerminal",
+              "runInTerminal",
+              "runInTerminal",
+              "runInTerminal",
+              "runInTerminal",
+              "runInTerminal",
+              "runInTerminal",
+              "runInTerminal"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile",
+              "runInTerminal",
+              "runSubagent"
+            ],
+            "redundant_call_rate": 0.706,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 8
+          }
+        },
+        {
+          "sample": 1,
+          "passed": true,
+          "detail": "COMPLIANT: all 3 subagent prompt(s) include the directive (>= 2 markers each)",
+          "trajectory": {
+            "tool_call_count": 14,
+            "tool_call_sequence": [
+              "fileSearch",
+              "readFile",
+              "askQuestions",
+              "runSubagent",
+              "askQuestions",
+              "runSubagent",
+              "runSubagent",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "runInTerminal"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile",
+              "runInTerminal",
+              "runSubagent"
+            ],
+            "redundant_call_rate": 0.643,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 8
+          }
+        },
+        {
+          "sample": 2,
+          "passed": true,
+          "detail": "COMPLIANT: all 4 subagent prompt(s) include the directive (>= 2 markers each)",
+          "trajectory": {
+            "tool_call_count": 16,
+            "tool_call_sequence": [
+              "fileSearch",
+              "readFile",
+              "askQuestions",
+              "runSubagent",
+              "readFile",
+              "askQuestions",
+              "runSubagent",
+              "runSubagent",
+              "runSubagent",
+              "runInTerminal",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile",
+              "runInTerminal",
+              "runSubagent"
+            ],
+            "redundant_call_rate": 0.688,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 8
+          }
+        },
+        {
+          "sample": 3,
+          "passed": true,
+          "detail": "COMPLIANT: all 8 subagent prompt(s) include the directive (>= 2 markers each)",
+          "trajectory": {
+            "tool_call_count": 19,
+            "tool_call_sequence": [
+              "fileSearch",
+              "readFile",
+              "askQuestions",
+              "runSubagent",
+              "askQuestions",
+              "runSubagent",
+              "runSubagent",
+              "runSubagent",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "runInTerminal",
+              "runSubagent",
+              "runSubagent",
+              "runSubagent",
+              "runSubagent"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile",
+              "runInTerminal",
+              "runSubagent"
+            ],
+            "redundant_call_rate": 0.737,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 8
+          }
+        },
+        {
+          "sample": 4,
+          "passed": true,
+          "detail": "COMPLIANT: all 5 subagent prompt(s) include the directive (>= 2 markers each)",
+          "trajectory": {
+            "tool_call_count": 16,
+            "tool_call_sequence": [
+              "fileSearch",
+              "readFile",
+              "askQuestions",
+              "runSubagent",
+              "askQuestions",
+              "runSubagent",
+              "runSubagent",
+              "runSubagent",
+              "runInTerminal",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "fileSearch",
+              "runSubagent"
+            ],
+            "unique_tools_used": [
+              "askQuestions",
+              "fileSearch",
+              "readFile",
+              "runInTerminal",
+              "runSubagent"
+            ],
+            "redundant_call_rate": 0.688,
+            "max_turns_hit": true,
+            "stopped_reason": "max_turns",
+            "turns_used": 8
+          }
+        }
+      ]
+    }
+  ]
+}

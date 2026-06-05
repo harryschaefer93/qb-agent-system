@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "imp_id": "IMP-0005",
+    "eval_type": "structural",
+    "eval_id": "imp_0005",
+    "commit_sha": "f051c67",
+    "timestamp": "2026-06-03T14:13:18.441819+00:00",
+    "phase": "post",
+    "model": null,
+    "temperature": null,
+    "seed": null,
+    "n_samples": 1,
+    "cost": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "wall_time_ms": 5,
+      "cost_usd": 0.0,
+      "pricing_source": "config.yaml@v1"
+    },
+    "trajectory": {},
+    "thresholds": {}
+  },
+  "metrics": {
+    "total_checks": 3,
+    "passed_checks": 3,
+    "pass_rate": 1.0,
+    "all_passed": true
+  },
+  "raw_results": [
+    {
+      "check_id": "handoff_section",
+      "label": "Session Handoff Protocol section exists",
+      "passed": true,
+      "detail": "Found"
+    },
+    {
+      "check_id": "trigger_conditions",
+      "label": "Trigger conditions use turn/phase counts",
+      "passed": true,
+      "detail": "Found"
+    },
+    {
+      "check_id": "handoff_template",
+      "label": "Handoff Brief template included",
+      "passed": true,
+      "detail": "Brief heading: yes, fields: 5/5"
+    }
+  ]
+}

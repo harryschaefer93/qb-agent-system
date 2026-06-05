@@ -1,0 +1,28 @@
+{
+  "agent": "dev",
+  "description": "Full-stack application developer. Builds APIs, frontends, AI integrations across Python, TypeScript, C#, Java. Microsoft-first stack.",
+  "shouldTriggerPrompts": [
+    "build a FastAPI backend with Azure OpenAI integration",
+    "add a React frontend with Fluent UI components",
+    "implement RAG with AI Search and Cosmos DB",
+    "add SignalR for real-time updates",
+    "create the REST API endpoints for claims processing",
+    "write the Python agent using Microsoft Agent Framework",
+    "build a Blazor frontend for the test harness",
+    "implement MSAL authentication in the React app",
+    "add Redis caching for the API responses",
+    "set up the Express.js API with GraphQL"
+  ],
+  "shouldNotTriggerPrompts": [
+    "set up the Bicep templates for Container Apps",
+    "provision VNets and subnets",
+    "review the code for security issues",
+    "write the README with deployment steps",
+    "generate an architecture diagram",
+    "triage my inbox",
+    "scope a new POC engagement",
+    "kick off the full delivery pipeline",
+    "validate the Bicep templates compile",
+    "create the customer handoff document"
+  ]
+}

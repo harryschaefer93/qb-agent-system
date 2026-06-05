@@ -1,0 +1,28 @@
+{
+  "agent": "qb",
+  "description": "Orchestration agent. Routes tasks across dev, infra, qa, diagram, docs. Handles bug-fix, new-poc-setup, customer-handoff, full-delivery workflows.",
+  "shouldTriggerPrompts": [
+    "kick off full delivery for the Fabrikam POC",
+    "there's a bug in the API — the /scores endpoint returns 500",
+    "run the customer handoff pipeline for Northwind",
+    "new POC setup — we need a RAG chatbot",
+    "orchestrate the full build pipeline",
+    "fix this bug and validate everything works",
+    "prepare everything for the customer demo",
+    "run the full delivery workflow",
+    "this endpoint is broken — figure out what's wrong and fix it",
+    "package this for customer handoff"
+  ],
+  "shouldNotTriggerPrompts": [
+    "scope a new engagement for Contoso",
+    "build a React frontend with Fluent UI",
+    "create Terraform for Azure resources",
+    "triage my inbox",
+    "write the deployment guide",
+    "generate a C4 diagram",
+    "help me respond to my emails",
+    "I need to plan a new customer POC from scratch",
+    "set up managed identity for the app",
+    "create the architecture diagram"
+  ]
+}

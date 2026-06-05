@@ -1,0 +1,44 @@
+{
+  "test_id": "bugfix-api-500",
+  "content": "",
+  "tool_calls": [
+    {
+      "id": "call_Goia1U7Q3F8C7MicM8N5xvMO",
+      "type": "function",
+      "function": {
+        "name": "fileSearch",
+        "arguments": "{\"query\": \"**/BRIEF.md\"}"
+      }
+    },
+    {
+      "id": "call_J87QNnJH8qKnEoKnuWa6pPKq",
+      "type": "function",
+      "function": {
+        "name": "askQuestions",
+        "arguments": "{\"questions\": [{\"header\": \"Bug scope\", \"question\": \"Before I diagnose this, what scope do you want for the /scores 500 issue?\", \"message\": \"I\u2019ll invoke **QA first** after you confirm scope. Please choose the closest option.\", \"options\": [{\"label\": \"Endpoint only\", \"description\": \"Fix just the /scores failure path\", \"recommended\": true}, {\"label\": \"Audit similar endpoints\", \"description\": \"Fix /scores and check related score/ranking endpoints for the same issue\"}, {\"label\": \"Unsure\", \"description\": \"Diagnose first, then I\u2019ll come back with a scoped plan\"}], \"allowFreeformInput\": true}]}"
+      }
+    }
+  ],
+  "raw_message": {
+    "role": "assistant",
+    "content": "",
+    "tool_calls": [
+      {
+        "id": "call_Goia1U7Q3F8C7MicM8N5xvMO",
+        "type": "function",
+        "function": {
+          "name": "fileSearch",
+          "arguments": "{\"query\": \"**/BRIEF.md\"}"
+        }
+      },
+      {
+        "id": "call_J87QNnJH8qKnEoKnuWa6pPKq",
+        "type": "function",
+        "function": {
+          "name": "askQuestions",
+          "arguments": "{\"questions\": [{\"header\": \"Bug scope\", \"question\": \"Before I diagnose this, what scope do you want for the /scores 500 issue?\", \"message\": \"I\u2019ll invoke **QA first** after you confirm scope. Please choose the closest option.\", \"options\": [{\"label\": \"Endpoint only\", \"description\": \"Fix just the /scores failure path\", \"recommended\": true}, {\"label\": \"Audit similar endpoints\", \"description\": \"Fix /scores and check related score/ranking endpoints for the same issue\"}, {\"label\": \"Unsure\", \"description\": \"Diagnose first, then I\u2019ll come back with a scoped plan\"}], \"allowFreeformInput\": true}]}"
+        }
+      }
+    ]
+  }
+}
