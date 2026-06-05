@@ -4,6 +4,8 @@ A multi-agent orchestration system for delivering Microsoft-first proof-of-conce
 engineering work end-to-end — from architecture through code, infrastructure, validation,
 diagrams, docs, and a clean repo handoff.
 
+**🔗 [Overview site](https://harryschaefer93.github.io/qb-agent-system/)** — a visual, at-a-glance guide to the fleet, flow, and getting started.
+
 At the center is **QB** (the "Quarterback"), an orchestrator that classifies a request,
 gates it behind explicit human approval, and routes the work to specialist sub-agents.
 A separate **retro** agent mines session history to measure how the fleet performs and
