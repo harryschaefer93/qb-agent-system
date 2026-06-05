@@ -69,13 +69,14 @@ adjust them for yours:
 
 - **Model IDs** — every agent's `model:` field points at `claude-opus-4.6-1m`. Swap it for a
   model your Copilot license exposes if needed.
-- **`~/.copilot` paths** — the `retro` agent and parts of `evals/` reference a
-  `~/.copilot/...` layout for the local session store. Update those paths for your machine/OS.
+- **`~/.copilot` paths** — the `retro` agent and parts of `evals/` assume the standard
+  `~/.copilot/` location for the local Copilot session store. This is the default install
+  path, so it works as-is on most setups (paths use `~` / `Path.home()` and are OS-agnostic).
 - **MCP server names** — the VS Code agents list specific MCP tools in frontmatter. Any you
   don't have are simply ignored; trim the `tools:` list if you prefer a clean set.
-- **FDPO / Microsoft-first conventions** — agents enforce Entra ID + RBAC (no API keys) and a
-  Microsoft-first stack. These are opinionated defaults; relax them in the agent prompts if
-  your context differs.
+- **FDPO / Microsoft-first conventions** — agents enforce Entra ID + RBAC (no API keys),
+  `disableLocalAuth: true`, and a Microsoft-first stack. These align with FDPO tenants, so
+  **no change is needed for FDPO environments** — they're the intended target.
 
 ---
 

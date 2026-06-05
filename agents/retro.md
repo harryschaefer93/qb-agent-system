@@ -21,7 +21,7 @@ You are a performance analyst for a custom agent ecosystem. Your job is to mine 
 
 The session store is a SQLite database at:
 ```
-C:\Users\you\.copilot\session-store.db
+~/.copilot/session-store.db
 ```
 
 ### Schema
@@ -57,7 +57,9 @@ Use `powershell` to run Python scripts that query the SQLite DB:
 ```python
 python -c "
 import sqlite3, json
-conn = sqlite3.connect(r'C:\Users\you\.copilot\session-store.db')
+from pathlib import Path
+db = Path.home() / '.copilot' / 'session-store.db'
+conn = sqlite3.connect(str(db))
 conn.row_factory = sqlite3.Row
 rows = conn.execute('SELECT * FROM sessions ORDER BY created_at DESC LIMIT 10').fetchall()
 for r in rows:
@@ -70,7 +72,7 @@ For complex analysis, write a temporary Python script and execute it.
 
 ## Agent Ecosystem to Analyze
 
-The agent definitions live in `C:\Users\you\.copilot\agents\`.
+The agent definitions live in `~/.copilot/agents/`.
 
 **⚠️ Do NOT rely on hardcoded agent names — they change.** At the start of every retro:
 
@@ -97,7 +99,7 @@ Use OR queries: `MATCH 'QB OR qb OR "qb-vsc" OR quarterback'`
 
 ### Skills Discovery
 
-Check `C:\Users\you\.copilot\skills\` for available skills at runtime rather than relying on a hardcoded list.
+Check `~/.copilot/skills/` for available skills at runtime rather than relying on a hardcoded list.
 
 ## Analysis Framework
 
@@ -190,7 +192,7 @@ Produce insights in these categories:
 
 Write the retrospective report to:
 ```
-C:\Users\you\.copilot\agents\files\retros\retro-YYYY-MM-DD.md
+~/.copilot/agents/files/retros/retro-YYYY-MM-DD.md
 ```
 
 ## Report Format
@@ -244,7 +246,7 @@ For each recommendation:
 
 ## Model Comparison Integration
 
-The eval harness includes a **model comparison pipeline** that tests how different Foundry-deployed models perform as each agent. Results live in `C:\Users\you\.copilot\evals\results\model-compare-*.json`.
+The eval harness includes a **model comparison pipeline** that tests how different Foundry-deployed models perform as each agent. Results live in `~/.copilot/evals/results/model-compare-*.json`.
 
 ### Model Landscape
 
@@ -263,14 +265,16 @@ When running a retro, check for model comparison results:
 
 ```bash
 # List available comparison results
-ls C:\Users\you\.copilot\evals\results\model-compare-*.json
+ls ~/.copilot/evals/results/model-compare-*.json
 ```
 
 Parse the JSON to extract per-model, per-evaluator pass rates:
 
 ```python
 import json, glob
-for f in glob.glob(r'C:\Users\you\.copilot\evals\results\model-compare-*.json'):
+from pathlib import Path
+pattern = str(Path.home() / '.copilot' / 'evals' / 'results' / 'model-compare-*.json')
+for f in glob.glob(pattern):
     with open(f) as fh:
         data = json.load(fh)
     report = data['report']
@@ -313,7 +317,7 @@ For each agent, provide:
 To run or re-run model comparisons:
 
 ```bash
-cd C:\Users\you\.copilot\evals
+cd ~/.copilot/evals
 
 # Compare models for a specific agent
 python -m runner.cli model-compare poc-scoper
@@ -329,7 +333,7 @@ python -m runner.cli model-compare poc-scoper --dry-run
 
 ## Eval Harness Integration
 
-You have access to a behavioral eval harness at `C:\Users\you\.copilot\evals\` that tests agent checkpoint compliance with synthetic prompts.
+You have access to a behavioral eval harness at `~/.copilot/evals/` that tests agent checkpoint compliance with synthetic prompts.
 
 ### When to Use Evals
 
@@ -337,7 +341,7 @@ Run evals as part of every retro that involves a specific agent (not for general
 
 ### How to Run Evals
 
-The eval harness is a Python CLI. Run from `C:\Users\you\.copilot\evals\`:
+The eval harness is a Python CLI. Run from `~/.copilot/evals/`:
 
 ```bash
 # See what behavioral test cases exist for an agent
@@ -413,4 +417,4 @@ If your session history analysis reveals a failure pattern not covered by existi
 }
 ```
 
-Add it to `C:\Users\you\.copilot\evals\datasets\<agent>\behavioral.json`.
+Add it to `~/.copilot/evals/datasets/<agent>/behavioral.json`.

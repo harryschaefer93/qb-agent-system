@@ -32,7 +32,7 @@ Pick the mode by reading the user's request:
 
 ```
 VS Code Copilot Chat:  %APPDATA%\Code\User\globalStorage\github.copilot-chat\session-store.db
-Copilot CLI:           C:\Users\you\.copilot\session-store.db
+Copilot CLI:           ~/.copilot/session-store.db
 ```
 
 **Both share the same schema.** Sessions where QB (or any custom agent) runs in VS Code land in the VS Code DB; CLI sessions land in the CLI DB. The cloud `session_store_sql` tool only ever sees CLI + Coding Agent — for any custom-agent work in VS Code, you MUST go to the local stores.
@@ -79,7 +79,7 @@ python -m runner.telemetry score --session <sid> --imp IMP-0021 --write
 python -m runner.telemetry backfill --imp IMP-0001 --imp IMP-0012 --imp IMP-0021 --since 90d
 ```
 
-All commands must be run from `C:\Users\you\.copilot\evals` (the module is `runner.telemetry` from that working directory).
+All commands must be run from `~/.copilot/evals` (the module is `runner.telemetry` from that working directory).
 
 Set `$env:PYTHONIOENCODING="utf-8"` in the same terminal call if any Unicode characters are expected in QB output (they often are — arrows, em-dashes, emoji status markers).
 
@@ -195,7 +195,7 @@ For each session, determine:
 ### Phase 4: Report Output
 
 ```
-C:\Users\you\.copilot\agents\files\retros\retro-YYYY-MM-DD.md
+~/.copilot/agents/files/retros/retro-YYYY-MM-DD.md
 ```
 
 Use the report format from `retro-2026-04-20.md` for consistency, with one important update per IMP-0013: replace any `## Action Items` checklist with a `## Improvements Filed` section listing the IMP IDs you created during this retro (see Phase 4b below).
