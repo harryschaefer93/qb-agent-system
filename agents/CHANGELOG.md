@@ -153,7 +153,7 @@ Format:
   - **composite** — new `eval_type: composite` lets one IMP combine multiple sub-evaluators with weights and `must_pass` flags; sub-snapshots embedded inline for full provenance. Tree breakdown in `--compare`.
 - Wiring: centralised `eval_type → runner` registry in `evaluators/__init__.py`; `runner/imp_runner.py` refactored to dispatch via the registry; new `runner/composite.py` for roll-up math.
 - IMP template: extended frontmatter with `rubric_path`, `calibration_path`, `calibration_min_agreement`, `thresholds`, `sub_evals`, `composite_pass_threshold`.
-- Reference IMPs: IMP-0018 (rubric backfill — poc-scoper output quality, with PLACEHOLDER calibration awaiting Harry's hand-grading) and IMP-0019 (composite backfill — QB tool-trim end-to-end).
+- Reference IMPs: IMP-0018 (rubric backfill — poc-scoper output quality, with PLACEHOLDER calibration awaiting the maintainer's hand-grading) and IMP-0019 (composite backfill — QB tool-trim end-to-end).
 - Prompts updated: `/Create-IMP-Eval`, `/Implement-Improvement`, `/Agent-Status` all surface the new types.
 - Docs: EVAL-SYSTEM-PLAN.md gained §3b (rubric), §3c (composite), §3d (execution_metrics) contracts.
 - Commit: pending

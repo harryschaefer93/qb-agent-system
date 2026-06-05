@@ -6,7 +6,7 @@ assistant response, and feeds it to the rubric judge defined in
 evaluators/rubrics/imp_0018.md.
 
 Scenarios are intentionally small (N_SAMPLES=1) for the scaffold so a baseline
-runs in a single judge call. Harry should expand this set when the rubric
+runs in a single judge call. the maintainer should expand this set when the rubric
 calibration is finalised.
 """
 from __future__ import annotations

@@ -15,6 +15,70 @@ feeds improvements back into the system.
 
 ---
 
+## Getting started (try it out)
+
+These are **agent definitions**, not a standalone app — they run inside GitHub Copilot
+(VS Code Copilot Chat and/or the Copilot CLI). To try them:
+
+### Prerequisites
+
+- **GitHub Copilot** access (Enterprise or a plan that exposes custom agents).
+- An **Opus/Sonnet-class model** selectable in your Copilot client. The agents declare
+  `model: claude-opus-4.6-1m`; if that exact model isn't available to you, change the
+  `model:` field in each agent's frontmatter to one you can use (see *Adapt before you run* below).
+- For the **build pipeline's full power** (optional to start): the MCP servers the agents
+  reference — `azure-mcp`, `microsoft-learn`, `bicep`, `context7`, `playwright`. Missing MCP
+  servers degrade gracefully; the orchestration still works without them.
+- For the **eval harness**: Python ≥ 3.10.
+
+### Install the agents
+
+```bash
+git clone https://github.com/harryschaefer93/qb-agent-system
+cd qb-agent-system
+```
+
+- **Copilot CLI:** copy the CLI agents (`scoper.md`, `retro.md`) into your `~/.copilot/agents/`
+  directory.
+- **VS Code Copilot Chat:** copy the `*.agent.md` files into your Copilot custom-agents
+  directory, then pick the agent (e.g. **QB**) from the agent selector in Copilot Chat.
+
+> Tip: start with just `QB.agent.md` + its specialists (`ARCH`, `QA`, `DEV`, `INFRA`,
+> `DIAGRAM`, `DOCS`, `REPO`) to exercise the core pipeline.
+
+### Run the pipeline
+
+1. (Optional) Drop a `BRIEF.md` at your workspace root describing the POC — or let `scoper`
+   generate one.
+2. Invoke **QB** with a request, e.g. *"Build a POC for a RAG chatbot on Azure."*
+3. QB classifies the task, asks you to confirm scope (**Checkpoint 1**), runs QA, presents a
+   plan for approval (**Checkpoint 2**), then routes the work to the specialists.
+
+### Run the eval harness (optional)
+
+```bash
+cd evals
+pip install -e .
+python -m runner.cli run-behavioral qb --dry-run   # see QB's behavioral test cases
+```
+
+### Adapt before you run
+
+This system was extracted from one engineer's environment. A few things assume that setup —
+adjust them for yours:
+
+- **Model IDs** — every agent's `model:` field points at `claude-opus-4.6-1m`. Swap it for a
+  model your Copilot license exposes if needed.
+- **`~/.copilot` paths** — the `retro` agent and parts of `evals/` reference a
+  `~/.copilot/...` layout for the local session store. Update those paths for your machine/OS.
+- **MCP server names** — the VS Code agents list specific MCP tools in frontmatter. Any you
+  don't have are simply ignored; trim the `tools:` list if you prefer a clean set.
+- **FDPO / Microsoft-first conventions** — agents enforce Entra ID + RBAC (no API keys) and a
+  Microsoft-first stack. These are opinionated defaults; relax them in the agent prompts if
+  your context differs.
+
+---
+
 ## Two runtimes, one fleet
 
 Every role ships in **two independent variants** because the two host environments expose
