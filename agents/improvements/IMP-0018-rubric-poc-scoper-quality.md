@@ -52,7 +52,7 @@ For ongoing eval, run a small set of captured customer scoping prompts through t
 - [ ] Rubric file `evaluators/rubrics/imp_0018.md` exists with 3 criteria summing to weight 1.0
 - [ ] Calibration set `evaluators/rubrics/imp_0018.calibration.jsonl` has ≥ 5 hand-graded examples
 - [ ] `evals run-imp IMP-0018 --baseline` captures a snapshot with rubric metrics populated (`weighted_score`, `per_criterion_means`, `calibration_passed`)
-- [ ] Calibration agreement ≥ 0.80 against the hand-graded set after the maintainer's refinement pass
+- [ ] Calibration agreement ≥ 0.80 against the hand-graded set after Harry's refinement pass
 - [ ] At least one prompt in the scenario set deliberately produces a low-quality BRIEF so the judge has to distinguish quality (negative case)
 
 ## Validation plan
@@ -92,9 +92,9 @@ Capture a baseline against the current `scoper.md` prompt. Iterate on `scoper.md
 
 ## Notes
 
-**PLACEHOLDER calibration grades.** The 5 examples in `imp_0018.calibration.jsonl` are scaffolded with fabricated `response` text and approximate `expected_scores`. Every entry is marked `"notes": "PLACEHOLDER — the maintainer to refine"`.
+**PLACEHOLDER calibration grades.** The 5 examples in `imp_0018.calibration.jsonl` are scaffolded with fabricated `response` text and approximate `expected_scores`. Every entry is marked `"notes": "PLACEHOLDER — Harry to refine"`.
 
-Before this rubric can be used to gate an IMP, the maintainer must:
+Before this rubric can be used to gate an IMP, Harry must:
 
 1. Replace each fabricated `response` with a real BRIEF.md excerpt drawn from past customer scoping work (or hand-author representative examples that match the score level).
 2. Re-grade `expected_scores` against those real responses.

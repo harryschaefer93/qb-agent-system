@@ -48,7 +48,7 @@ def get_scenarios() -> list[dict]:
          "expected": {"class": "new-poc-setup", "ambiguous": False}},
         {"id": "newpoc_2", "prompt": "Spin up a RAG demo using Foundry agents and Azure AI Search. New project.",
          "expected": {"class": "new-poc-setup", "ambiguous": False}},
-        {"id": "handoff_1", "prompt": "Package this POC for delivery to Contoso. Customer handoff.",
+        {"id": "handoff_1", "prompt": "Package this POC for delivery to Allstate. Customer handoff.",
          "expected": {"class": "customer-handoff", "ambiguous": False}},
         {"id": "handoff_2", "prompt": "Run public-release readiness on this repo and prepare the handoff branch.",
          "expected": {"class": "customer-handoff", "ambiguous": False}},

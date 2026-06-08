@@ -5,7 +5,7 @@
 {"query": "Package the broker workbench POC for customer handoff - needs README, architecture diagram, and deployment guide"}
 {"query": "Add authentication to the existing app using MSAL and Azure Entra ID - it currently has no auth"}
 {"query": "The Playwright E2E tests are failing because the UI changed but tests weren't updated"}
-{"query": "Create a full delivery pipeline for the Fabrikam contact center POC - frontend, API, Azure resources, and docs"}
+{"query": "Create a full delivery pipeline for the Aon contact center POC - frontend, API, Azure resources, and docs"}
 {"query": "The app is throwing CORS errors when the frontend tries to call the API from a different origin"}
 {"query": "We need to add a new feature - document upload with OCR processing using Azure Document Intelligence"}
 {"query": "The container app keeps restarting - looks like it's running out of memory during peak load"}

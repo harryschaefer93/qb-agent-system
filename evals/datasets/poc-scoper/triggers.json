@@ -2,14 +2,14 @@
   "agent": "poc-scoper",
   "description": "POC scoping specialist for FSI customer engagements. Takes verbal brief, researches customer via WorkIQ, produces BRIEF.md.",
   "shouldTriggerPrompts": [
-    "scope a new POC for Contoso",
-    "help me write up the brief for Tailspin",
+    "scope a new POC for Allstate",
+    "help me write up the brief for FCT Canada",
     "I need to scope an engagement for a new insurance client",
-    "new customer engagement — Fabrikam wants interview scoring",
+    "new customer engagement — Aon wants interview scoring",
     "let's scope the content understanding POC",
     "write a BRIEF.md for this customer",
     "customer kickoff — what do we need to scope?",
-    "start new POC planning for Northwind chatbot",
+    "start new POC planning for Enact UK chatbot",
     "POC scoping session for a financial services client",
     "I just got off a call about a new engagement — help me capture it"
   ],

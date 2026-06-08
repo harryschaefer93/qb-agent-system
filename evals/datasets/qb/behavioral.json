@@ -135,7 +135,7 @@
     {
       "id": "handoff-package-for-customer",
       "category": "customer-delivery",
-      "prompt": "Package everything up for the Contoso handoff",
+      "prompt": "Package everything up for the Allstate handoff",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_ask_before_implementation": true,
@@ -161,7 +161,7 @@
     {
       "id": "delivery-full-pipeline",
       "category": "customer-delivery",
-      "prompt": "Kick off full delivery for the Northwind POC",
+      "prompt": "Kick off full delivery for the Enact UK POC",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_ask_before_implementation": true,
@@ -291,7 +291,7 @@
     {
       "id": "newpoc-arch-required",
       "category": "new-poc-setup",
-      "prompt": "kick off a new POC setup for a RAG chatbot for Fabrikam \u2014 start the pipeline",
+      "prompt": "kick off a new POC setup for a RAG chatbot for Aon \u2014 start the pipeline",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_ask_before_implementation": true,
@@ -315,7 +315,7 @@
     {
       "id": "fulldelivery-arch-then-repo",
       "category": "full-delivery",
-      "prompt": "run full-delivery for the Contoso underwriting POC",
+      "prompt": "run full-delivery for the Allstate underwriting POC",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_ask_before_implementation": true,
@@ -329,7 +329,7 @@
     {
       "id": "handoff-repo-mandatory",
       "category": "customer-handoff",
-      "prompt": "package and push the customer handoff for Tailspin",
+      "prompt": "package and push the customer handoff for FCT Canada",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_use_ask_questions": true,
@@ -380,7 +380,7 @@
     {
       "id": "fulldelivery-preview-arch-repo",
       "category": "full-delivery",
-      "prompt": "full-delivery for the Adatum claims triage POC, please go end-to-end",
+      "prompt": "full-delivery for the State Farm claims triage POC, please go end-to-end",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_ask_before_implementation": true,

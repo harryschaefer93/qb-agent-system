@@ -32,7 +32,7 @@ Pick the mode by reading the user's request:
 
 ```
 VS Code Copilot Chat:  %APPDATA%\Code\User\globalStorage\github.copilot-chat\session-store.db
-Copilot CLI:           ~/.copilot/session-store.db
+Copilot CLI:           ~/.copilot\session-store.db
 ```
 
 **Both share the same schema.** Sessions where QB (or any custom agent) runs in VS Code land in the VS Code DB; CLI sessions land in the CLI DB. The cloud `session_store_sql` tool only ever sees CLI + Coding Agent — for any custom-agent work in VS Code, you MUST go to the local stores.
@@ -79,7 +79,7 @@ python -m runner.telemetry score --session <sid> --imp IMP-0021 --write
 python -m runner.telemetry backfill --imp IMP-0001 --imp IMP-0012 --imp IMP-0021 --since 90d
 ```
 
-All commands must be run from `~/.copilot/evals` (the module is `runner.telemetry` from that working directory).
+All commands must be run from `~/.copilot\evals` (the module is `runner.telemetry` from that working directory).
 
 Set `$env:PYTHONIOENCODING="utf-8"` in the same terminal call if any Unicode characters are expected in QB output (they often are — arrows, em-dashes, emoji status markers).
 
@@ -184,7 +184,7 @@ For each session, determine:
    - DOCS: `README.md`/`docs/` edits + deployment-guide language
    - REPO: `secret scan`, `gitignore audit`, `gh repo edit`
 2. **Task type** — bug-fix, new-poc, troubleshooting, agent development, customer work, internal
-3. **Customer context** — look for: contoso, fabrikam, northwind, tailspin, woodgrove, adatum, globex
+3. **Customer context** — look for: allstate, aon, enact, fct, broker, climate, aurora
 4. **Outcome** — completed / partial / abandoned / errored (heuristic: checkpoints + final turn content)
 5. **Turn count** — high turn count (>15) signals friction or genuine complexity
 
@@ -195,7 +195,7 @@ For each session, determine:
 ### Phase 4: Report Output
 
 ```
-~/.copilot/agents/files/retros/retro-YYYY-MM-DD.md
+~/.copilot\agents\files\retros\retro-YYYY-MM-DD.md
 ```
 
 Use the report format from `retro-2026-04-20.md` for consistency, with one important update per IMP-0013: replace any `## Action Items` checklist with a `## Improvements Filed` section listing the IMP IDs you created during this retro (see Phase 4b below).
@@ -264,4 +264,4 @@ For *fingerprint* detection in IMP Evidence Mode, names don't matter — content
 3. **Read agent definitions** before recommending prompt changes — understand what the prompt already says.
 4. **Prioritize** by impact × frequency.
 5. **Track over time.** Reference prior retros in `agents/files/retros/`. Note which past recommendations shipped and whether they helped.
-6. **Never write silently.** All IMP frontmatter edits require explicit user approval per change.
+6. **Never write silently.** All IMP frontmatter edits require explicit user approval per change.

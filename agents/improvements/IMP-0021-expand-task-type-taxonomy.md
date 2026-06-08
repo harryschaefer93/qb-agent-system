@@ -108,7 +108,7 @@ These complement the existing `fast-check` and `deep-review` modes.
 
 ## Validation plan
 
-Three real sessions on an active POC (e.g., one of the `clients/Contoso/*` projects):
+Three real sessions on an active POC (e.g., one of the `clients/allstate/*` projects):
 
 1. **feature-request** — "add a `/healthz` endpoint that returns DB connection status". Verify QB routes to QA-survey → CHECKPOINT 2 (no ARCH needed, single service) → DEV → gates → QA-deep-review → REPO.
 2. **refactor** — "extract the chat history persistence into its own module". Verify QB captures a baseline (existing tests + API surface) before DEV touches anything, then runs regression check after.

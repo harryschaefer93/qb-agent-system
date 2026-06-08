@@ -286,7 +286,7 @@ Edge(label="  ④  Returns score JSON (REST)  ")
 **Diagram metadata footer (always include):**
 ```python
 # Add as graph label or subtitle
-graph_attr["label"] = "Architecture Overview | Fabrikam Voice Agent POC | v1.0 | April 2026 | Author Name"
+graph_attr["label"] = "Architecture Overview | Aon Voice Agent POC | v1.0 | April 2026 | Harry Schaefer"
 graph_attr["labelloc"] = "b"  # bottom
 graph_attr["labeljust"] = "r"  # right-aligned
 graph_attr["fontsize"] = "10"  # small metadata
@@ -533,7 +533,7 @@ from diagrams.aws.ml import Bedrock, Sagemaker, SagemakerModel, Comprehend, Lex,
 from diagrams.aws.compute import Lambda, EC2, ECS, EKS, Fargate, AppRunner, ElasticBeanstalk, Batch
 
 # Database
-from diagrams.aws.database import RDS, Dynamodb, ElastiCache, Neptune, Redshift, DocumentDB
+from diagrams.aws.database import RDS, Aurora, Dynamodb, ElastiCache, Neptune, Redshift, DocumentDB
 
 # Storage
 from diagrams.aws.storage import S3, EFS, FSx, Glacier  # import from diagrams.aws.storage
