@@ -48,3 +48,8 @@ evals/evidence/**/*.json
 Thumbs.db
 *.swp
 *~
+
+# --- never publish inbox-triage to the public mirror ---
+**/inbox-triage*
+**/inbox-triage/
+

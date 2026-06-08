@@ -45,7 +45,7 @@ def load_agents() -> dict[str, list[str]]:
     for f in AGENTS_DIR.glob("*.agent.md"):
         name = f.stem.replace(".agent", "")
         agents[name] = parse_agent_tools(f)
-    # Also CLI-style .md agents (scoper, inbox-triage, retro)
+    # Also CLI-style .md agents (scoper, retro)
     for f in AGENTS_DIR.glob("*.md"):
         if f.name in ("README.md",) or f.name.endswith(".agent.md"):
             continue

@@ -184,33 +184,6 @@
       ]
     },
     {
-      "id": "rt-021",
-      "prompt": "triage my inbox \u2014 clean up the junk and show me what needs responses",
-      "expectedAgent": "inbox-triage",
-      "shouldNotRoute": [
-        "scoper",
-        "qb"
-      ]
-    },
-    {
-      "id": "rt-022",
-      "prompt": "help me respond to my urgent emails",
-      "expectedAgent": "inbox-triage",
-      "shouldNotRoute": [
-        "docs",
-        "dev"
-      ]
-    },
-    {
-      "id": "rt-023",
-      "prompt": "inbox status \u2014 what's the damage?",
-      "expectedAgent": "inbox-triage",
-      "shouldNotRoute": [
-        "scoper",
-        "qa"
-      ]
-    },
-    {
       "id": "rt-024",
       "prompt": "new POC setup \u2014 we need a RAG chatbot for Aon market research",
       "expectedAgent": "qb",
@@ -254,15 +227,6 @@
       "expectedAgent": "qa",
       "shouldNotRoute": [
         "dev",
-        "docs"
-      ]
-    },
-    {
-      "id": "rt-029",
-      "prompt": "what are my top 3 urgent emails right now?",
-      "expectedAgent": "inbox-triage",
-      "shouldNotRoute": [
-        "scoper",
         "docs"
       ]
     },

@@ -118,55 +118,6 @@ def evaluate_qb_output_structure(content: str) -> StructureResult:
     )
 
 
-def evaluate_triage_categorization(content: str) -> StructureResult:
-    """
-    Inbox-triage: Validate triage output has proper categorization.
-    """
-    expected_categories = [
-        ("DELETE category", r"(?i)(🗑️|DELETE|delete)"),
-        ("ARCHIVE category", r"(?i)(📁|ARCHIVE|archive)"),
-        ("NEEDS RESPONSE category", r"(?i)(📬|NEEDS\s+RESPONSE|needs\s+response)"),
-    ]
-
-    priority_indicators = [
-        ("Has priority indicators", r"(🔴|🟡|🟢|HIGH|MEDIUM|LOW)"),
-    ]
-
-    details = []
-    passed_count = 0
-
-    for check_name, pattern in expected_categories + priority_indicators:
-        found = bool(re.search(pattern, content))
-        if found:
-            passed_count += 1
-        details.append({
-            "check": check_name,
-            "passed": found,
-            "note": "present" if found else "MISSING",
-        })
-
-    # Check for confirmation prompt (should never auto-execute)
-    has_confirmation = bool(re.search(
-        r"(?i)(confirm|approve|proceed|go ahead|shall I|ready to)",
-        content
-    ))
-    if has_confirmation:
-        passed_count += 1
-    details.append({
-        "check": "Asks for confirmation before executing",
-        "passed": has_confirmation,
-        "note": "present" if has_confirmation else "MISSING — should ask before deleting/archiving",
-    })
-
-    total = len(details)
-    return StructureResult(
-        agent="inbox-triage",
-        evaluator="triage_categorization",
-        passed=passed_count == total,
-        total_checks=total,
-        passed_checks=passed_count,
-        details=details,
-    )
 
 
 def evaluate_iac_structure(content: str, iac_type: str = "bicep") -> StructureResult:

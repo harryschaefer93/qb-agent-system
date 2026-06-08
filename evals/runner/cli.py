@@ -29,7 +29,6 @@ from evaluators.routing import (
 from evaluators.structure import (
     evaluate_brief_structure,
     evaluate_qb_output_structure,
-    evaluate_triage_categorization,
 )
 from evaluators.behavioral import (
     compute_behavioral_summary,
@@ -282,32 +281,6 @@ def run_agent(agent_name: str):
         console.print(f"    {status} {prompt[:60]}...")
 
     console.print(f"\n  Should NOT trigger: [{'green' if not_trigger_pass == not_trigger_total else 'yellow'}]{not_trigger_pass}/{not_trigger_total}[/{'green' if not_trigger_pass == not_trigger_total else 'yellow'}]")
-
-    # Mode detection for inbox-triage
-    if agent_name == "inbox-triage" and "modeDetection" in triggers:
-        console.print("\n  [bold]Mode Detection:[/bold]")
-        modes = triggers["modeDetection"]
-        mode_pass = 0
-        for case in modes:
-            prompt_lower = case["prompt"].lower()
-            expected_mode = case["expectedMode"]
-            # Simple mode detection heuristic
-            if any(kw in prompt_lower for kw in ["triage", "clean", "inbox zero", "archive"]):
-                detected = "triage"
-            elif any(kw in prompt_lower for kw in ["respond", "reply", "draft"]):
-                detected = "respond"
-            elif any(kw in prompt_lower for kw in ["status", "urgent", "unread", "how many"]):
-                detected = "status"
-            else:
-                detected = "unknown"
-
-            passed = detected == expected_mode
-            if passed:
-                mode_pass += 1
-            status = "[green]✓[/green]" if passed else f"[red]✗ expected {expected_mode}, got {detected}[/red]"
-            console.print(f"    {status} \"{case['prompt'][:50]}\" → {detected}")
-
-        console.print(f"\n  Mode detection: [{'green' if mode_pass == len(modes) else 'yellow'}]{mode_pass}/{len(modes)}[/{'green' if mode_pass == len(modes) else 'yellow'}]")
 
     console.print()
 
@@ -877,7 +850,6 @@ def model_compare(agent_name: str, models: str | None, dataset: str | None,
     Examples:
       python -m runner.cli model-compare poc-scoper
       python -m runner.cli model-compare qb --models gpt-5.4,gpt-4.1-mini
-      python -m runner.cli model-compare inbox-triage --dry-run
     """
     from evaluators.model_eval import (
         ModelConfig,

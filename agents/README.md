@@ -32,7 +32,6 @@ CLI agents are **work assistants** — they leverage the full Agency Stack (Work
 | Agent | File | Role |
 |---|---|---|
 | scoper | `scoper.md` | Scope customer engagements → `BRIEF.md` |
-| inbox-triage | `inbox-triage.md` | Email triage, response drafting, inbox status |
 | retro | `retro.md` | Session history mining & retrospectives |
 
 ## Workflow

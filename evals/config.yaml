@@ -14,7 +14,6 @@ agents:
     docs: "docs.agent.md"
     arch: "arch.agent.md"
     repo: "repo.agent.md"
-    inbox-triage: "inbox-triage.agent.md"
 
 # Foundry config — modern Foundry resource (Entra auth, no API keys)
 foundry:

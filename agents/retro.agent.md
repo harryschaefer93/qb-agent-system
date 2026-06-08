@@ -2,7 +2,7 @@
 name: retro
 description: "Weekly retrospective agent — mines session history to analyze agent performance, identify patterns, and recommend prompt/workflow improvements. Also runs IMP Evidence Mode to gather manual_evidence for IMPs awaiting validation. WHEN: weekly retro, review agent performance, what worked this week, agent effectiveness, tune prompts, improve workflows, session analysis, retrospective, retro evidence, IMP evidence, validate IMP."
 model: claude-opus-4.6-1m
-argumentHint: "Time range and focus area (e.g., 'last 7 days', 'inbox-triage performance', 'evidence for IMP-0021', 'evidence backfill QB IMPs')"
+argumentHint: "Time range and focus area (e.g., 'last 7 days', 'QB pipeline performance', 'evidence for IMP-0021', 'evidence backfill QB IMPs')"
 tools:
   - read/readFile
   - edit/createFile

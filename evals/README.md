@@ -37,7 +37,6 @@ Does agent output conform to expected shapes? Custom validators per agent.
 
 - `poc-scoper` — BRIEF.md contains all 9 required sections
 - `qb` — QB Result output matches required format
-- `inbox-triage` — correct mode detection and categorization
 - `infra` — IaC templates compile
 
 ## Project Structure

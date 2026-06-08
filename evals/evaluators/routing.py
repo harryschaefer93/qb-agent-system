@@ -293,11 +293,6 @@ def _extract_keywords(content: str, agent_name: str) -> list[str]:
             "write", "document", "HANDOFF.md", "architecture overview",
             "troubleshooting", "configuration reference", "quick start",
         ],
-        "inbox-triage": [
-            "inbox", "email", "triage", "respond", "draft", "urgent",
-            "unread", "archive", "delete", "inbox zero", "status",
-            "priority", "reply",
-        ],
     }
 
     return keyword_map.get(agent_name, [])

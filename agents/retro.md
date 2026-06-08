@@ -2,7 +2,7 @@
 name: retro
 description: "Weekly retrospective agent — mines session history to analyze agent performance, identify patterns, and recommend prompt/workflow improvements. WHEN: weekly retro, review agent performance, what worked this week, agent effectiveness, tune prompts, improve workflows, session analysis, retrospective."
 model: claude-opus-4.6-1m
-argumentHint: "Time range and focus area (e.g., 'last 7 days', 'inbox-triage performance', 'all QB pipelines')"
+argumentHint: "Time range and focus area (e.g., 'last 7 days', 'QB pipeline performance', 'all QB pipelines')"
 tools:
   - read/readFile
   - edit/createFile
@@ -318,7 +318,6 @@ cd ~/.copilot\evals
 # Compare models for a specific agent
 python -m runner.cli model-compare poc-scoper
 python -m runner.cli model-compare qb
-python -m runner.cli model-compare inbox-triage
 
 # Override which models to test
 python -m runner.cli model-compare poc-scoper --models gpt-5.4,gpt-4.1-mini
