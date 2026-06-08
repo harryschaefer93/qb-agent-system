@@ -20,7 +20,7 @@
     "validate the implementation end-to-end",
     "generate an architecture diagram",
     "package the customer handoff doc with executive summary",
-    "scope a new POC for Allstate",
+    "scope a new POC for Woodgrove",
     "fix the broken auth endpoint",
     "deploy to Azure",
     "run the unit tests"

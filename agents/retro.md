@@ -139,7 +139,7 @@ From the raw data, extract and classify:
 1. **Session categorization** — For each session, determine:
    - Which agent(s) were involved (look for agent names in turns, file paths in `~/.copilot/agents/`)
    - Task type (bug-fix, new feature, troubleshooting, agent development, customer work, internal)
-   - Customer context (look for customer names: allstate, aon, enact, fct)
+   - Customer context (look for customer names: woodgrove, contoso, relecloud, litware)
    - Outcome (completed successfully, partial, abandoned, errored)
    - Turn count / complexity
 

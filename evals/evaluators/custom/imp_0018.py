@@ -18,9 +18,9 @@ MAX_TURNS = 4
 def get_scenarios() -> list[dict]:
     return [
         {
-            "id": "scope-allstate-claims",
+            "id": "scope-woodgrove-claims",
             "prompt": (
-                "Scope a new POC for Allstate on claims automation. "
+                "Scope a new POC for Woodgrove on claims automation. "
                 "Customer has 80M policies and a $3B annual claims spend. "
                 "Produce a BRIEF.md with sections: Customer Context, "
                 "Acceptance Criteria, Constraints."

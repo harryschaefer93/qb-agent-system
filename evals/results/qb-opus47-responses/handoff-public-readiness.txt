@@ -1,13 +1,13 @@
-No BRIEF.md found at workspace root — flagging. For Travelers (US insurer) handoff with explicit open-source intent, BRIEF context would normally inform license + attribution decisions.
+No BRIEF.md found at workspace root — flagging. For VanArsdel (US insurer) handoff with explicit open-source intent, BRIEF context would normally inform license + attribution decisions.
 
 This is a **customer-handoff** task with **open-sourceable** posture explicitly requested → strict public-readiness checklist applies. Checkpoint 1.
 
 ```askQuestions
-message: "Open-source-ready handoff for Travelers — that triggers a stricter checklist than a private handoff. Before I invoke QA, I need to confirm a few things:
+message: "Open-source-ready handoff for VanArsdel — that triggers a stricter checklist than a private handoff. Before I invoke QA, I need to confirm a few things:
 
-1. **License** — what license should DOCS apply (MIT default for samples; Apache-2.0 if patent grants matter; something Travelers has specified)?
-2. **Attribution / ownership** — open-sourced under your GitHub org, a Microsoft org, a Travelers org, or a joint?
-3. **Customer references** — should public-readiness scrub ALL Travelers-identifying references (logos, customer name in code/docs/configs/sample data), or are some explicit references OK because Travelers has approved attribution?
+1. **License** — what license should DOCS apply (MIT default for samples; Apache-2.0 if patent grants matter; something VanArsdel has specified)?
+2. **Attribution / ownership** — open-sourced under your GitHub org, a Microsoft org, a VanArsdel org, or a joint?
+3. **Customer references** — should public-readiness scrub ALL VanArsdel-identifying references (logos, customer name in code/docs/configs/sample data), or are some explicit references OK because VanArsdel has approved attribution?
 4. **Internal refs** — anything internal-Microsoft that needs to come out (FTE names in commits, internal URLs, internal Slack/email references in comments)?
 5. **Sample data** — is current sample/test data safe for public release, or does it need to be regenerated as fully synthetic?
 6. **Diagrams** — regenerate as-built (recommended for public release) or trust existing?
@@ -25,7 +25,7 @@ Here's the open-source handoff plan:
    - **Strict secret scan** — BLOCKS on any finding
    - License headers on source files
    - No internal references (Microsoft FTE names, internal URLs, internal email addresses)
-   - No customer-identifying data in samples (unless Travelers-approved)
+   - No customer-identifying data in samples (unless VanArsdel-approved)
    - License + CONTRIBUTING + SECURITY present
    - Creates `customer-handoff` branch + tag + release notes
    - Final push (to your chosen destination)
@@ -33,13 +33,13 @@ Here's the open-source handoff plan:
 I will block on ANY public-readiness checklist failure or secret scan finding. Open-sourcing accidentally-leaked content is not recoverable."
 
 options:
-  - label: "MIT license, Travelers + Microsoft attribution, scrub internal refs only"
+  - label: "MIT license, VanArsdel + Microsoft attribution, scrub internal refs only"
     description: "Standard FSI open-source handoff. Customer name OK with their approval; internal Microsoft refs scrubbed. Recommended."
     recommended: true
   - label: "MIT license, fully scrub all customer references too"
     description: "Stricter. Generic POC presentation, no customer attribution. Safer if approval is uncertain."
   - label: "Apache-2.0 (patent grant) — same scrubbing as recommended"
-    description: "Pick this if Travelers/legal asked for Apache-2.0 explicitly."
+    description: "Pick this if VanArsdel/legal asked for Apache-2.0 explicitly."
 
 allowFreeformInput: true
 ```

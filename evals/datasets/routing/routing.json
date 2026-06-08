@@ -4,7 +4,7 @@
   "test_cases": [
     {
       "id": "rt-001",
-      "prompt": "scope a new POC for Allstate on claims automation",
+      "prompt": "scope a new POC for Woodgrove on claims automation",
       "expectedAgent": "scoper",
       "shouldNotRoute": [
         "dev",
@@ -14,7 +14,7 @@
     },
     {
       "id": "rt-002",
-      "prompt": "I just had a call with FCT Canada about content understanding \u2014 help me write up the brief",
+      "prompt": "I just had a call with Litware Canada about content understanding \u2014 help me write up the brief",
       "expectedAgent": "scoper",
       "shouldNotRoute": [
         "docs",
@@ -23,7 +23,7 @@
     },
     {
       "id": "rt-003",
-      "prompt": "kick off full delivery for the Aon interview scoring POC",
+      "prompt": "kick off full delivery for the Contoso interview scoring POC",
       "expectedAgent": "qb",
       "shouldNotRoute": [
         "scoper",
@@ -41,7 +41,7 @@
     },
     {
       "id": "rt-005",
-      "prompt": "run the customer handoff pipeline for Enact UK",
+      "prompt": "run the customer handoff pipeline for Relecloud UK",
       "expectedAgent": "qb",
       "shouldNotRoute": [
         "dev",
@@ -185,7 +185,7 @@
     },
     {
       "id": "rt-024",
-      "prompt": "new POC setup \u2014 we need a RAG chatbot for Aon market research",
+      "prompt": "new POC setup \u2014 we need a RAG chatbot for Contoso market research",
       "expectedAgent": "qb",
       "shouldNotRoute": [
         "scoper",
@@ -241,7 +241,7 @@
     },
     {
       "id": "rt-031",
-      "prompt": "design the architecture for a new RAG chatbot POC for Allstate",
+      "prompt": "design the architecture for a new RAG chatbot POC for Woodgrove",
       "expectedAgent": "arch",
       "shouldNotRoute": [
         "dev",

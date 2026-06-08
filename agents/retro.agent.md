@@ -184,7 +184,7 @@ For each session, determine:
    - DOCS: `README.md`/`docs/` edits + deployment-guide language
    - REPO: `secret scan`, `gitignore audit`, `gh repo edit`
 2. **Task type** — bug-fix, new-poc, troubleshooting, agent development, customer work, internal
-3. **Customer context** — look for: allstate, aon, enact, fct, broker, climate, aurora
+3. **Customer context** — look for: woodgrove, contoso, relecloud, litware, broker, climate, aurora
 4. **Outcome** — completed / partial / abandoned / errored (heuristic: checkpoints + final turn content)
 5. **Turn count** — high turn count (>15) signals friction or genuine complexity
 

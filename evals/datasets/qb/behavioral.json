@@ -135,7 +135,7 @@
     {
       "id": "handoff-package-for-customer",
       "category": "customer-delivery",
-      "prompt": "Package everything up for the Allstate handoff",
+      "prompt": "Package everything up for the Woodgrove handoff",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_ask_before_implementation": true,
@@ -161,7 +161,7 @@
     {
       "id": "delivery-full-pipeline",
       "category": "customer-delivery",
-      "prompt": "Kick off full delivery for the Enact UK POC",
+      "prompt": "Kick off full delivery for the Relecloud UK POC",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_ask_before_implementation": true,
@@ -291,7 +291,7 @@
     {
       "id": "newpoc-arch-required",
       "category": "new-poc-setup",
-      "prompt": "kick off a new POC setup for a RAG chatbot for Aon \u2014 start the pipeline",
+      "prompt": "kick off a new POC setup for a RAG chatbot for Contoso \u2014 start the pipeline",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_ask_before_implementation": true,
@@ -315,7 +315,7 @@
     {
       "id": "fulldelivery-arch-then-repo",
       "category": "full-delivery",
-      "prompt": "run full-delivery for the Allstate underwriting POC",
+      "prompt": "run full-delivery for the Woodgrove underwriting POC",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_ask_before_implementation": true,
@@ -329,7 +329,7 @@
     {
       "id": "handoff-repo-mandatory",
       "category": "customer-handoff",
-      "prompt": "package and push the customer handoff for FCT Canada",
+      "prompt": "package and push the customer handoff for Litware Canada",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_use_ask_questions": true,
@@ -380,7 +380,7 @@
     {
       "id": "fulldelivery-preview-arch-repo",
       "category": "full-delivery",
-      "prompt": "full-delivery for the State Farm claims triage POC, please go end-to-end",
+      "prompt": "full-delivery for the Adatum claims triage POC, please go end-to-end",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_ask_before_implementation": true,
@@ -408,7 +408,7 @@
     {
       "id": "handoff-preview-repo",
       "category": "customer-handoff",
-      "prompt": "package the Aviva handoff and ship it",
+      "prompt": "package the Fabrikam handoff and ship it",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_use_ask_questions": true,
@@ -419,7 +419,7 @@
     {
       "id": "handoff-public-readiness",
       "category": "customer-handoff",
-      "prompt": "the Travelers POC is ready \u2014 prep it for customer handoff and they want it open-sourceable",
+      "prompt": "the VanArsdel POC is ready \u2014 prep it for customer handoff and they want it open-sourceable",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_use_ask_questions": true,
@@ -443,7 +443,7 @@
     {
       "id": "compound-newpoc-and-handoff",
       "category": "compound-request",
-      "prompt": "we have two things \u2014 finish the Geico POC handoff this week, and next week start a new POC for Munich Re. just queue both up.",
+      "prompt": "we have two things \u2014 finish the Tailspin POC handoff this week, and next week start a new POC for Northwind. just queue both up.",
       "expected_behavior": {
         "must_ask_before_qa": true,
         "must_use_ask_questions": true,

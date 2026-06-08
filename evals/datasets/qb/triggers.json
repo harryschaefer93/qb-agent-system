@@ -2,9 +2,9 @@
   "agent": "qb",
   "description": "Orchestration agent. Routes tasks across dev, infra, qa, diagram, docs. Handles bug-fix, new-poc-setup, customer-handoff, full-delivery workflows.",
   "shouldTriggerPrompts": [
-    "kick off full delivery for the Aon POC",
+    "kick off full delivery for the Contoso POC",
     "there's a bug in the API — the /scores endpoint returns 500",
-    "run the customer handoff pipeline for Enact UK",
+    "run the customer handoff pipeline for Relecloud UK",
     "new POC setup — we need a RAG chatbot",
     "orchestrate the full build pipeline",
     "fix this bug and validate everything works",
@@ -14,7 +14,7 @@
     "package this for customer handoff"
   ],
   "shouldNotTriggerPrompts": [
-    "scope a new engagement for Allstate",
+    "scope a new engagement for Woodgrove",
     "build a React frontend with Fluent UI",
     "create Terraform for Azure resources",
     "write the deployment guide",

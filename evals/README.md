@@ -93,7 +93,7 @@ thresholds:
 ### Quality test case
 ```json
 {
-  "prompt": "scope a new POC for Allstate on claims automation",
+  "prompt": "scope a new POC for Woodgrove on claims automation",
   "evaluators": ["fluency", "task_adherence", "coherence"],
   "groundTruth": "Should produce structured BRIEF.md with customer context"
 }
