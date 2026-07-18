@@ -1,0 +1,763 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "generator": "scripts/generate_fleet_data.py",
+    "source_fingerprint": "aa1cbc5b4d3fa1b2",
+    "sources": [
+      "agents/ARCH.agent.md",
+      "agents/DEV.agent.md",
+      "agents/DIAGRAM.agent.md",
+      "agents/DOCS.agent.md",
+      "agents/INFRA.agent.md",
+      "agents/ORACLE.agent.md",
+      "agents/QA.agent.md",
+      "agents/QB.agent.md",
+      "agents/REPO.agent.md",
+      "agents/SCOUT.agent.md",
+      "agents/imp.md",
+      "agents/retro.agent.md",
+      "agents/retro.md",
+      "agents/scoper.md",
+      "evals/pipelines.yaml"
+    ]
+  },
+  "agents": [
+    {
+      "id": "QB",
+      "role": "Orchestrator",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "Quarterback agent \u2014 orchestrates POC engineering across QA, Dev, Infra, Diagram, and Docs agents with iteration and validation loops.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/QB.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/QB.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "SCOUT",
+      "role": "Recon \u2014 cheap & read-only",
+      "tier": "recon",
+      "model": "claude-haiku-4.5",
+      "blurb": "Cheap, read-only reconnaissance agent.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/SCOUT.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/SCOUT.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "ARCH",
+      "role": "Solution architect",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "Solution architect for Microsoft customer POCs.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/ARCH.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/ARCH.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "QA",
+      "role": "Quality \u2014 first & last",
+      "tier": "volume",
+      "model": "claude-sonnet-5",
+      "blurb": "Quality assurance engineer that validates POC code, tests functionality, reviews for bugs and security issues, and ensures demos actually work.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/QA.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/QA.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "DEV",
+      "role": "Full-stack developer",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "Full-stack application developer for customer POCs. Builds APIs, frontends, integrations, and AI-powered apps across Python, TypeScript, C#, and Java.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/DEV.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/DEV.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "INFRA",
+      "role": "Azure infrastructure",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "Azure infrastructure specialist for Bicep, Terraform, and ARM templates. Provisions cloud resources, networking, IAM, and CI/CD pipelines for customer POCs.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/INFRA.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/INFRA.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "DIAGRAM",
+      "role": "Diagram specialist",
+      "tier": "volume",
+      "model": "claude-sonnet-5",
+      "blurb": "Cloud architecture diagram specialist that generates high-fidelity visual diagrams with real Azure/AWS/GCP/SaaS/on-prem icons.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/DIAGRAM.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/DIAGRAM.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "DOCS",
+      "role": "Technical writer",
+      "tier": "volume",
+      "model": "claude-sonnet-5",
+      "blurb": "Technical writer that creates README files, architecture diagrams, deployment guides, and customer handoff documentation for POCs.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/DOCS.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/DOCS.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "REPO",
+      "role": "Git/GitHub hygiene",
+      "tier": "volume",
+      "model": "claude-sonnet-5",
+      "blurb": "Git/GitHub hygiene specialist.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/REPO.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/REPO.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "ORACLE",
+      "role": "Second opinion \u2014 cross-family",
+      "tier": "advisor",
+      "model": "gpt-5.5",
+      "blurb": "Cross-family second-opinion advisor (deliberately NOT a Claude model).",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/ORACLE.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/ORACLE.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "scoper",
+      "role": "Brief intake (CLI)",
+      "tier": "judgment",
+      "model": "claude-opus-4.8",
+      "blurb": "POC scoping agent for FSI customer engagements.",
+      "files": [
+        {
+          "runtime": "cli",
+          "path": "agents/scoper.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/scoper.md"
+        }
+      ]
+    },
+    {
+      "id": "retro",
+      "role": "Retrospective",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "Weekly retrospective agent \u2014 mines session history to analyze agent performance, identify patterns, and recommend prompt/workflow improvements.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/retro.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/retro.agent.md"
+        },
+        {
+          "runtime": "cli",
+          "path": "agents/retro.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/retro.md"
+        }
+      ]
+    },
+    {
+      "id": "imp",
+      "role": "Improvement lifecycle (CLI)",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "End-to-end orchestrator for the agent-improvement workflow. Five modes: status dashboard, full orchestrate (default), implement, create-eval, validate.",
+      "files": [
+        {
+          "runtime": "cli",
+          "path": "agents/imp.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/imp.md"
+        }
+      ]
+    }
+  ],
+  "orchestrator": {
+    "id": "QB",
+    "subagents": [
+      "SCOUT",
+      "ORACLE",
+      "ARCH",
+      "QA",
+      "DEV",
+      "INFRA",
+      "DIAGRAM",
+      "DOCS",
+      "REPO"
+    ],
+    "handoffs": [
+      {
+        "label": "Scout Recon",
+        "agent": "SCOUT"
+      },
+      {
+        "label": "Design Architecture",
+        "agent": "ARCH"
+      },
+      {
+        "label": "Validate with QA",
+        "agent": "QA"
+      },
+      {
+        "label": "Implement in Dev",
+        "agent": "DEV"
+      },
+      {
+        "label": "Implement in Infra",
+        "agent": "INFRA"
+      },
+      {
+        "label": "Generate Diagrams",
+        "agent": "DIAGRAM"
+      },
+      {
+        "label": "Package Documentation",
+        "agent": "DOCS"
+      },
+      {
+        "label": "Repo Hygiene + Push",
+        "agent": "REPO"
+      }
+    ]
+  },
+  "task_types": [
+    "bug-fix",
+    "new-poc-setup",
+    "full-delivery",
+    "customer-handoff",
+    "feature-request",
+    "refactor",
+    "optimization"
+  ],
+  "pipelines": {
+    "bug-fix": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "QA",
+          "artifacts": [
+            "structured diagnostic report",
+            "app-code/infra/mixed classification",
+            "scope classification",
+            "Proposed Change Plan (design preview: files path:line, interface changes, approach, before/after, test plan, risks)"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "DEV",
+          "artifacts": [
+            "scoped fix",
+            "tests or rationale for no tests"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "QA",
+          "artifacts": [
+            "fast-check or deep-review validation report",
+            "quality gate evidence"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "handoff-ready commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before first QA (guided); consolidated into CP2 at standard/trusted \u2014 IMP-0028",
+          "purpose": "Clarify bug scope, reproduction steps, affected surfaces, and user priorities before diagnosis."
+        },
+        "CP2": {
+          "before_index": 1,
+          "placement": "after QA diagnosis and issue/scope classification; before DEV/INFRA implementation.",
+          "purpose": "Approve, modify, add scope, or cancel the fix plan before work proceeds \u2014 presented with the design preview (Proposed Change Plan)."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": false
+    },
+    "new-poc-setup": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "ARCH",
+          "artifacts": [
+            "ARCHITECTURE.md",
+            "recommended stack",
+            "trade-offs",
+            "FDPO identity plan",
+            "cost estimate",
+            "parallelization tracks"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "DEV",
+          "artifacts": [
+            "track-scoped implementation",
+            "env-var contract",
+            "tests"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "INFRA",
+          "artifacts": [
+            "IaC",
+            "RBAC assignments",
+            "managed identity wiring",
+            "deployment configuration"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "QA",
+          "artifacts": [
+            "deep-review report",
+            "gate evidence",
+            "blocker list or approval"
+          ]
+        },
+        {
+          "i": 4,
+          "role": "DIAGRAM",
+          "artifacts": [
+            "as-built architecture diagrams"
+          ]
+        },
+        {
+          "i": 5,
+          "role": "DOCS",
+          "artifacts": [
+            "README",
+            "deployment guide",
+            "customer handoff docs"
+          ]
+        },
+        {
+          "i": 6,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "CI/CD via OIDC check",
+            "final commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before ARCH",
+          "purpose": "Clarify POC scope, technology stack, Azure resources, customer constraints, and auth needs before architecture."
+        },
+        "CP2": {
+          "before_index": 1,
+          "placement": "after ARCH produces ARCHITECTURE.md; before DEV/INFRA fan-out.",
+          "purpose": "Approve, modify, pick alternative, or cancel the proposed stack, cost, and delivery tracks."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": true
+    },
+    "full-delivery": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "ARCH",
+          "artifacts": [
+            "ARCHITECTURE.md",
+            "recommended stack",
+            "trade-offs",
+            "FDPO identity plan",
+            "cost estimate",
+            "parallelization tracks"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "DEV",
+          "artifacts": [
+            "track-scoped implementation",
+            "env-var contract",
+            "tests"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "INFRA",
+          "artifacts": [
+            "IaC",
+            "RBAC assignments",
+            "managed identity wiring",
+            "deployment configuration"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "QA",
+          "artifacts": [
+            "deep-review report",
+            "gate evidence",
+            "blocker list or approval",
+            "demo evidence pack (per-flow screenshots + verified timestamps + pass/fail table)"
+          ]
+        },
+        {
+          "i": 4,
+          "role": "DIAGRAM",
+          "artifacts": [
+            "as-built architecture diagrams"
+          ]
+        },
+        {
+          "i": 5,
+          "role": "DOCS",
+          "artifacts": [
+            "README",
+            "deployment guide",
+            "customer handoff docs with embedded demo evidence"
+          ]
+        },
+        {
+          "i": 6,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "CI/CD via OIDC check",
+            "final commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before ARCH",
+          "purpose": "Clarify full-delivery scope, technology stack, Azure resources, customer constraints, and auth needs before architecture."
+        },
+        "CP2": {
+          "before_index": 1,
+          "placement": "after ARCH produces ARCHITECTURE.md; before DEV/INFRA fan-out.",
+          "purpose": "Approve, modify, pick alternative, or cancel the proposed stack, cost, and delivery tracks."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": true
+    },
+    "customer-handoff": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "QA",
+          "artifacts": [
+            "deep-review report",
+            "release blockers",
+            "validation evidence",
+            "demo evidence pack (per-flow screenshots + verified timestamps + pass/fail table)"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "DOCS",
+          "artifacts": [
+            "customer handoff documentation with embedded demo evidence",
+            "release notes draft"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "DIAGRAM",
+          "artifacts": [
+            "updated as-built diagrams",
+            "diagram review notes"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "REPO",
+          "artifacts": [
+            "public-readiness checklist",
+            "customer-handoff branch/tag summary",
+            "secret scan result",
+            "release notes"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before QA",
+          "purpose": "Clarify handoff scope, deliverables, public/private release posture, and delivery format before final validation."
+        },
+        "CP2": {
+          "before_index": 1,
+          "placement": "after QA deep-review findings; before packaging and release work.",
+          "purpose": "Approve, modify, add scope, or cancel the handoff package plan."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": false
+    },
+    "feature-request": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "ARCH",
+          "artifacts": [
+            "integration design note (design preview: files path:line, interface changes, approach, test plan)",
+            "integration approach",
+            "FDPO/compliance impact if applicable"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "DEV",
+          "artifacts": [
+            "approved implementation",
+            "acceptance tests",
+            "env/dependency updates if needed"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "QA",
+          "artifacts": [
+            "fast-check or deep-review validation",
+            "acceptance criteria evidence"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "final commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before SCOUT recon (guided); consolidated into CP2 at standard/trusted \u2014 IMP-0028",
+          "purpose": "Clarify scope, acceptance criteria, auth, tests, and public/internal exposure before reconnoitering implementation impact."
+        },
+        "CP2": {
+          "before_index": 1,
+          "placement": "after SCOUT recon and ARCH integration design; before DEV/INFRA implementation.",
+          "purpose": "Approve, modify, pick alternative, or cancel the integration plan and acceptance test \u2014 presented with the design preview (integration design note)."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": false
+    },
+    "refactor": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "DEV",
+          "artifacts": [
+            "behavior-preserving refactor",
+            "characterization tests if selected",
+            "invariant citations"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "QA",
+          "artifacts": [
+            "baseline/regression report",
+            "per-invariant pass/fail table",
+            "API surface diff",
+            "Behavior Preserved line"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "final commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before QA baseline (guided); consolidated into CP2 at standard/trusted \u2014 IMP-0028",
+          "purpose": "Clarify refactor contract, behavior to preserve, success signal, and scope before baseline capture."
+        },
+        "CP2": {
+          "before_index": 0,
+          "placement": "after QA baseline and scope classification; before DEV refactor.",
+          "purpose": "Approve invariants, characterization-test strategy, smoke test plan, or cancellation before behavior-preserving changes \u2014 presented with the design preview (Proposed Change Plan: target structure, invariants, migration steps)."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": false
+    },
+    "optimization": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "DEV",
+          "artifacts": [
+            "application optimization",
+            "metric/invariant references",
+            "tests or measurement scripts"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "INFRA",
+          "artifacts": [
+            "infrastructure optimization",
+            "SKU/resource changes",
+            "cost/security rationale"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "QA",
+          "artifacts": [
+            "delta-check report",
+            "baseline-to-post table",
+            "regression-on-others check",
+            "Improvement vs Target line"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "final commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before QA baseline (guided); consolidated into CP2 at standard/trusted \u2014 IMP-0028",
+          "purpose": "Clarify metric, target delta, and constraints before baseline measurement."
+        },
+        "CP2": {
+          "before_index": 0,
+          "placement": "after QA baseline and scope classification; before DEV/INFRA optimization.",
+          "purpose": "Approve, modify, pick alternative, or cancel the approach, expected delta, and severity-tagged security plan when applicable \u2014 presented with the design preview (Proposed Change Plan: approach, expected delta, measurement method)."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": false
+    }
+  },
+  "satellites": {
+    "SCOUT": {
+      "role": "Recon",
+      "when": "Read-only reconnaissance before CHECKPOINT 2 \u2014 repo shape, patterns, constraints.",
+      "returns": "path:line citations, touched surface, gotchas \u2014 bounded digest.",
+      "handoff_label": "Scout Recon"
+    },
+    "ORACLE": {
+      "role": "Second opinion",
+      "when": "Conflicting recommendations, repeated escalations, or risky CHECKPOINT 2 approvals.",
+      "note": "Advisory-only, cross-model-family; its opinion is data, never a decision. Never a pipeline phase."
+    }
+  },
+  "fanout_example": {
+    "note": "Illustrative example \u2014 real tracks are declared per engagement in ARCHITECTURE.md (tracks-block schema).",
+    "tracks": [
+      {
+        "name": "frontend",
+        "framework": "React + Vite",
+        "owned_paths": [
+          "web/"
+        ],
+        "env_contract": [
+          "VITE_API_BASE"
+        ],
+        "depends_on": []
+      },
+      {
+        "name": "api",
+        "framework": "FastAPI",
+        "owned_paths": [
+          "api/"
+        ],
+        "env_contract": [
+          "COSMOS_ENDPOINT"
+        ],
+        "depends_on": []
+      },
+      {
+        "name": "ingestion",
+        "framework": "Python worker",
+        "owned_paths": [
+          "ingestion/"
+        ],
+        "env_contract": [
+          "COSMOS_ENDPOINT"
+        ],
+        "depends_on": [
+          "api"
+        ]
+      }
+    ],
+    "merge": "Sequential attributed merge into the integration branch; conflicts bounce to the owning track."
+  }
+}

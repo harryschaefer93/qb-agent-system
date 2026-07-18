@@ -1,0 +1,272 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/harryschaefer93/copilot/evals/schemas/run-state.schema.json",
+  "title": "IMP-0026/0030/0039 Pipeline Run State",
+  "description": "Persistent QB pipeline run state written at phase transitions so fresh sessions can resume from artifacts instead of chat history. IMP-0030/0039 extend it into an outcome-grade run record (workspace, activity stamps, lifecycle status, escalations, cost estimates); the extensions are optional so pre-extension run-state files remain valid.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "task_type",
+    "scope",
+    "phases",
+    "approvals",
+    "iteration_counters",
+    "gate_bounce_counters"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "Stable identifier for this pipeline run; also names the session-state report directory."
+    },
+    "task_type": {
+      "type": "string",
+      "description": "QB task classification for the run, such as bug-fix, new-poc-setup, customer-handoff, or full-delivery."
+    },
+    "scope": {
+      "type": "string",
+      "description": "Approved scope summary that the pipeline is executing."
+    },
+    "phases": {
+      "type": "array",
+      "description": "Ordered phase ledger for the pipeline. QB appends or updates entries at every phase transition.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "agent",
+          "verdict",
+          "artifact_path",
+          "started",
+          "finished"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Pipeline phase name, for example architecture, dev-api, qa-fast-check, or repo-handoff."
+          },
+          "agent": {
+            "type": "string",
+            "description": "Agent responsible for the phase, for example QB, QA, DEV, INFRA, ARCH, DIAGRAM, DOCS, or REPO."
+          },
+          "verdict": {
+            "type": "string",
+            "description": "Current or final phase verdict, such as pending, running, passed, failed, blocked, or escalated."
+          },
+          "artifact_path": {
+            "type": "string",
+            "description": "Path to the phase artifact/report, normally session-state/<run-id>/reports/<phase>-<agent>.md."
+          },
+          "started": {
+            "type": "string",
+            "description": "Timestamp for when the phase started, preferably ISO 8601 with timezone."
+          },
+          "finished": {
+            "type": "string",
+            "description": "Timestamp for when the phase finished, preferably ISO 8601 with timezone."
+          }
+        }
+      }
+    },
+    "approvals": {
+      "type": "array",
+      "description": "Checkpoint approval decisions captured during the run for audit and resume.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "checkpoint",
+          "options_presented",
+          "option_chosen",
+          "modified"
+        ],
+        "properties": {
+          "checkpoint": {
+            "type": "string",
+            "description": "Checkpoint identifier or short name where the approval decision was made."
+          },
+          "options_presented": {
+            "type": "array",
+            "description": "Options presented to the user at the checkpoint.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "option_chosen": {
+            "type": "string",
+            "description": "Option selected by the user."
+          },
+          "modified": {
+            "type": "boolean",
+            "description": "Whether the approved option was modified from the originally recommended option."
+          }
+        }
+      }
+    },
+    "iteration_counters": {
+      "type": "object",
+      "description": "Map of phase or loop names to iteration counts for bounded retry tracking.",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "gate_bounce_counters": {
+      "type": "object",
+      "description": "Map of gate names to the number of times work bounced at that gate.",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "workspace": {
+      "type": "string",
+      "description": "Absolute path of the workspace/repo the run operates on. Lets `pipeline list --workspace` scope incomplete-run discovery to the current project (IMP-0039)."
+    },
+    "autonomy_level": {
+      "type": "string",
+      "enum": [
+        "guided",
+        "standard",
+        "trusted"
+      ],
+      "description": "Session autonomy dial set at kickoff (IMP-0028). Governs blocking-gate count per the QB policy matrix; hard asks are identical at every level."
+    },
+    "last_activity": {
+      "type": "string",
+      "description": "ISO 8601 timestamp of the last state-mutating driver call (start/advance/escalate/abandon). Reads do not stamp it, so staleness is a stall signal (IMP-0039)."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "complete",
+        "abandoned"
+      ],
+      "description": "Run lifecycle status. Driver writes active on start, complete when the last phase passes, abandoned via `pipeline abandon`. A stored-active run with stale last_activity is *reported* as abandoned by `pipeline list` without rewriting the file (IMP-0039)."
+    },
+    "final_verdict": {
+      "type": "string",
+      "description": "Terminal outcome summary set when the run ends: completed, abandoned, or cancelled, optionally with a short reason (IMP-0030)."
+    },
+    "escalations": {
+      "type": "array",
+      "description": "Escalation events raised during the run \u2014 2-cycle limits, conflicts, scope creep (IMP-0030).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "phase",
+          "reason",
+          "timestamp"
+        ],
+        "properties": {
+          "phase": {
+            "type": "string",
+            "description": "Phase (agent) active when the escalation was raised."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Why the run escalated to the user."
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "ISO 8601 timestamp of the escalation."
+          }
+        }
+      }
+    },
+    "gate_bounces": {
+      "type": "array",
+      "description": "Detailed gate-bounce events (which gate, which agent was responsible, when) complementing the aggregate gate_bounce_counters (IMP-0030).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "gate",
+          "agent",
+          "timestamp"
+        ],
+        "properties": {
+          "gate": {
+            "type": "string",
+            "description": "Quality gate that bounced the work, for example ruff, tsc, bicep-lint, merge-gate."
+          },
+          "agent": {
+            "type": "string",
+            "description": "Agent responsible for fixing the bounce."
+          },
+          "reason": {
+            "type": "string",
+            "description": "Optional short description of the failure."
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "ISO 8601 timestamp of the bounce."
+          }
+        }
+      }
+    },
+    "checkpoint_shas": {
+      "type": "array",
+      "description": "checkpoint: commit shas recorded at pipeline seams \u2014 the rewind targets (IMP-0033).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sha",
+          "label"
+        ],
+        "properties": {
+          "sha": {
+            "type": "string",
+            "description": "Commit sha returned by scripts/git/checkpoint.ps1."
+          },
+          "label": {
+            "type": "string",
+            "description": "Pipeline seam label, for example post-DEV or post-merge-gate."
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "ISO 8601 timestamp of the checkpoint."
+          }
+        }
+      }
+    },
+    "cost_estimates": {
+      "type": "object",
+      "description": "Approximate cost/credit/token figures per agent or phase, where observable (VS Code subagent credit visibility). Estimates, labeled as such \u2014 the runtime does not expose exact counts (IMP-0030).",
+      "additionalProperties": {
+        "type": "number"
+      }
+    },
+    "clarifications": {
+      "type": "array",
+      "description": "Clarification ledger (IMP-0051): user decisions recorded once so QB never re-asks them; reloaded on resume.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "question": {
+            "type": "string",
+            "description": "What was unclear or assumed."
+          },
+          "answer": {
+            "type": "string",
+            "description": "The user's decision, verbatim or tightly paraphrased."
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "ISO 8601 timestamp of the clarification."
+          }
+        },
+        "required": [
+          "question",
+          "answer",
+          "timestamp"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,325 @@
+{
+  "description": "Cross-agent routing evaluation. Each test case maps a user prompt to the expected agent.",
+  "version": "1.0",
+  "test_cases": [
+    {
+      "id": "rt-001",
+      "prompt": "scope a new POC for Woodgrove on claims automation",
+      "expectedAgent": "scoper",
+      "shouldNotRoute": [
+        "dev",
+        "infra",
+        "qb"
+      ]
+    },
+    {
+      "id": "rt-002",
+      "prompt": "I just had a call with Litware Canada about content understanding \u2014 help me write up the brief",
+      "expectedAgent": "scoper",
+      "shouldNotRoute": [
+        "docs",
+        "dev"
+      ]
+    },
+    {
+      "id": "rt-003",
+      "prompt": "kick off full delivery for the Contoso interview scoring POC",
+      "expectedAgent": "qb",
+      "shouldNotRoute": [
+        "scoper",
+        "dev"
+      ]
+    },
+    {
+      "id": "rt-004",
+      "prompt": "there's a bug in the API \u2014 the /scores endpoint returns 500",
+      "expectedAgent": "qb",
+      "shouldNotRoute": [
+        "scoper",
+        "docs"
+      ]
+    },
+    {
+      "id": "rt-005",
+      "prompt": "run the customer handoff pipeline for Relecloud UK",
+      "expectedAgent": "qb",
+      "shouldNotRoute": [
+        "dev",
+        "infra"
+      ]
+    },
+    {
+      "id": "rt-006",
+      "prompt": "build a FastAPI backend with Azure OpenAI integration for the chatbot",
+      "expectedAgent": "dev",
+      "shouldNotRoute": [
+        "infra",
+        "docs"
+      ]
+    },
+    {
+      "id": "rt-007",
+      "prompt": "add a React frontend with Fluent UI components for the broker workbench",
+      "expectedAgent": "dev",
+      "shouldNotRoute": [
+        "infra",
+        "diagram"
+      ]
+    },
+    {
+      "id": "rt-008",
+      "prompt": "implement RAG with AI Search and Cosmos DB for the knowledge base",
+      "expectedAgent": "dev",
+      "shouldNotRoute": [
+        "infra",
+        "docs"
+      ]
+    },
+    {
+      "id": "rt-009",
+      "prompt": "set up the Bicep templates for Container Apps with Key Vault and managed identity",
+      "expectedAgent": "infra",
+      "shouldNotRoute": [
+        "dev",
+        "docs"
+      ]
+    },
+    {
+      "id": "rt-010",
+      "prompt": "create Terraform for the Azure AI Foundry resources with private endpoints",
+      "expectedAgent": "infra",
+      "shouldNotRoute": [
+        "dev",
+        "diagram"
+      ]
+    },
+    {
+      "id": "rt-011",
+      "prompt": "provision the VNet, subnets, and NSGs for the POC environment",
+      "expectedAgent": "infra",
+      "shouldNotRoute": [
+        "dev",
+        "qb"
+      ]
+    },
+    {
+      "id": "rt-012",
+      "prompt": "write the azure.yaml and configure azd for deployment",
+      "expectedAgent": "infra",
+      "shouldNotRoute": [
+        "dev",
+        "docs"
+      ]
+    },
+    {
+      "id": "rt-013",
+      "prompt": "review the code for security issues before the customer demo",
+      "expectedAgent": "qa",
+      "shouldNotRoute": [
+        "dev",
+        "docs"
+      ]
+    },
+    {
+      "id": "rt-014",
+      "prompt": "test the application end-to-end \u2014 click through the UI and verify everything works",
+      "expectedAgent": "qa",
+      "shouldNotRoute": [
+        "dev",
+        "diagram"
+      ]
+    },
+    {
+      "id": "rt-015",
+      "prompt": "validate the Bicep templates compile and the RBAC is least privilege",
+      "expectedAgent": "qa",
+      "shouldNotRoute": [
+        "infra",
+        "dev"
+      ]
+    },
+    {
+      "id": "rt-016",
+      "prompt": "generate an architecture diagram showing all the Azure services and data flow",
+      "expectedAgent": "diagram",
+      "shouldNotRoute": [
+        "docs",
+        "dev"
+      ]
+    },
+    {
+      "id": "rt-017",
+      "prompt": "create a C4 context diagram for the claims processing system",
+      "expectedAgent": "diagram",
+      "shouldNotRoute": [
+        "docs",
+        "infra"
+      ]
+    },
+    {
+      "id": "rt-018",
+      "prompt": "write the README with quick start, architecture overview, and deployment steps",
+      "expectedAgent": "docs",
+      "shouldNotRoute": [
+        "dev",
+        "diagram"
+      ]
+    },
+    {
+      "id": "rt-019",
+      "prompt": "create the customer handoff document with executive summary and next steps",
+      "expectedAgent": "docs",
+      "shouldNotRoute": [
+        "scoper",
+        "dev"
+      ]
+    },
+    {
+      "id": "rt-020",
+      "prompt": "write a deployment guide with step-by-step instructions for the customer",
+      "expectedAgent": "docs",
+      "shouldNotRoute": [
+        "dev",
+        "infra"
+      ]
+    },
+    {
+      "id": "rt-024",
+      "prompt": "new POC setup \u2014 we need a RAG chatbot for Contoso market research",
+      "expectedAgent": "qb",
+      "shouldNotRoute": [
+        "scoper",
+        "dev"
+      ],
+      "note": "new-poc-setup is a QB task type, not scoper (BRIEF already exists)"
+    },
+    {
+      "id": "rt-025",
+      "prompt": "the diagram has overlapping nodes and wrong icons \u2014 fix it",
+      "expectedAgent": "diagram",
+      "shouldNotRoute": [
+        "qa",
+        "docs"
+      ],
+      "note": "Direct diagram fix request, not QA review"
+    },
+    {
+      "id": "rt-026",
+      "prompt": "add SignalR for real-time updates to the frontend",
+      "expectedAgent": "dev",
+      "shouldNotRoute": [
+        "infra",
+        "docs"
+      ]
+    },
+    {
+      "id": "rt-027",
+      "prompt": "set up GitHub Actions CI/CD pipeline for the POC",
+      "expectedAgent": "infra",
+      "shouldNotRoute": [
+        "dev",
+        "qa"
+      ]
+    },
+    {
+      "id": "rt-028",
+      "prompt": "check if the app handles weird input gracefully \u2014 test edge cases",
+      "expectedAgent": "qa",
+      "shouldNotRoute": [
+        "dev",
+        "docs"
+      ]
+    },
+    {
+      "id": "rt-030",
+      "prompt": "I need to scope an engagement for a new insurance client wanting AI-powered underwriting",
+      "expectedAgent": "scoper",
+      "shouldNotRoute": [
+        "qb",
+        "dev"
+      ]
+    },
+    {
+      "id": "rt-031",
+      "prompt": "design the architecture for a new RAG chatbot POC for Woodgrove",
+      "expectedAgent": "arch",
+      "shouldNotRoute": [
+        "dev",
+        "infra",
+        "qb"
+      ]
+    },
+    {
+      "id": "rt-032",
+      "prompt": "should we use Container Apps or App Service for this workload? give me the trade-offs",
+      "expectedAgent": "arch",
+      "shouldNotRoute": [
+        "dev",
+        "infra"
+      ]
+    },
+    {
+      "id": "rt-033",
+      "prompt": "produce ARCHITECTURE.md with parallelization tracks for the document processing POC",
+      "expectedAgent": "arch",
+      "shouldNotRoute": [
+        "qb",
+        "docs"
+      ]
+    },
+    {
+      "id": "rt-034",
+      "prompt": "estimate the monthly Azure cost for the proposed stack",
+      "expectedAgent": "arch",
+      "shouldNotRoute": [
+        "infra",
+        "dev"
+      ]
+    },
+    {
+      "id": "rt-035",
+      "prompt": "audit the .gitignore and run a secret scan before I push",
+      "expectedAgent": "repo",
+      "shouldNotRoute": [
+        "qa",
+        "dev"
+      ]
+    },
+    {
+      "id": "rt-036",
+      "prompt": "set up GitHub Actions CI/CD with OIDC to Azure",
+      "expectedAgent": "repo",
+      "shouldNotRoute": [
+        "infra",
+        "dev"
+      ]
+    },
+    {
+      "id": "rt-037",
+      "prompt": "is this POC ready to be made public on GitHub?",
+      "expectedAgent": "repo",
+      "shouldNotRoute": [
+        "docs",
+        "qa"
+      ]
+    },
+    {
+      "id": "rt-038",
+      "prompt": "create a customer-handoff branch with release notes and push",
+      "expectedAgent": "repo",
+      "shouldNotRoute": [
+        "docs",
+        "qb"
+      ]
+    },
+    {
+      "id": "rt-039",
+      "prompt": "check for any leaked API keys in git history",
+      "expectedAgent": "repo",
+      "shouldNotRoute": [
+        "qa",
+        "qb"
+      ]
+    }
+  ]
+}

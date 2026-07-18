@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/harryschaefer93/copilot/evals/schemas/tracks-block.schema.json",
+  "title": "IMP-0029 ARCHITECTURE tracks block",
+  "description": "ARCH's parallelization tracks, emitted as a fenced JSON/YAML block in ARCHITECTURE.md. QB's DEV fan-out and fanout-setup.ps1 depend on this parsing — a failed parse is a gate-bounce to ARCH.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tracks"],
+  "properties": {
+    "tracks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "owned_paths"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Track name; becomes the track/<name> branch (IMP-0033)."
+          },
+          "owned_paths": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" },
+            "description": "Path prefixes this track owns exclusively."
+          },
+          "framework": {
+            "type": "string",
+            "description": "Language/framework for the track."
+          },
+          "env_contract": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Environment variables this track consumes or produces."
+          },
+          "depends_on": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Names of tracks that must complete first (future task-DAG use)."
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>QB Agent System — Multi-agent POC delivery</title>
+<meta name="description" content="A multi-agent orchestration system for delivering Microsoft-first proof-of-concept engineering work end-to-end — architecture, code, infrastructure, validation, diagrams, docs, and a clean repo handoff." />
+<style>
+  :root {
+    --ms-blue: #0078D4;
+    --ms-blue-dark: #005A9E;
+    --ms-blue-light: #50B0F6;
+    --bg: #0b1220;
+    --panel: #15203a;
+    --panel-2: #1b2942;
+    --line: #25324f;
+    --text: #e8eef9;
+    --text-soft: #aab6cf;
+    --accent: #50B0F6;
+    --radius: 12px;
+    --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    --maxw: 1120px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Segoe UI", "Segoe UI Web", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    background: radial-gradient(1200px 600px at 80% -10%, #1a2a4a 0%, var(--bg) 55%) no-repeat, var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(10px);
+    background: rgba(11,18,32,0.72);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .wrap { display: flex; align-items: center; gap: 18px; height: 60px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .2px; }
+  .brand .logo {
+    width: 26px; height: 26px; border-radius: 6px;
+    background: conic-gradient(from 90deg, var(--ms-blue), var(--ms-blue-light), var(--ms-blue));
+    display: inline-block;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.08) inset;
+  }
+  .nav nav { margin-left: auto; display: flex; gap: 22px; flex-wrap: wrap; }
+  .nav nav a { color: var(--text-soft); font-size: 14px; }
+  .nav nav a:hover { color: var(--text); text-decoration: none; }
+  .nav .ghbtn {
+    border: 1px solid var(--line); padding: 7px 14px; border-radius: 8px;
+    color: var(--text); font-size: 14px; background: var(--panel);
+  }
+  .nav .ghbtn:hover { border-color: var(--ms-blue); text-decoration: none; }
+
+  .hero { padding: 84px 0 56px; }
+  .hero .eyebrow {
+    color: var(--accent); font-weight: 600; font-size: 13px; letter-spacing: 1.4px; text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .hero h1 { font-size: clamp(34px, 5vw, 56px); line-height: 1.05; margin: 0 0 18px; letter-spacing: -.5px; }
+  .hero h1 .grad {
+    background: linear-gradient(90deg, var(--ms-blue-light), #9bd0ff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lede { font-size: 19px; color: var(--text-soft); max-width: 760px; margin: 0 0 28px; }
+  .cta { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px; border-radius: 10px; font-weight: 600; font-size: 15px;
+    border: 1px solid transparent;
+  }
+  .btn.primary { background: var(--ms-blue); color: #fff; }
+  .btn.primary:hover { background: var(--ms-blue-dark); text-decoration: none; }
+  .btn.ghost { border-color: var(--line); color: var(--text); background: var(--panel); }
+  .btn.ghost:hover { border-color: var(--ms-blue); text-decoration: none; }
+
+  .pills { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 34px; }
+  .pill {
+    font-size: 13px; color: var(--text-soft); border: 1px solid var(--line);
+    padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.02);
+  }
+  .pill b { color: var(--text); font-weight: 600; }
+
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  section h2 { font-size: 28px; margin: 0 0 8px; letter-spacing: -.3px; }
+  section .sub { color: var(--text-soft); margin: 0 0 30px; max-width: 760px; }
+
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .step {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 18px; position: relative;
+  }
+  .step .n {
+    width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center;
+    background: rgba(80,176,246,.14); color: var(--accent); font-weight: 700; font-size: 14px; margin-bottom: 12px;
+  }
+  .step h3 { margin: 0 0 6px; font-size: 16px; }
+  .step p { margin: 0; color: var(--text-soft); font-size: 14px; }
+
+  .agents { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .agent {
+    background: linear-gradient(180deg, var(--panel-2), var(--panel));
+    border: 1px solid var(--line); border-radius: var(--radius); padding: 20px;
+    transition: transform .15s ease, border-color .15s ease;
+    display: flex; flex-direction: column;
+  }
+  .agent:hover { transform: translateY(-3px); border-color: var(--ms-blue); }
+  .agent .top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .agent .tag {
+    font-weight: 800; font-size: 15px; letter-spacing: .4px;
+    padding: 6px 10px; border-radius: 8px; color: #fff;
+  }
+  .agent .role { font-size: 13px; color: var(--text-soft); }
+  .agent p { margin: 0 0 14px; font-size: 14px; color: var(--text-soft); flex: 1; }
+  .agent .links { display: flex; gap: 14px; font-size: 13px; }
+  .agent.qb { border-color: rgba(80,176,246,.5); box-shadow: 0 0 0 1px rgba(80,176,246,.25), var(--shadow); }
+  .t-qb { background: linear-gradient(135deg, var(--ms-blue), var(--ms-blue-light)); }
+  .t-arch { background: #8a5cf6; }
+  .t-qa { background: #e06c75; }
+  .t-dev { background: #2fa86b; }
+  .t-infra { background: #d98c2b; }
+  .t-diagram { background: #c057c0; }
+  .t-docs { background: #3a8fd0; }
+  .t-repo { background: #5a6472; }
+  .t-retro { background: #c9a227; }
+  .t-scoper { background: #1f9e9e; }
+  .t-scout { background: #4c9a8f; }
+  .t-oracle { background: #10a37f; }
+  .t-imp { background: #7d6cd9; }
+
+  .flow { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; overflow-x: auto; }
+  .flow pre { margin: 0; font-family: "Cascadia Code","Consolas",monospace; font-size: 12.5px; color: var(--text-soft); line-height: 1.5; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 18px; }
+  .card p { color: var(--text-soft); margin: 0 0 14px; font-size: 14.5px; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--text-soft); font-size: 14px; }
+  .card ul li { margin: 4px 0; }
+
+  pre.code {
+    background: #0a1322; border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 18px; overflow-x: auto; font-family: "Cascadia Code","Consolas",monospace;
+    font-size: 13.5px; color: #d6e2f5; margin: 0;
+  }
+  pre.code .c { color: #6f86b0; }
+  pre.code .k { color: var(--ms-blue-light); }
+
+  table.rt { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.rt th, table.rt td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  table.rt th { color: var(--text); font-weight: 600; }
+  table.rt td { color: var(--text-soft); }
+  table.rt code { color: var(--accent); word-break: break-word; }
+  @media (max-width: 700px) { table.rt { display: block; overflow-x: auto; } }
+
+  footer { padding: 44px 0 64px; border-top: 1px solid var(--line); color: var(--text-soft); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .note { font-size: 13px; color: var(--text-soft); background: rgba(242,201,76,.08); border: 1px solid rgba(242,201,76,.25); border-radius: 10px; padding: 12px 14px; }
+
+  @media (max-width: 900px) {
+    .steps { grid-template-columns: repeat(2, 1fr); }
+    .agents { grid-template-columns: 1fr 1fr; }
+    .cols { grid-template-columns: 1fr; }
+    .nav nav { display: none; }
+  }
+  @media (max-width: 560px) {
+    .agents { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+  }
+
+  /* ---- Interactive orchestration viz (IMP-0069) ---- */
+  .task-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .chip {
+    font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+    color: var(--text-soft); background: rgba(255,255,255,.03);
+    border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
+  }
+  .chip:hover { border-color: var(--ms-blue); color: var(--text); }
+  .chip[aria-selected="true"] {
+    background: rgba(0,120,212,.18); border-color: var(--ms-blue);
+    color: var(--text); box-shadow: 0 0 0 1px rgba(80,176,246,.25);
+  }
+  .viz-svg { width: 100%; height: auto; display: block; }
+  .viz-svg text { font-family: "Segoe UI", -apple-system, sans-serif; }
+  .viz-svg .node { cursor: pointer; }
+  .viz-svg .node rect { transition: filter .15s ease; }
+  .viz-svg .node:hover rect, .viz-svg .node:focus rect, .viz-svg .node.active rect {
+    filter: brightness(1.25) drop-shadow(0 0 6px rgba(80,176,246,.45));
+  }
+  .viz-svg .gate { cursor: pointer; }
+  .viz-svg .gate:hover .gate-shape, .viz-svg .gate.flash .gate-shape {
+    filter: brightness(1.4) drop-shadow(0 0 8px rgba(242,201,76,.6));
+  }
+  .viz-detail {
+    margin-top: 16px; min-height: 74px; background: var(--panel-2);
+    border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+    font-size: 14px; color: var(--text-soft);
+  }
+  .viz-detail b { color: var(--text); }
+  .viz-detail .tier-chip {
+    display: inline-block; font-size: 11.5px; font-weight: 700; letter-spacing: .3px;
+    padding: 2px 9px; border-radius: 999px; margin-left: 8px;
+    background: rgba(80,176,246,.14); color: var(--accent); vertical-align: middle;
+  }
+  .viz-detail ul { margin: 8px 0 0; padding-left: 18px; }
+  .viz-detail li { margin: 2px 0; font-size: 13.5px; }
+  .viz-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; font-size: 12.5px; color: var(--text-soft); }
+  .viz-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  #flow-text { margin-top: 16px; }
+  #flow-text summary { cursor: pointer; color: var(--text-soft); font-size: 13.5px; }
+  #flow-text[open] summary { margin-bottom: 10px; }
+  @media (prefers-reduced-motion: reduce) { .viz-svg .pulse { display: none; } }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="logo"></span> QB Agent System</a>
+    <nav>
+      <a href="#how">How it works</a>
+      <a href="#fleet">The fleet</a>
+      <a href="#flow">Flow</a>
+      <a href="#improve">Improvement &amp; evals</a>
+      <a href="#start">Get started</a>
+    </nav>
+    <a class="ghbtn" href="https://github.com/harryschaefer93/qb-agent-system" target="_blank" rel="noopener">GitHub ↗</a>
+  </div>
+</header>
+
+<a id="top"></a>
+<section class="hero" style="border-top:none;">
+  <div class="wrap">
+    <div class="eyebrow">Microsoft-first · Multi-agent orchestration</div>
+    <h1>One <span class="grad">Quarterback</span>.<br/>A full fleet of specialist agents.</h1>
+    <p class="lede">
+      A multi-agent system that delivers proof-of-concept engineering end-to-end —
+      from architecture through code, infrastructure, validation, diagrams, docs,
+      and a clean repo handoff. <strong>QB</strong> classifies every request, gates it behind
+      explicit human approval, and routes it to the right specialist.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="#start">Get started</a>
+      <a class="btn ghost" href="https://github.com/harryschaefer93/qb-agent-system" target="_blank" rel="noopener">View on GitHub</a>
+    </div>
+    <div class="pills">
+      <span class="pill"><b>13</b> agent roles</span>
+      <span class="pill"><b>2</b> runtimes + a deterministic driver</span>
+      <span class="pill"><b>2</b> human checkpoints · autonomy dial</span>
+      <span class="pill"><b>3-tier</b> model economy</span>
+      <span class="pill"><b>FDPO</b> · Entra ID + RBAC</span>
+      <span class="pill"><b>Eval</b> harness + graduation gate</span>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="sub">From a free-form ask to a validated, documented, pushed POC — in four moves.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>Scope → Brief</h3>
+        <p><b>scoper</b> intakes a free-form request, researches the customer, and produces the shared <code>BRIEF.md</code> every agent reads.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>QB orchestrates</h3>
+        <p>QB classifies the task, sends <b>SCOUT</b> on cheap read-only recon, and stops at two human checkpoints — CHECKPOINT 2 presents a design preview before any implementation. A session autonomy dial (guided · standard · trusted) tunes everything except the hard gates.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>Specialists build</h3>
+        <p>ARCH, DEV, INFRA, QA, DIAGRAM, DOCS and REPO fan out — multi-track work runs in isolated git worktrees with attributed merges — behind quality gates and bounce-on-fail loops. <b>ORACLE</b> gives a cross-family second opinion at conflicts and risky approvals.</p>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <h3>Retro improves</h3>
+        <p><b>retro</b> mines session history and files tracked improvements; the <b>imp</b> agent orchestrates their lifecycle; a mechanical graduation gate promotes them only on typed, committed evidence.</p>
+      </div>
+    </div>
+    <div style="margin-top:22px" class="note">
+      <b>Human-in-the-loop by design.</b> QB never writes code itself — it classifies, gates, and routes,
+      and a deterministic Python driver (<code>pipelines.yaml</code> + externalized run-state) enforces phase
+      order and refuses illegal transitions. Both checkpoints are structured questions; chat text never counts
+      as approval, and hard gates (new Azure cost, auth, push, destructive ops) hold at every autonomy level.
+    </div>
+  </div>
+</section>
+
+<section id="fleet">
+  <div class="wrap">
+    <h2>The agent fleet</h2>
+    <p class="sub">One orchestrator, seven build specialists, a recon tier, a cross-family advisor, and the scoping / retrospective / improvement agents — on a three-tier model economy (Opus-class judgment, Sonnet-class volume, Haiku-class recon).</p>
+    <div class="agents" id="fleet-cards">
+
+      <div class="agent qb">
+        <div class="top"><span class="tag t-qb">QB</span><span class="role">Orchestrator</span></div>
+        <p>The Quarterback. Classifies the request, gates behind two approvals, and routes work to specialists. Never writes code itself.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/QB.agent.md" target="_blank" rel="noopener">QB.agent.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-scout">SCOUT</span><span class="role">Recon — cheap &amp; read-only</span></div>
+        <p>Fast, low-cost reconnaissance before planning: repo shape, existing patterns, constraints. No terminal, no writes — findings feed CHECKPOINT 2's design preview.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/SCOUT.agent.md" target="_blank" rel="noopener">SCOUT.agent.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-arch">ARCH</span><span class="role">Solution architect</span></div>
+        <p>Produces <code>ARCHITECTURE.md</code>: stack choices, trade-offs, identity plan, cost, and parallelization tracks with owned paths and dependencies.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/ARCH.agent.md" target="_blank" rel="noopener">ARCH.agent.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-qa">QA</span><span class="role">Quality — first &amp; last</span></div>
+        <p>Diagnosis, baselines, validation, and security review. Every task starts and ends with QA.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/QA.agent.md" target="_blank" rel="noopener">QA.agent.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-dev">DEV</span><span class="role">Full-stack developer</span></div>
+        <p>Application code in Python / TS / C# / Java, plus tests and Dockerfiles.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/DEV.agent.md" target="_blank" rel="noopener">DEV.agent.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-infra">INFRA</span><span class="role">Azure infrastructure</span></div>
+        <p>Bicep / Terraform IaC, networking, identity &amp; RBAC, and CI/CD wiring.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/INFRA.agent.md" target="_blank" rel="noopener">INFRA.agent.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-diagram">DIAGRAM</span><span class="role">Diagram specialist</span></div>
+        <p>Architecture, sequence, data-flow and C4 diagrams with real cloud icons.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/DIAGRAM.agent.md" target="_blank" rel="noopener">DIAGRAM.agent.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-docs">DOCS</span><span class="role">Technical writer</span></div>
+        <p>README, deployment guides, and handoff docs. Runs last, once everything else is settled.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/DOCS.agent.md" target="_blank" rel="noopener">DOCS.agent.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-repo">REPO</span><span class="role">Git/GitHub hygiene</span></div>
+        <p>Secret scanning, gitignore audit, OIDC CI/CD, and the final commit + push. Blocks on leaked secrets.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/REPO.agent.md" target="_blank" rel="noopener">REPO.agent.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-oracle">ORACLE</span><span class="role">Second opinion — cross-family</span></div>
+        <p>An advisory-only reviewer from a different model family. Consulted at agent conflicts, pre-escalation, and risky approvals — its opinion is data, never a decision.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/ORACLE.agent.md" target="_blank" rel="noopener">ORACLE.agent.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-scoper">scoper</span><span class="role">Brief intake (CLI)</span></div>
+        <p>Turns a verbal brief into <code>BRIEF.md</code> — researched customer context with source provenance, EARS acceptance criteria, and an untrusted-content quarantine.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/scoper.md" target="_blank" rel="noopener">scoper.md ↗</a></div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-retro">retro</span><span class="role">Retrospective</span></div>
+        <p>Mines session history and run records, scores the fleet, and files improvements. Evidence Mode turns real sessions into validation proof.</p>
+        <div class="links">
+          <a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/retro.agent.md" target="_blank" rel="noopener">retro.agent.md ↗</a>
+          <a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/retro.md" target="_blank" rel="noopener">retro.md ↗</a>
+        </div>
+      </div>
+
+      <div class="agent">
+        <div class="top"><span class="tag t-imp">imp</span><span class="role">Improvement lifecycle (CLI)</span></div>
+        <p>Orchestrates the IMP lifecycle end-to-end — status dashboard, implement, create-eval, validate — with hard human stops at every gate.</p>
+        <div class="links"><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/imp.md" target="_blank" rel="noopener">imp.md ↗</a></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="runtimes">
+  <div class="wrap">
+    <h2>Two runtimes, one fleet</h2>
+    <p class="sub">Every role ships in two independent variants, because the two host environments expose different tools.</p>
+    <table class="rt">
+      <thead><tr><th>File pattern</th><th>Runtime</th><th>Focus</th></tr></thead>
+      <tbody>
+        <tr><td><code>*.agent.md</code></td><td>VS Code Copilot Chat</td><td>Editor-first, code-focused; uses <code>vscode/*</code>, <code>execute/*</code>, <code>agent/runSubagent</code> tools</td></tr>
+        <tr><td><code>*.md</code> (no <code>.agent</code>)</td><td>GitHub Copilot CLI</td><td>Work-context-aware assistants: scoper, retro, imp</td></tr>
+        <tr><td><code>evals/pipelines.yaml</code></td><td>Python driver</td><td>Deterministic pipeline state machine: phase order, iteration caps, checkpoint gating, externalized <code>run-state.json</code> — the runtime's job done by a runtime, not the prompt</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="wrap">
+    <h2>Orchestration flow</h2>
+    <p class="sub">Pick a task type to see its real pipeline — rendered from the same <code>pipelines.yaml</code> the driver enforces, regenerated on every publish. QA and both checkpoints are universal; ARCH / DIAGRAM / DOCS / REPO are conditional on task type. ORACLE can be consulted (advisory-only) at any conflict or risky approval.</p>
+    <div class="flow">
+      <div id="viz-root"></div>
+      <noscript><p style="margin:0 0 12px;color:var(--text-soft)">The interactive view needs JavaScript — the text version below is complete.</p></noscript>
+      <details id="flow-text">
+        <summary>Text version (accessible fallback)</summary>
+<pre>
+                 ┌──────────┐
+  scoper ──BRIEF─▶│   USER   │
+                 └────┬─────┘
+                      │ request
+                      ▼
+        ┌─────────────────────────────┐
+        │             QB              │      pipeline driver
+        │  classify → CHECKPOINT 1 ───┼──▶ askQuestions (scope)   ◀── waits
+        └──────────────┬──────────────┘      (phase order enforced
+                       ▼                       by pipelines.yaml +
+                  ┌─────────┐                  run-state.json)
+                  │  SCOUT  │ cheap read-only recon
+                  └───┬─────┘
+                      ▼ (always before build)
+                  ┌────────┐
+                  │   QA   │ diagnose / baseline
+                  └───┬────┘
+                      ▼
+        ┌─────────────────────────────┐
+        │  QB: design preview         │
+        │  CHECKPOINT 2 ──────────────┼──▶ askQuestions (plan +   ◀── HARD STOP
+        └──────────────┬──────────────┘      delivery contract)
+            on approval │ route by task type
+        ┌───────────────┼───────────────────────────┐
+        ▼ (new-poc)     ▼ (any build)                │
+    ┌──────┐       ┌──────┐   ┌───────┐  merge +     │
+    │ ARCH │──────▶│ DEV  │   │ INFRA │  quality ◀───┤ bounce on fail
+    └──────┘ tracks└──┬───┘   └───┬───┘  gates       │
+       (≥2 tracks ⇒ isolated git worktrees,          │
+        attributed merges, checkpoint/rewind)        │
+                      └─────┬─────┘                   │
+                            ▼                          │
+                      ┌──────────┐                     │
+                      │    QA    │ re-validate         │
+                      └────┬─────┘                     │
+                           ▼                            │
+                     ┌──────────┐                       │
+                     │ DIAGRAM  │──▶ QA diagram review  │
+                     └────┬─────┘                       │
+                          ▼                              │
+                     ┌──────────┐                        │
+                     │   DOCS   │ (runs last)            │
+                     └────┬─────┘                        │
+                          ▼                               │
+                     ┌──────────┐                         │
+                     │   REPO   │ secret scan → push      │
+                     └──────────┘  (blocks on secrets)────┘
+</pre>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="improve">
+  <div class="wrap">
+    <h2>The improvement system &amp; eval harness</h2>
+    <p class="sub">A closed loop: retro discovers → IMP files capture → evals measure → changes ship → next retro verifies impact.</p>
+    <div class="cols">
+      <div class="card">
+        <h3>Tracked improvements (IMPs)</h3>
+        <p>The fleet evolves through one file per proposal — 60+ filed to date — moving through a <code>proposed → accepted → implemented → validated</code> lifecycle. Graduation to <code>validated</code> is a <b>mechanical gate</b>: typed, source-tagged evidence (deterministic · synthetic · surrogate · real-session · inspection) with commit provenance, Wilson-bound runtime confidence, ticked acceptance criteria, and a real CHANGELOG SHA.</p>
+        <ul>
+          <li><a href="https://github.com/harryschaefer93/qb-agent-system/tree/main/agents/improvements" target="_blank" rel="noopener">All improvements (IMP backlog)</a></li>
+          <li><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/improvements/README.md" target="_blank" rel="noopener">Conventions, lifecycle &amp; the validated bar</a></li>
+          <li><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/improvements/EXECUTION-ORDER.md" target="_blank" rel="noopener">Execution order — pain-point waves</a></li>
+          <li><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/CHANGELOG.md" target="_blank" rel="noopener">Shipped changes log</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>The eval harness</h3>
+        <p>A Python harness with nine eval types (structural, tool-loop, routing, behavioral, quality, rubric-judged, execution-metrics, composite, manual). A structural fleet gate runs nightly in CI; telemetry mining scores real sessions from both runtimes; run records feed completion / cycle-time / bounce KPIs.</p>
+        <ul>
+          <li><a href="https://github.com/harryschaefer93/qb-agent-system/tree/main/evals" target="_blank" rel="noopener">evals/ overview</a></li>
+          <li><a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/EVAL-SYSTEM-PLAN.md" target="_blank" rel="noopener">EVAL-SYSTEM-PLAN — the full design</a></li>
+          <li><a href="https://github.com/harryschaefer93/qb-agent-system/tree/main/evals/schemas" target="_blank" rel="noopener">Artifact schemas (run-state, brief, design preview…)</a></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>How it has evolved</h3>
+        <p>Shipped in waves, each attacking a measured pain point:</p>
+        <ul>
+          <li><b>Run-state + driver</b> — externalized pipeline state, artifact-by-reference handoffs, a driver that refuses illegal transitions</li>
+          <li><b>Customer context</b> — researched briefs with provenance + untrusted-content hardening</li>
+          <li><b>SCOUT + design preview</b> — cheap recon before a mandatory CHECKPOINT 2 plan</li>
+          <li><b>Worktree isolation</b> — per-track worktrees, attributed merges, checkpoint/rewind</li>
+          <li><b>Risk-tiered autonomy</b> — session dial; hard gates never move</li>
+          <li><b>Synthetic-first graduation</b> — the mechanical validated bar</li>
+          <li><b>In flight</b> — DEV throughput (parallel track waves, rigor dial, deploy preflight) and cloud delegation to async coding agents</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Operating discipline</h3>
+        <ul>
+          <li><b>Nightly jobs</b> — structural CI gate, evidence backfill, hygiene sweep, untracked-work scan, public-mirror drift</li>
+          <li><b>Run records</b> — every pipeline run emits outcome telemetry (completion, cycle time, bounces, escalations)</li>
+          <li><b>Ask discipline</b> — clarification ledger; decisions asked once, delivery contract pinned at approval</li>
+          <li><b>Second opinions</b> — ORACLE consulted at conflicts, advisory-only</li>
+          <li><b>This site</b> — published from the private working system through an allowlist + redaction + secret-scan pipeline; push is always human-approved</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <div class="wrap">
+    <h2>Get started</h2>
+    <p class="sub">These are agent definitions, not a standalone app — they run inside GitHub Copilot (VS Code Copilot Chat and/or the Copilot CLI).</p>
+    <div class="cols">
+      <div class="card">
+        <h3>1 · Install the agents</h3>
+        <pre class="code"><span class="c"># Clone the repo</span>
+git clone https://github.com/harryschaefer93/qb-agent-system
+cd qb-agent-system
+
+<span class="c"># Copilot CLI: copy CLI agents into ~/.copilot/agents/</span>
+<span class="c">#   scoper.md, retro.md, imp.md</span>
+
+<span class="c"># VS Code Copilot Chat: copy *.agent.md into your</span>
+<span class="c"># custom-agents dir, then pick QB in the agent selector</span></pre>
+      </div>
+      <div class="card">
+        <h3>2 · Run the pipeline</h3>
+        <pre class="code"><span class="c"># (Optional) drop a BRIEF.md at your workspace root,</span>
+<span class="c"># or let scoper generate one.</span>
+
+<span class="c"># Invoke QB with a request, e.g.</span>
+<span class="k">QB</span> ▸ "Build a POC for a RAG chatbot on Azure."
+
+<span class="c"># QB confirms scope (Checkpoint 1), runs QA,</span>
+<span class="c"># presents a plan (Checkpoint 2), then routes work.</span></pre>
+      </div>
+      <div class="card">
+        <h3>3 · Run the eval harness <span style="font-weight:400;color:var(--text-soft)">(optional)</span></h3>
+        <pre class="code">cd evals
+pip install -e .
+
+<span class="c"># Dry-run an agent's behavioral test cases</span>
+python -m runner.cli run-behavioral qb --dry-run
+
+<span class="c"># Mine session telemetry for IMP evidence</span>
+python -m runner.telemetry scan --since 30d</pre>
+      </div>
+      <div class="card">
+        <h3>Adapt before you run</h3>
+        <ul>
+          <li><b>Model IDs</b> — the fleet runs a three-tier economy: Opus-class (<code>claude-opus-4.8-1m</code>) for judgment agents, Sonnet-class for volume work, Haiku-class for SCOUT recon, plus a cross-family model for ORACLE. Swap for models your license exposes.</li>
+          <li><b><code>~/.copilot</code> paths</b> — retro and parts of evals assume the standard local Copilot session store (OS-agnostic).</li>
+          <li><b>MCP servers</b> — any you don't have are ignored; trim the <code>tools:</code> list if you prefer.</li>
+          <li><b>FDPO conventions</b> — Entra ID + RBAC, no API keys, <code>disableLocalAuth: true</code>. No change needed for FDPO tenants.</li>
+        </ul>
+      </div>
+    </div>
+    <div style="margin-top:22px" class="note">
+      <b>Note on examples.</b> All customer names and identifiers in this repo (Contoso, Fabrikam, Woodgrove, Adatum…) are fictional placeholders. Nothing here contains real customer data.
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong>QB Agent System</strong> · Microsoft-first, FDPO-aligned multi-agent POC delivery.<br/>
+      Built to run inside GitHub Copilot.
+    </div>
+    <div>
+      <a href="https://github.com/harryschaefer93/qb-agent-system" target="_blank" rel="noopener">Repository</a> ·
+      <a href="https://github.com/harryschaefer93/qb-agent-system/blob/main/README.md" target="_blank" rel="noopener">README</a> ·
+      <a href="https://github.com/harryschaefer93/qb-agent-system/tree/main/agents" target="_blank" rel="noopener">Agents</a>
+    </div>
+  </div>
+</footer>
+<script type="application/json" id="fleet-data">
+{
+  "meta": {
+    "schema_version": 1,
+    "generator": "scripts/generate_fleet_data.py",
+    "source_fingerprint": "aa1cbc5b4d3fa1b2",
+    "sources": [
+      "agents/ARCH.agent.md",
+      "agents/DEV.agent.md",
+      "agents/DIAGRAM.agent.md",
+      "agents/DOCS.agent.md",
+      "agents/INFRA.agent.md",
+      "agents/ORACLE.agent.md",
+      "agents/QA.agent.md",
+      "agents/QB.agent.md",
+      "agents/REPO.agent.md",
+      "agents/SCOUT.agent.md",
+      "agents/imp.md",
+      "agents/retro.agent.md",
+      "agents/retro.md",
+      "agents/scoper.md",
+      "evals/pipelines.yaml"
+    ]
+  },
+  "agents": [
+    {
+      "id": "QB",
+      "role": "Orchestrator",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "Quarterback agent \u2014 orchestrates POC engineering across QA, Dev, Infra, Diagram, and Docs agents with iteration and validation loops.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/QB.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/QB.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "SCOUT",
+      "role": "Recon \u2014 cheap & read-only",
+      "tier": "recon",
+      "model": "claude-haiku-4.5",
+      "blurb": "Cheap, read-only reconnaissance agent.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/SCOUT.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/SCOUT.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "ARCH",
+      "role": "Solution architect",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "Solution architect for Microsoft customer POCs.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/ARCH.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/ARCH.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "QA",
+      "role": "Quality \u2014 first & last",
+      "tier": "volume",
+      "model": "claude-sonnet-5",
+      "blurb": "Quality assurance engineer that validates POC code, tests functionality, reviews for bugs and security issues, and ensures demos actually work.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/QA.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/QA.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "DEV",
+      "role": "Full-stack developer",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "Full-stack application developer for customer POCs. Builds APIs, frontends, integrations, and AI-powered apps across Python, TypeScript, C#, and Java.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/DEV.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/DEV.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "INFRA",
+      "role": "Azure infrastructure",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "Azure infrastructure specialist for Bicep, Terraform, and ARM templates. Provisions cloud resources, networking, IAM, and CI/CD pipelines for customer POCs.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/INFRA.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/INFRA.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "DIAGRAM",
+      "role": "Diagram specialist",
+      "tier": "volume",
+      "model": "claude-sonnet-5",
+      "blurb": "Cloud architecture diagram specialist that generates high-fidelity visual diagrams with real Azure/AWS/GCP/SaaS/on-prem icons.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/DIAGRAM.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/DIAGRAM.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "DOCS",
+      "role": "Technical writer",
+      "tier": "volume",
+      "model": "claude-sonnet-5",
+      "blurb": "Technical writer that creates README files, architecture diagrams, deployment guides, and customer handoff documentation for POCs.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/DOCS.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/DOCS.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "REPO",
+      "role": "Git/GitHub hygiene",
+      "tier": "volume",
+      "model": "claude-sonnet-5",
+      "blurb": "Git/GitHub hygiene specialist.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/REPO.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/REPO.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "ORACLE",
+      "role": "Second opinion \u2014 cross-family",
+      "tier": "advisor",
+      "model": "gpt-5.5",
+      "blurb": "Cross-family second-opinion advisor (deliberately NOT a Claude model).",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/ORACLE.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/ORACLE.agent.md"
+        }
+      ]
+    },
+    {
+      "id": "scoper",
+      "role": "Brief intake (CLI)",
+      "tier": "judgment",
+      "model": "claude-opus-4.8",
+      "blurb": "POC scoping agent for FSI customer engagements.",
+      "files": [
+        {
+          "runtime": "cli",
+          "path": "agents/scoper.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/scoper.md"
+        }
+      ]
+    },
+    {
+      "id": "retro",
+      "role": "Retrospective",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "Weekly retrospective agent \u2014 mines session history to analyze agent performance, identify patterns, and recommend prompt/workflow improvements.",
+      "files": [
+        {
+          "runtime": "vscode",
+          "path": "agents/retro.agent.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/retro.agent.md"
+        },
+        {
+          "runtime": "cli",
+          "path": "agents/retro.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/retro.md"
+        }
+      ]
+    },
+    {
+      "id": "imp",
+      "role": "Improvement lifecycle (CLI)",
+      "tier": "judgment",
+      "model": "claude-opus-4.8-1m",
+      "blurb": "End-to-end orchestrator for the agent-improvement workflow. Five modes: status dashboard, full orchestrate (default), implement, create-eval, validate.",
+      "files": [
+        {
+          "runtime": "cli",
+          "path": "agents/imp.md",
+          "href": "https://github.com/harryschaefer93/qb-agent-system/blob/main/agents/imp.md"
+        }
+      ]
+    }
+  ],
+  "orchestrator": {
+    "id": "QB",
+    "subagents": [
+      "SCOUT",
+      "ORACLE",
+      "ARCH",
+      "QA",
+      "DEV",
+      "INFRA",
+      "DIAGRAM",
+      "DOCS",
+      "REPO"
+    ],
+    "handoffs": [
+      {
+        "label": "Scout Recon",
+        "agent": "SCOUT"
+      },
+      {
+        "label": "Design Architecture",
+        "agent": "ARCH"
+      },
+      {
+        "label": "Validate with QA",
+        "agent": "QA"
+      },
+      {
+        "label": "Implement in Dev",
+        "agent": "DEV"
+      },
+      {
+        "label": "Implement in Infra",
+        "agent": "INFRA"
+      },
+      {
+        "label": "Generate Diagrams",
+        "agent": "DIAGRAM"
+      },
+      {
+        "label": "Package Documentation",
+        "agent": "DOCS"
+      },
+      {
+        "label": "Repo Hygiene + Push",
+        "agent": "REPO"
+      }
+    ]
+  },
+  "task_types": [
+    "bug-fix",
+    "new-poc-setup",
+    "full-delivery",
+    "customer-handoff",
+    "feature-request",
+    "refactor",
+    "optimization"
+  ],
+  "pipelines": {
+    "bug-fix": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "QA",
+          "artifacts": [
+            "structured diagnostic report",
+            "app-code/infra/mixed classification",
+            "scope classification",
+            "Proposed Change Plan (design preview: files path:line, interface changes, approach, before/after, test plan, risks)"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "DEV",
+          "artifacts": [
+            "scoped fix",
+            "tests or rationale for no tests"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "QA",
+          "artifacts": [
+            "fast-check or deep-review validation report",
+            "quality gate evidence"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "handoff-ready commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before first QA (guided); consolidated into CP2 at standard/trusted \u2014 IMP-0028",
+          "purpose": "Clarify bug scope, reproduction steps, affected surfaces, and user priorities before diagnosis."
+        },
+        "CP2": {
+          "before_index": 1,
+          "placement": "after QA diagnosis and issue/scope classification; before DEV/INFRA implementation.",
+          "purpose": "Approve, modify, add scope, or cancel the fix plan before work proceeds \u2014 presented with the design preview (Proposed Change Plan)."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": false
+    },
+    "new-poc-setup": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "ARCH",
+          "artifacts": [
+            "ARCHITECTURE.md",
+            "recommended stack",
+            "trade-offs",
+            "FDPO identity plan",
+            "cost estimate",
+            "parallelization tracks"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "DEV",
+          "artifacts": [
+            "track-scoped implementation",
+            "env-var contract",
+            "tests"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "INFRA",
+          "artifacts": [
+            "IaC",
+            "RBAC assignments",
+            "managed identity wiring",
+            "deployment configuration"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "QA",
+          "artifacts": [
+            "deep-review report",
+            "gate evidence",
+            "blocker list or approval"
+          ]
+        },
+        {
+          "i": 4,
+          "role": "DIAGRAM",
+          "artifacts": [
+            "as-built architecture diagrams"
+          ]
+        },
+        {
+          "i": 5,
+          "role": "DOCS",
+          "artifacts": [
+            "README",
+            "deployment guide",
+            "customer handoff docs"
+          ]
+        },
+        {
+          "i": 6,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "CI/CD via OIDC check",
+            "final commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before ARCH",
+          "purpose": "Clarify POC scope, technology stack, Azure resources, customer constraints, and auth needs before architecture."
+        },
+        "CP2": {
+          "before_index": 1,
+          "placement": "after ARCH produces ARCHITECTURE.md; before DEV/INFRA fan-out.",
+          "purpose": "Approve, modify, pick alternative, or cancel the proposed stack, cost, and delivery tracks."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": true
+    },
+    "full-delivery": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "ARCH",
+          "artifacts": [
+            "ARCHITECTURE.md",
+            "recommended stack",
+            "trade-offs",
+            "FDPO identity plan",
+            "cost estimate",
+            "parallelization tracks"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "DEV",
+          "artifacts": [
+            "track-scoped implementation",
+            "env-var contract",
+            "tests"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "INFRA",
+          "artifacts": [
+            "IaC",
+            "RBAC assignments",
+            "managed identity wiring",
+            "deployment configuration"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "QA",
+          "artifacts": [
+            "deep-review report",
+            "gate evidence",
+            "blocker list or approval",
+            "demo evidence pack (per-flow screenshots + verified timestamps + pass/fail table)"
+          ]
+        },
+        {
+          "i": 4,
+          "role": "DIAGRAM",
+          "artifacts": [
+            "as-built architecture diagrams"
+          ]
+        },
+        {
+          "i": 5,
+          "role": "DOCS",
+          "artifacts": [
+            "README",
+            "deployment guide",
+            "customer handoff docs with embedded demo evidence"
+          ]
+        },
+        {
+          "i": 6,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "CI/CD via OIDC check",
+            "final commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before ARCH",
+          "purpose": "Clarify full-delivery scope, technology stack, Azure resources, customer constraints, and auth needs before architecture."
+        },
+        "CP2": {
+          "before_index": 1,
+          "placement": "after ARCH produces ARCHITECTURE.md; before DEV/INFRA fan-out.",
+          "purpose": "Approve, modify, pick alternative, or cancel the proposed stack, cost, and delivery tracks."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": true
+    },
+    "customer-handoff": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "QA",
+          "artifacts": [
+            "deep-review report",
+            "release blockers",
+            "validation evidence",
+            "demo evidence pack (per-flow screenshots + verified timestamps + pass/fail table)"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "DOCS",
+          "artifacts": [
+            "customer handoff documentation with embedded demo evidence",
+            "release notes draft"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "DIAGRAM",
+          "artifacts": [
+            "updated as-built diagrams",
+            "diagram review notes"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "REPO",
+          "artifacts": [
+            "public-readiness checklist",
+            "customer-handoff branch/tag summary",
+            "secret scan result",
+            "release notes"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before QA",
+          "purpose": "Clarify handoff scope, deliverables, public/private release posture, and delivery format before final validation."
+        },
+        "CP2": {
+          "before_index": 1,
+          "placement": "after QA deep-review findings; before packaging and release work.",
+          "purpose": "Approve, modify, add scope, or cancel the handoff package plan."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": false
+    },
+    "feature-request": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "ARCH",
+          "artifacts": [
+            "integration design note (design preview: files path:line, interface changes, approach, test plan)",
+            "integration approach",
+            "FDPO/compliance impact if applicable"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "DEV",
+          "artifacts": [
+            "approved implementation",
+            "acceptance tests",
+            "env/dependency updates if needed"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "QA",
+          "artifacts": [
+            "fast-check or deep-review validation",
+            "acceptance criteria evidence"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "final commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before SCOUT recon (guided); consolidated into CP2 at standard/trusted \u2014 IMP-0028",
+          "purpose": "Clarify scope, acceptance criteria, auth, tests, and public/internal exposure before reconnoitering implementation impact."
+        },
+        "CP2": {
+          "before_index": 1,
+          "placement": "after SCOUT recon and ARCH integration design; before DEV/INFRA implementation.",
+          "purpose": "Approve, modify, pick alternative, or cancel the integration plan and acceptance test \u2014 presented with the design preview (integration design note)."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": false
+    },
+    "refactor": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "DEV",
+          "artifacts": [
+            "behavior-preserving refactor",
+            "characterization tests if selected",
+            "invariant citations"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "QA",
+          "artifacts": [
+            "baseline/regression report",
+            "per-invariant pass/fail table",
+            "API surface diff",
+            "Behavior Preserved line"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "final commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before QA baseline (guided); consolidated into CP2 at standard/trusted \u2014 IMP-0028",
+          "purpose": "Clarify refactor contract, behavior to preserve, success signal, and scope before baseline capture."
+        },
+        "CP2": {
+          "before_index": 0,
+          "placement": "after QA baseline and scope classification; before DEV refactor.",
+          "purpose": "Approve invariants, characterization-test strategy, smoke test plan, or cancellation before behavior-preserving changes \u2014 presented with the design preview (Proposed Change Plan: target structure, invariants, migration steps)."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": false
+    },
+    "optimization": {
+      "phases": [
+        {
+          "i": 0,
+          "role": "DEV",
+          "artifacts": [
+            "application optimization",
+            "metric/invariant references",
+            "tests or measurement scripts"
+          ]
+        },
+        {
+          "i": 1,
+          "role": "INFRA",
+          "artifacts": [
+            "infrastructure optimization",
+            "SKU/resource changes",
+            "cost/security rationale"
+          ]
+        },
+        {
+          "i": 2,
+          "role": "QA",
+          "artifacts": [
+            "delta-check report",
+            "baseline-to-post table",
+            "regression-on-others check",
+            "Improvement vs Target line"
+          ]
+        },
+        {
+          "i": 3,
+          "role": "REPO",
+          "artifacts": [
+            "secret scan result",
+            "gitignore audit",
+            "final commit/push summary"
+          ]
+        }
+      ],
+      "checkpoints": {
+        "CP1": {
+          "before_index": 0,
+          "placement": "before QA baseline (guided); consolidated into CP2 at standard/trusted \u2014 IMP-0028",
+          "purpose": "Clarify metric, target delta, and constraints before baseline measurement."
+        },
+        "CP2": {
+          "before_index": 0,
+          "placement": "after QA baseline and scope classification; before DEV/INFRA optimization.",
+          "purpose": "Approve, modify, pick alternative, or cancel the approach, expected delta, and severity-tagged security plan when applicable \u2014 presented with the design preview (Proposed Change Plan: approach, expected delta, measurement method)."
+        }
+      },
+      "iteration_cap": 2,
+      "quality_gate_before_repo": true,
+      "multi_track": false
+    }
+  },
+  "satellites": {
+    "SCOUT": {
+      "role": "Recon",
+      "when": "Read-only reconnaissance before CHECKPOINT 2 \u2014 repo shape, patterns, constraints.",
+      "returns": "path:line citations, touched surface, gotchas \u2014 bounded digest.",
+      "handoff_label": "Scout Recon"
+    },
+    "ORACLE": {
+      "role": "Second opinion",
+      "when": "Conflicting recommendations, repeated escalations, or risky CHECKPOINT 2 approvals.",
+      "note": "Advisory-only, cross-model-family; its opinion is data, never a decision. Never a pipeline phase."
+    }
+  },
+  "fanout_example": {
+    "note": "Illustrative example \u2014 real tracks are declared per engagement in ARCHITECTURE.md (tracks-block schema).",
+    "tracks": [
+      {
+        "name": "frontend",
+        "framework": "React + Vite",
+        "owned_paths": [
+          "web/"
+        ],
+        "env_contract": [
+          "VITE_API_BASE"
+        ],
+        "depends_on": []
+      },
+      {
+        "name": "api",
+        "framework": "FastAPI",
+        "owned_paths": [
+          "api/"
+        ],
+        "env_contract": [
+          "COSMOS_ENDPOINT"
+        ],
+        "depends_on": []
+      },
+      {
+        "name": "ingestion",
+        "framework": "Python worker",
+        "owned_paths": [
+          "ingestion/"
+        ],
+        "env_contract": [
+          "COSMOS_ENDPOINT"
+        ],
+        "depends_on": [
+          "api"
+        ]
+      }
+    ],
+    "merge": "Sequential attributed merge into the integration branch; conflicts bounce to the owning track."
+  }
+}
+</script>
+<script src="fleet-viz.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/harryschaefer93/copilot/evals/schemas/brief.schema.json",
+  "title": "IMP-0029 BRIEF.md",
+  "description": "Markdown-artifact contract for BRIEF.md (canonical template: skills/brief-template/SKILL.md). Validated by required-heading presence plus the source-citation and EARS quality signals.",
+  "type": "object",
+  "x-artifact-format": "markdown",
+  "x-required-headings": [
+    "Executive Summary",
+    "Customer Context",
+    "POC Scope",
+    "Objectives",
+    "Success Criteria",
+    "Acceptance Criteria",
+    "Architecture Guidance",
+    "Risks & Mitigations",
+    "Next Steps"
+  ],
+  "x-required-patterns": {
+    "source_citation": "Source:",
+    "ears_criterion": "THE SYSTEM SHALL"
+  }
+}

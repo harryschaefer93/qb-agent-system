@@ -1,0 +1,15 @@
+{"query": "The /scores endpoint is returning 500 errors intermittently when users submit large payloads"}
+{"query": "We need to add a caching layer to the API to reduce Cosmos DB costs - can you implement Redis?"}
+{"query": "Build a new POC from scratch for a customer demo - React frontend with a Python FastAPI backend on Azure Container Apps"}
+{"query": "The deployment pipeline is failing on the Bicep validation step - can you investigate and fix?"}
+{"query": "Package the broker workbench POC for customer handoff - needs README, architecture diagram, and deployment guide"}
+{"query": "Add authentication to the existing app using MSAL and Azure Entra ID - it currently has no auth"}
+{"query": "The Playwright E2E tests are failing because the UI changed but tests weren't updated"}
+{"query": "Create a full delivery pipeline for the Contoso contact center POC - frontend, API, Azure resources, and docs"}
+{"query": "The app is throwing CORS errors when the frontend tries to call the API from a different origin"}
+{"query": "We need to add a new feature - document upload with OCR processing using Azure Document Intelligence"}
+{"query": "The container app keeps restarting - looks like it's running out of memory during peak load"}
+{"query": "Set up the infrastructure for a new POC - need Container Apps, Cosmos DB, AI Search, and Key Vault with managed identity"}
+{"query": "Review the code quality of the current POC before we hand it off to the customer"}
+{"query": "The SignalR real-time updates stopped working after the last deployment - users don't see live changes"}
+{"query": "Generate an architecture diagram showing all the Azure resources and data flow for the current POC"}

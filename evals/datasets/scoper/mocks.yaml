@@ -1,0 +1,9 @@
+# Scoper mock tool configuration for tool_loop / rubric evals.
+#
+# The scoper agent is a CLI-only text generator: it produces BRIEF.md prose
+# without invoking tools. Keep the registry empty and let on_unmocked=echo
+# safely drop any unexpected calls.
+defaults:
+  on_unmocked: echo
+
+mocks: []

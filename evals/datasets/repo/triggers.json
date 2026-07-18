@@ -1,0 +1,28 @@
+{
+  "agent": "repo",
+  "description": "Git/GitHub hygiene. Owns gitignore audit, mandatory secret scan (gitleaks), GitHub Actions CI/CD scaffolding via OIDC, public-readiness checklist, repo metadata, .github/copilot-instructions.md, customer-handoff branches and release notes, and the final commit + push.",
+  "shouldTriggerPrompts": [
+    "audit my .gitignore before pushing",
+    "scan the repo for secrets",
+    "set up GitHub Actions CI/CD pipeline for the POC",
+    "is this repo ready to be made public?",
+    "make sure no API keys are in git history",
+    "create the customer-handoff branch with release notes",
+    "set the repo description and topics",
+    "generate .github/copilot-instructions.md for this project",
+    "wire up workload identity federation for GitHub Actions to Azure",
+    "do the final commit and push for this POC"
+  ],
+  "shouldNotTriggerPrompts": [
+    "design the architecture for the new POC",
+    "build the FastAPI backend",
+    "create the Bicep templates",
+    "validate the implementation end-to-end",
+    "generate an architecture diagram",
+    "package the customer handoff doc with executive summary",
+    "scope a new POC for Woodgrove",
+    "fix the broken auth endpoint",
+    "deploy to Azure",
+    "run the unit tests"
+  ]
+}

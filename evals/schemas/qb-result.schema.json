@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/harryschaefer93/copilot/evals/schemas/qb-result.schema.json",
+  "title": "IMP-0029 QB Result block",
+  "description": "Markdown-artifact contract for QB's final `## QB Result` output shape — the stable telemetry anchor replacing regex fingerprints over time.",
+  "type": "object",
+  "x-artifact-format": "markdown",
+  "x-required-headings": [
+    "QB Result",
+    "Task Type",
+    "Routing Plan"
+  ],
+  "x-required-patterns": {
+    "verdict_line": "Verdict"
+  }
+}

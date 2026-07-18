@@ -1,0 +1,99 @@
+# Agent definitions
+agents:
+  # Path is resolved relative to PROJECT_ROOT (the evals/ directory) when not absolute.
+  # Default points at the sibling agents/ directory inside .copilot/.
+  definitions_path: "../agents/"
+  # Map file names to agent identifiers
+  agent_files:
+    poc-scoper: "scoper.md"
+    qb: "qb.agent.md"
+    dev: "dev.agent.md"
+    infra: "infra.agent.md"
+    qa: "qa.agent.md"
+    diagram: "diagram.agent.md"
+    docs: "docs.agent.md"
+    arch: "arch.agent.md"
+    repo: "repo.agent.md"
+
+# Foundry config — modern Foundry resource (Entra auth, no API keys)
+foundry:
+  endpoint: "https://foundry-agent-evals.openai.azure.com/"
+  deployment: "gpt-5.4"
+  api_version: "2024-12-01-preview"
+  # Auth: DefaultAzureCredential (az login for local dev, managed identity for CI)
+
+# Eval thresholds — scores below these trigger warnings
+thresholds:
+  routing:
+    accuracy: 0.90          # % of prompts routed to correct agent
+    false_positive_max: 0.05  # Max % wrong-agent activations
+  quality:
+    fluency_min: 4.0        # 1-5 scale
+    coherence_min: 4.0
+    task_adherence_min: 4.0
+    groundedness_min: 4.0
+  structure:
+    pass_rate: 1.0          # All structure checks must pass
+  foundry_agents:
+    tool_call_accuracy_min: 3.0  # 1-5 scale — did the agent call the right tools?
+    task_adherence_min: 4.0      # 1-5 scale — did it follow rules and checkpoints?
+    intent_resolution_min: 4.0   # 1-5 scale — did it resolve user intent correctly?
+
+# Model comparison settings
+model_compare:
+  project_endpoint: "https://foundry-agent-evals.services.ai.azure.com/api/projects/eval-harness"
+  # LLM judge for quality evaluators (coherence, fluency, etc.)
+  judge_deployment: "gpt-5.4"
+  # Models to compare — each must be deployed in the Foundry account
+  models:
+    - deployment: gpt-5.4
+      display_name: "GPT-5.4"
+    - deployment: gpt-4.1-mini
+      display_name: "GPT-4.1-mini"
+  # Evaluators to run on each model's responses
+  evaluators:
+    - builtin.coherence
+    - builtin.fluency
+    - builtin.task_adherence
+    - builtin.response_completeness
+    - builtin.intent_resolution
+
+# Output settings
+output:
+  results_dir: "results"
+  reports_dir: "reports"
+  format: "json"  # json or yaml
+
+# --- Phase 1: Execution metrics ---
+# Per-deployment USD pricing for cost_usd computation in every snapshot.
+# Bump pricing.version when prices change so old snapshots remain interpretable.
+# Source: Azure OpenAI / Foundry public pricing (US East, pay-as-you-go).
+pricing:
+  version: v1
+  deployments:
+    gpt-5.4:
+      input_per_million_usd: 1.25
+      output_per_million_usd: 10.00
+    gpt-5-pro:
+      input_per_million_usd: 10.00
+      output_per_million_usd: 40.00
+    gpt-4.1:
+      input_per_million_usd: 2.00
+      output_per_million_usd: 8.00
+    gpt-4.1-mini:
+      input_per_million_usd: 0.40
+      output_per_million_usd: 1.60
+    o4-mini:
+      input_per_million_usd: 1.10
+      output_per_million_usd: 4.40
+
+# Thresholds for execution_metrics regression gating.
+# - speed_regression_pct / wall_time_max_ms: SPEED regressions FAIL the verdict (gated)
+# - cost_regression_pct: null = WARN-only (advisory). Set to a number to gate cost too.
+# - token_regression_pct: WARN-only signal that token spend grew.
+# Per-IMP overrides go in the IMP frontmatter under `thresholds:`.
+execution_metrics:
+  speed_regression_pct: 25       # wall_time delta > 25% => fail
+  cost_regression_pct: null      # null => advisory only (user prioritises quality + speed)
+  wall_time_max_ms: 60000        # absolute cap; fail if exceeded
+  token_regression_pct: 30       # warn if input+output token growth > 30%

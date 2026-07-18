@@ -1,0 +1,159 @@
+# Single source of truth for QB task-type pipelines. Evals consume this now; the
+# pipeline driver and QB prompt should consume it later so routing stays in sync.
+pipelines:
+  bug-fix:
+    phases: ["QA", "DEV", "QA", "REPO"]
+    checkpoints:
+      CP1:
+        placement: "before first QA (guided); consolidated into CP2 at standard/trusted — IMP-0028"
+        purpose: "Clarify bug scope, reproduction steps, affected surfaces, and user priorities before diagnosis."
+      CP2:
+        placement: "after QA diagnosis and issue/scope classification; before DEV/INFRA implementation."
+        purpose: "Approve, modify, add scope, or cancel the fix plan before work proceeds — presented with the design preview (Proposed Change Plan)."
+    quality_gate_before_repo: true
+    iteration_cap: 2
+    required_artifacts:
+      - phase: "QA"
+        artifacts: ["structured diagnostic report", "app-code/infra/mixed classification", "scope classification", "Proposed Change Plan (design preview: files path:line, interface changes, approach, before/after, test plan, risks)"]
+      - phase: "DEV"
+        artifacts: ["scoped fix", "tests or rationale for no tests"]
+      - phase: "QA"
+        artifacts: ["fast-check or deep-review validation report", "quality gate evidence"]
+      - phase: "REPO"
+        artifacts: ["secret scan result", "gitignore audit", "handoff-ready commit/push summary"]
+
+  new-poc-setup:
+    phases: ["ARCH", "DEV", "INFRA", "QA", "DIAGRAM", "DOCS", "REPO"]
+    checkpoints:
+      CP1:
+        placement: "before ARCH"
+        purpose: "Clarify POC scope, technology stack, Azure resources, customer constraints, and auth needs before architecture."
+      CP2:
+        placement: "after ARCH produces ARCHITECTURE.md; before DEV/INFRA fan-out."
+        purpose: "Approve, modify, pick alternative, or cancel the proposed stack, cost, and delivery tracks."
+    quality_gate_before_repo: true
+    iteration_cap: 2
+    required_artifacts:
+      - phase: "ARCH"
+        artifacts: ["ARCHITECTURE.md", "recommended stack", "trade-offs", "FDPO identity plan", "cost estimate", "parallelization tracks"]
+      - phase: "DEV"
+        artifacts: ["track-scoped implementation", "env-var contract", "tests"]
+      - phase: "INFRA"
+        artifacts: ["IaC", "RBAC assignments", "managed identity wiring", "deployment configuration"]
+      - phase: "QA"
+        artifacts: ["deep-review report", "gate evidence", "blocker list or approval"]
+      - phase: "DIAGRAM"
+        artifacts: ["as-built architecture diagrams"]
+      - phase: "DOCS"
+        artifacts: ["README", "deployment guide", "customer handoff docs"]
+      - phase: "REPO"
+        artifacts: ["secret scan result", "gitignore audit", "CI/CD via OIDC check", "final commit/push summary"]
+
+  full-delivery:
+    phases: ["ARCH", "DEV", "INFRA", "QA", "DIAGRAM", "DOCS", "REPO"]
+    checkpoints:
+      CP1:
+        placement: "before ARCH"
+        purpose: "Clarify full-delivery scope, technology stack, Azure resources, customer constraints, and auth needs before architecture."
+      CP2:
+        placement: "after ARCH produces ARCHITECTURE.md; before DEV/INFRA fan-out."
+        purpose: "Approve, modify, pick alternative, or cancel the proposed stack, cost, and delivery tracks."
+    quality_gate_before_repo: true
+    iteration_cap: 2
+    required_artifacts:
+      - phase: "ARCH"
+        artifacts: ["ARCHITECTURE.md", "recommended stack", "trade-offs", "FDPO identity plan", "cost estimate", "parallelization tracks"]
+      - phase: "DEV"
+        artifacts: ["track-scoped implementation", "env-var contract", "tests"]
+      - phase: "INFRA"
+        artifacts: ["IaC", "RBAC assignments", "managed identity wiring", "deployment configuration"]
+      - phase: "QA"
+        artifacts: ["deep-review report", "gate evidence", "blocker list or approval", "demo evidence pack (per-flow screenshots + verified timestamps + pass/fail table)"]
+      - phase: "DIAGRAM"
+        artifacts: ["as-built architecture diagrams"]
+      - phase: "DOCS"
+        artifacts: ["README", "deployment guide", "customer handoff docs with embedded demo evidence"]
+      - phase: "REPO"
+        artifacts: ["secret scan result", "gitignore audit", "CI/CD via OIDC check", "final commit/push summary"]
+
+  customer-handoff:
+    phases: ["QA", "DOCS", "DIAGRAM", "REPO"]
+    checkpoints:
+      CP1:
+        placement: "before QA"
+        purpose: "Clarify handoff scope, deliverables, public/private release posture, and delivery format before final validation."
+      CP2:
+        placement: "after QA deep-review findings; before packaging and release work."
+        purpose: "Approve, modify, add scope, or cancel the handoff package plan."
+    quality_gate_before_repo: true
+    iteration_cap: 2
+    required_artifacts:
+      - phase: "QA"
+        artifacts: ["deep-review report", "release blockers", "validation evidence", "demo evidence pack (per-flow screenshots + verified timestamps + pass/fail table)"]
+      - phase: "DOCS"
+        artifacts: ["customer handoff documentation with embedded demo evidence", "release notes draft"]
+      - phase: "DIAGRAM"
+        artifacts: ["updated as-built diagrams", "diagram review notes"]
+      - phase: "REPO"
+        artifacts: ["public-readiness checklist", "customer-handoff branch/tag summary", "secret scan result", "release notes"]
+
+  feature-request:
+    phases: ["ARCH", "DEV", "QA", "REPO"]
+    checkpoints:
+      CP1:
+        placement: "before SCOUT recon (guided); consolidated into CP2 at standard/trusted — IMP-0028"
+        purpose: "Clarify scope, acceptance criteria, auth, tests, and public/internal exposure before reconnoitering implementation impact."
+      CP2:
+        placement: "after SCOUT recon and ARCH integration design; before DEV/INFRA implementation."
+        purpose: "Approve, modify, pick alternative, or cancel the integration plan and acceptance test — presented with the design preview (integration design note)."
+    quality_gate_before_repo: true
+    iteration_cap: 2
+    required_artifacts:
+      - phase: "ARCH"
+        artifacts: ["integration design note (design preview: files path:line, interface changes, approach, test plan)", "integration approach", "FDPO/compliance impact if applicable"]
+      - phase: "DEV"
+        artifacts: ["approved implementation", "acceptance tests", "env/dependency updates if needed"]
+      - phase: "QA"
+        artifacts: ["fast-check or deep-review validation", "acceptance criteria evidence"]
+      - phase: "REPO"
+        artifacts: ["secret scan result", "gitignore audit", "final commit/push summary"]
+
+  refactor:
+    phases: ["DEV", "QA", "REPO"]
+    checkpoints:
+      CP1:
+        placement: "before QA baseline (guided); consolidated into CP2 at standard/trusted — IMP-0028"
+        purpose: "Clarify refactor contract, behavior to preserve, success signal, and scope before baseline capture."
+      CP2:
+        placement: "after QA baseline and scope classification; before DEV refactor."
+        purpose: "Approve invariants, characterization-test strategy, smoke test plan, or cancellation before behavior-preserving changes — presented with the design preview (Proposed Change Plan: target structure, invariants, migration steps)."
+    quality_gate_before_repo: true
+    iteration_cap: 2
+    required_artifacts:
+      - phase: "DEV"
+        artifacts: ["behavior-preserving refactor", "characterization tests if selected", "invariant citations"]
+      - phase: "QA"
+        artifacts: ["baseline/regression report", "per-invariant pass/fail table", "API surface diff", "Behavior Preserved line"]
+      - phase: "REPO"
+        artifacts: ["secret scan result", "gitignore audit", "final commit/push summary"]
+
+  optimization:
+    phases: ["DEV", "INFRA", "QA", "REPO"]
+    checkpoints:
+      CP1:
+        placement: "before QA baseline (guided); consolidated into CP2 at standard/trusted — IMP-0028"
+        purpose: "Clarify metric, target delta, and constraints before baseline measurement."
+      CP2:
+        placement: "after QA baseline and scope classification; before DEV/INFRA optimization."
+        purpose: "Approve, modify, pick alternative, or cancel the approach, expected delta, and severity-tagged security plan when applicable — presented with the design preview (Proposed Change Plan: approach, expected delta, measurement method)."
+    quality_gate_before_repo: true
+    iteration_cap: 2
+    required_artifacts:
+      - phase: "DEV"
+        artifacts: ["application optimization", "metric/invariant references", "tests or measurement scripts"]
+      - phase: "INFRA"
+        artifacts: ["infrastructure optimization", "SKU/resource changes", "cost/security rationale"]
+      - phase: "QA"
+        artifacts: ["delta-check report", "baseline-to-post table", "regression-on-others check", "Improvement vs Target line"]
+      - phase: "REPO"
+        artifacts: ["secret scan result", "gitignore audit", "final commit/push summary"]

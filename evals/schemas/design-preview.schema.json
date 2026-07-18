@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/harryschaefer93/copilot/evals/schemas/design-preview.schema.json",
+  "title": "IMP-0042 Design Preview (Proposed Change Plan)",
+  "description": "What the user approves at CP2 before anything is built, for bug-fix / feature-request / refactor / optimization. Authored by QA (diagnosis/baseline) or ARCH (feature-request integration note) as a '## Proposed Change Plan' block; this schema is the normalized form for mechanical validation (validator lands with IMP-0029).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["files_to_change", "approach", "test_plan"],
+  "properties": {
+    "files_to_change": {
+      "type": "array",
+      "minItems": 1,
+      "description": "path:line entries for every file the change will touch.",
+      "items": { "type": "string" }
+    },
+    "interface_changes": {
+      "type": "array",
+      "description": "Signatures, endpoints, or schemas that change; empty when none.",
+      "items": { "type": "string" }
+    },
+    "approach": {
+      "type": "string",
+      "description": "2-4 sentences: what will be done and why this way."
+    },
+    "before_after": {
+      "type": "string",
+      "description": "One concrete example: current behavior -> post-change behavior."
+    },
+    "test_plan": {
+      "type": "string",
+      "description": "The tests/checks that will prove the change works."
+    },
+    "risks": {
+      "type": "string",
+      "description": "What could break and the blast radius; 'minimal' when honestly so."
+    }
+  }
+}
