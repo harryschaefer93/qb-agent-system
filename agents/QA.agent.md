@@ -30,6 +30,8 @@ QB invokes you in one of 5 modes. Each mode has a specific scope, output contrac
 
 **Trivial bug-fix exception:** for one-line corrections that QB classifies as `trivial` scope, QA may make the edit directly per the existing rule (search this file for "Trivial" and "QA fixes directly"). All 5 modes above are otherwise strictly read-only.
 
+**Rigor dial (IMP-0062).** The approved plan carries `rigor: poc | hardened | production`; QB's invocation names it. Scale review depth to it: `poc` → `fast-check` depth unless the pipeline mandates `deep-review` (handoff/full-delivery always get deep-review); `hardened`/`production` → `deep-review`. **Police over-delivery, not just under-delivery:** output materially exceeding the plan's test budget is a reportable finding ("over-delivered vs rigor=poc: 576 tests vs budget ~30 — cost without requirement"), a 🟡 Warning, never praise. **FDPO/auth/secret checks are rigor-independent — run them at full depth at every dial position.**
+
 ### Proposed Change Plan (design preview — IMP-0042)
 
 Whenever your report is the last artifact before CHECKPOINT 2 — bug-fix diagnosis, refactor/optimization `baseline` — it MUST end with a **Proposed Change Plan** block. This is what the user sees and approves *before anything is built*; write it for a human deciding, not for an agent executing:
@@ -194,6 +196,7 @@ Iterate with the diagram agent until the diagram passes with no blockers and min
 - Check that `azd up` / deployment scripts reference correct paths and configurations.
 - Ensure no local-only dependencies (hardcoded localhost URLs, local file paths).
 - Verify health endpoints and startup probes exist for containerized apps.
+- **Post-deploy auth smoke (IMP-0064):** For every deploy-bearing pipeline, immediately run `scripts/smoke-auth.ps1` against a protected endpoint. Absent/malformed tokens must return 401 or 403 and a valid Entra token must return 200; give the JSON output verbatim to DEV/INFRA on failure.
 
 ## How You Report Issues
 

@@ -1,19 +1,19 @@
 ---
 id: IMP-0058
 title: Cost telemetry — populate run-record cost estimates + delegation credit spend
-status: proposed
+status: implemented
 source: review-2026-07-15
 affects: [meta, retro]
 risk: low
 created: 2026-07-15
-updated: 2026-07-16
-commit: null
+updated: 2026-07-19
+commit: a977df5
 eval_type: structural
 skip_validation: false
 eval_id: imp_0058
 eval_seed: 42
 baseline_run: null
-post_run: null
+post_run: baselines/IMP-0058/20260719-152938-a977df5-post.json
 manual_evidence: []
 ---
 
@@ -64,12 +64,12 @@ segment is the headline number). This is the measurement prerequisite for IMP-00
 
 ## Acceptance criteria
 
-- [ ] Phase entries record real `started` at dispatch (not completion); per-track phases
+- [x] Phase entries record real `started` at dispatch (not completion); per-track phases
       included; `kpi` + nightly render per-phase wall time with DEV segment called out
-- [ ] New/backfilled run records carry non-null `cost_estimate_total` derived from
+- [x] New/backfilled run records carry non-null `cost_estimate_total` derived from
       transcript request counts × config tier weights
-- [ ] `kpi` renders cost per run, 7d total, and by-task-type; nightly report shows it
-- [ ] Units + methodology documented where the field is defined (schema comment + EVAL-SYSTEM-PLAN)
+- [x] `kpi` renders cost per run, 7d total, and by-task-type; nightly report shows it
+- [x] Units + methodology documented where the field is defined (schema comment + EVAL-SYSTEM-PLAN)
 - [ ] Delegation rows get a spend figure (real or `estimated: true`) once IMP-0053 lands
 - [ ] One week of KPIs with non-null cost; IMP-0049 retro compare cites them
 
@@ -96,3 +96,19 @@ carry it forward unattended.
 - Sequencing: independent of Wave 6 steps 1–2; ship alongside IMP-0055 so the briefing's
   KPI section is born with a cost column. The delegation-spend part (item 2) activates
   only after IMP-0053.
+- **Implemented 2026-07-19** (backlog-review session): `pipeline dispatch` verb stamps real
+  phase starts (idempotent; `already_dispatched` refusal protects the true start across
+  retries; legacy completion-stamp fallback unchanged, 6 new driver tests). `runner.telemetry
+  cost` derives per-agent weighted request counts from IMP-0052 sessions (`-subN` summary
+  prefix → agent; main-session anchor claims its subs) against the `config.yaml cost_model:`
+  block; `--write` persists the additive `cost_estimates` key; nightly runs it before kpi.
+  `phase_durations` + `dev_segment_minutes` (+ `_mean`) render in kpi/safe outputs — null for
+  legacy `started == finished` stamps, never fabricated zeros. Schema also gained the
+  IMP-0063 `reconstructed`/`reconstruction` provenance fields it had been missing.
+- **Backfill evidence 2026-07-19:** PilotApp-20260713-0837 → cost 96.0 (14 sessions, qb tier),
+  phase starts reconstructed from prior-phase finishes + repo-map mtime (caveats recorded in
+  the run record's `reconstruction` block; DEV segment 419.4 min ≈ the review's ~7h estimate);
+  PilotApp-webpublic-20260714 → cost 51.25 with a realistic 7-agent split (qb 24 / dev 21 /
+  infra 3 / qa 1 / repo 1 / docs 1 / scout 0.25). 7d KPI now shows cost 147.25 and
+  DEV-segment means. Remaining open boxes: delegation spend (gated on IMP-0053) and the
+  one-week-of-KPIs / IMP-0049 retro citation (elapsed-time criterion, ~2026-07-21).

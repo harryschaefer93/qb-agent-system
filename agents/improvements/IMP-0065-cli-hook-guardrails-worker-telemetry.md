@@ -1,19 +1,19 @@
 ---
 id: IMP-0065
 title: CLI hook layer — mechanical deny guardrails + session telemetry for headless workers
-status: proposed
+status: implemented
 source: review-2026-07-17
 affects: [DEV, REPO, meta]
 risk: low
 created: 2026-07-17
-updated: 2026-07-17
-commit: null
+updated: 2026-07-19
+commit: b9aec6b
 eval_type: structural
 skip_validation: false
 eval_id: imp_0065
 eval_seed: 42
 baseline_run: null
-post_run: null
+post_run: baselines/IMP-0065/20260719-160132-b9aec6b-post.json
 validation_evidence: []
 manual_evidence: []
 ---
@@ -65,20 +65,27 @@ enforcement layer the prose has been simulating now exists as configuration.
 
 ## Acceptance criteria
 
-- [ ] Hook config + `pretool-guard.ps1` + `session-telemetry.ps1` exist; deny canon JSON
+- [x] Hook config + `pretool-guard.ps1` + `session-telemetry.ps1` exist; deny canon JSON
       is the single source shared with the friction doc
 - [ ] Scripted headless session: a seeded `git push` is denied (exit-2 observed, audit
-      line written) and the worker continues, reporting the refusal
-- [ ] Same session: an allow-listed build/test command passes with negligible added latency
-- [ ] A dispatched worker carrying a run id lands real `started`/`finished` stamps in
-      run-state; `runner.telemetry kpi` renders them per track
-- [ ] Hook-config location for user-level scope verified (docs show repo-level
+      line written) and the worker continues, reporting the refusal — **BLOCKED on this
+      install: preToolUse hooks do not execute in `-p` mode on CLI 1.0.72-1 (see Notes,
+      2026-07-19 verification); deterministic rehearsal covers the contract; interim =
+      per-worker `--deny-tool` flags (IMP-0061 addendum), retest each CLI update**
+- [x] Same session: an allow-listed build/test command passes with negligible added latency
+      (deterministic rehearsal: pass-through green; live latency N/A while live-fire blocked)
+- [x] A dispatched worker carrying a run id lands real `started`/`finished` stamps in
+      run-state; `runner.telemetry kpi` renders them per track (rehearsal
+      `test_worker_with_run_id_lands_dispatch_stamp`; live sessionStart/sessionEnd firing
+      confirmed 2026-07-19 via untracked-worker-sessions.log)
+- [x] Hook-config location for user-level scope verified (docs show repo-level
       `.github/hooks/*.json`; confirm whether `~/.copilot` supports a global hooks dir —
       if not, `fanout-setup.ps1` installs the config into each worktree) and VS Code
       Copilot Chat applicability verified (expected: CLI-only; the VS Code path stays
       driver-side per the IMP-0058 addendum) — result recorded in Notes
-- [ ] Negative: an alternate-spelling bypass attempt (e.g. `git -C <path> push`) is caught
-      by the canon
+- [x] Negative: an alternate-spelling bypass attempt (e.g. `git -C <path> push`) is caught
+      by the canon (rehearsal covers `git -C`, `--force`, `rm -fr`, `Remove-Item -Recurse`,
+      `git reset --hard`, secret-file reads)
 
 ## Validation plan
 
@@ -129,3 +136,38 @@ by construction.
   complement to the IMP-0058 addendum's phase timing.
 - Companion sweep facts referenced by siblings: `/review` + `/security-review` GA (1.0.62)
   → IMP-0066; `/fleet` + `/settings` subagent concurrency → IMP-0061 addendum.
+- **Implementation-time verification (2026-07-19, CLI 1.0.72-1, from the installed
+  bundle's hook runner + live scratch-repo sessions):**
+  - Hook file schema: `{"version": 1, "hooks": {<event>: [{powershell|bash|command,
+    timeoutSec}]}}` — events MUST nest under a top-level `hooks` key (top-level event keys
+    silently load nothing); `command` aliases to bash+powershell, `timeout` → `timeoutSec`;
+    Claude Code nested matcher/hooks groups also accepted.
+  - Contract confirmed in the runner: stdin = `{sessionId, timestamp, cwd, toolName,
+    toolArgs}`; **exit 2 + stderr = deny** (tool result to the model: "Denied by preToolUse
+    hook: <stderr>", session continues); exit 0 = allow; other exit codes = hook error,
+    call proceeds. Stdout JSON `{permissionDecision: deny|ask, permissionDecisionReason,
+    modifiedArgs}` is the richer alternative channel.
+  - User-level scope: `~/.copilot/hooks/*.json` is supported (changelog), plus inline
+    `hooks` in global config.json. **Deliberately not used** — the canon denies `git push`,
+    which REPO legitimately runs from the main tree; install stays worktree-scoped via
+    `install-hooks.ps1` (fanout-setup.ps1 will call it per worktree).
+  - **Live-fire gap (the blocking finding):** in `-p` (prompt) mode, sessionStart /
+    sessionEnd hooks from the installed config fire (proven: untracked-worker-sessions.log
+    entries from scratch sessions), but **preToolUse hooks never execute** — repo-level or
+    user-level; a seeded `git push` ran undenied and a debug capture hook recorded nothing.
+    Likely interactions: the machine-wide Defender policy hook set
+    (`HKLM\Software\Policies\GitHub\Copilot\Defender` registers hooks on every event incl.
+    preToolUse) and/or prompt-mode processor wiring. **Until a CLI update fixes live fire,
+    the IMP-0061 dispatcher MUST pass per-worker `--deny-tool` flags (the addendum's
+    interim) in addition to installing this config; retest on every CLI bump** — the
+    deterministic rehearsal (`evals/pipeline/tests/test_hook_scripts.py`, 7 green) pins the
+    contract so the retest is one live session.
+  - Lifecycle payload note: sessionStart/sessionEnd stdin payloads arrived with empty
+    `sessionId`/`cwd` on 1.0.72-1; the telemetry script tolerates this (run-id linkage
+    comes from the dispatcher's `QB_RUN_ID` env, not the payload).
+- **2026-07-19 (IMP-0061 session): CLI version re-checked — still 1.0.72-1, retest not
+  triggered.** The IMP-0061 dispatcher shipped with the mandatory per-worker `--deny-tool`
+  interim (flag set now canonized as `cli_deny_tools` in deny-canon.json — single source)
+  and installs this hook config into every worktree (`fanout-setup.ps1` +
+  `fanout-dispatch.ps1` both call `install-hooks.ps1`). Rerun the one-session preToolUse
+  retest on the next CLI bump.

@@ -37,7 +37,11 @@
           "depends_on": {
             "type": "array",
             "items": { "type": "string" },
-            "description": "Names of tracks that must complete first (future task-DAG use)."
+            "description": "Names of tracks that must complete first; the driver computes dispatch waves from it (IMP-0061)."
+          },
+          "test_budget": {
+            "type": "string",
+            "description": "Per-track test budget sized to the plan's rigor dial (IMP-0062); DEV honors it, QA polices over-delivery."
           }
         }
       }

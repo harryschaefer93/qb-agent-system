@@ -516,6 +516,14 @@ When the eval recommender suggests a change, emit a draft `IMP-XXXX.md` file wit
 - **Mock fidelity:** `mocks.yaml` is hand-curated; bad mocks silently produce bad evals. Phase A.5 mitigates by capturing one real session per agent and asserting mocks are JSON-schema-compatible with what the real tool returned.
 - **Cost drift:** Foundry calls are cheap but not free. `max_turns` caps per-run cost; `cost.{tokens,wall_time}` in every snapshot lets us spot creep across IMPs.
 - **VS Code tool surface drift:** the Copilot tool list (especially deferred tools) evolves. Re-run mock-shape validation quarterly or whenever a new tool category appears in `copilot-instructions.md`.
+- **Run-cost units (IMP-0058):** `cost_estimates` / `cost_estimate_total` on run records are
+  **weighted model-request counts** (per-session turns × tier weight from `config.yaml
+  cost_model:`; tiers per the IMP-0049 fleet table), NOT dollars — Copilot billing exposes no
+  per-request dollars. Valid for relative comparisons only (fleet A vs B, local vs delegated,
+  task-type mix). Attribution rides the IMP-0052 `-subN` session split; its accuracy bounds the
+  proxy. Bump `cost_model.version` when weights change. Per-phase wall time (`phase_durations`,
+  `dev_segment_minutes`) requires the driver's `pipeline dispatch` stamp — legacy records with
+  `started == finished` yield null, never fabricated zeros.
 
 ## 8. Implementation order recommendation
 

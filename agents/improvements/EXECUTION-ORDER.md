@@ -97,12 +97,12 @@ reports over 25+h with track A iterating A2→A8 on live auth) have no run recor
 the 3-day deploy/auth tail dwarfs the 1-day build. Zero prior IMPs target DEV duration.
 **Priority call: nothing meta ships ahead of this wave + the IMP-0053 pilot.**
 
-1. **IMP-0063** — Run-record coverage (canonical root, QB active-run-id rule, untracked-work KPI, July backfill) — see the work at all · `proposed` · risk low
-2. **IMP-0058 addendum** — per-phase/per-track wall time in run-state + kpi/nightly (DEV segment becomes the headline KPI) · `proposed` · risk low
-3. **IMP-0064** — Governed-tenant deploy preflight + live-auth smoke + landmine knowledge capture — kills the 8-iteration auth tail · `proposed` · risk low
-4. **IMP-0062** — Rigor dial (`poc|hardened|production` at CP2; ARCH test budgets; DEV honors; QA polices over-delivery) — shrinks the work · `proposed` · risk medium
-5. **IMP-0065** — CLI hook guardrails + worker telemetry (preToolUse exit-2 deny for headless workers; sessionStart/End run-record + timing stamps) — the seatbelt for 0061's workers; validation fully deterministic · `proposed` · risk low — gate: before or with 0061's first dispatched wave
-6. **IMP-0061** — Parallel DEV track execution (driver dependency waves + ≤3 headless workers over IMP-0033 worktrees; ~36% projected cut on the 07-13 shape) — overlaps the work · `proposed` · risk medium — its real run doubles as IMP-0033's owed 2-track validation. Dispatch backend per 2026-07-17 addendum: native `/fleet` preferred, `fanout-dispatch.ps1` pool fallback; worktrees kept; verify account-tier subagent concurrency first — depends on 0065 for the worker deny layer
+1. **IMP-0063** — Run-record coverage (canonical root, QB active-run-id rule, untracked-work KPI, July backfill) — see the work at all · `validated 2026-07-18` · risk low
+2. **IMP-0058 (+ addendum)** — cost telemetry + per-phase/per-track wall time in run-state + kpi/nightly (DEV segment is now a headline KPI line) · `implemented 2026-07-19` · risk low — `pipeline dispatch` stamps real starts; `runner.telemetry cost --write` populates `cost_estimates` (weighted request counts, config-driven tiers); nightly refreshes it; July runs backfilled (147.25 total, -0837 DEV segment 419.4 min). Remaining boxes: delegation spend (gated on 0053), one-week KPIs + IMP-0049 retro citation (~07-21)
+3. **IMP-0064** — Governed-tenant deploy preflight + live-auth smoke + landmine knowledge capture — kills the 8-iteration auth tail · `implemented 2026-07-18` · risk low — deterministic gate green; validation debt: next deploy-bearing run records ≤2 auth iterations
+4. **IMP-0062** — Rigor dial (`poc|hardened|production` at CP2; ARCH test budgets; DEV honors; QA polices over-delivery) — shrinks the work · `implemented 2026-07-19` · risk medium — dial on the CP2 Delivery line + `pipeline start --rigor` + per-track `test_budget` through both schemas into worker prompts + `by_rigor` KPI segmentation (baseline metric = IMP-0058/0061 `dev_segment_minutes`); FDPO exemption stated on every surface (structural negative). Pending: behavioral rigor-pair scorer; first real `poc`-rigor run
+5. **IMP-0065** — CLI hook guardrails + worker telemetry (preToolUse exit-2 deny for headless workers; sessionStart/End run-record + timing stamps) — the seatbelt for 0061's workers · `implemented 2026-07-19` · risk low — deny canon + guard + telemetry scripts + worktree-scoped installer shipped; 7-test deterministic rehearsal green. **Live-fire caveat (1.0.72-1): lifecycle hooks fire in `-p` mode, preToolUse does not (machine Defender policy hook set present) — 0061's dispatcher MUST use per-worker `--deny-tool` flags as the enforcement layer until a CLI update passes the one-session retest** (details in the IMP's Notes)
+6. **IMP-0061** — Parallel DEV track execution (driver dependency waves + ≤3 headless workers over IMP-0033 worktrees; ~36% projected cut on the 07-13 shape) — overlaps the work · `implemented 2026-07-19` · risk medium — backend verification chose the **pool** (`fanout-dispatch.ps1`): 1.0.72-1 exposes no subagent-concurrency setting and the fleet RPC can't pin worktrees or carry per-worker flags (evidence in the IMP addendum). Waves via `pipeline tracks` + run-state tracks ledger; out-of-wave dispatch refused; canon-sourced `--deny-tool` per worker (0065 interim) + worktree hooks + QB_RUN_ID/QB_TRACK_PHASE; track savings KPI (serial sum vs wave wall) in kpi/nightly. 21 pytest cases green. Owed: first real ≥2-track wave — doubles as IMP-0033's owed 2-track validation
 7. **IMP-0066** — PR-native DEV→QA handoff (draft PR per track; Copilot code review + `/security-review` as free mechanical pre-layer; QA narrows to acceptance + demo evidence + 0062 rigor policing) · `proposed` · risk medium — after 0062, alongside/after 0061; multi-prompt change, ships alone
 8. **IMP-0053** (Wave 6 step 1) is the remaining lever: move delegable work off the local session entirely — pilot unchanged, runs alongside this wave
 
@@ -112,8 +112,10 @@ the 3-day deploy/auth tail dwarfs the 1-day build. Zero prior IMPs target DEV du
 
 ### User-requested, runs alongside (2026-07-17)
 
-- **IMP-0068** — Public-mirror graduation pipeline (allowlist manifest → scrub canon → gitleaks + leak-lint → diff report; push always a human hard-ask; drift line in nightly/retro) · `proposed` · risk medium — public site 5 weeks stale; first sanitized sync runs 2026-07-17
+- **IMP-0068** — Public-mirror graduation pipeline (allowlist manifest → scrub canon → gitleaks + leak-lint → diff report; push always a human hard-ask; drift line in nightly/retro) · `implemented 2026-07-17 @ 817e50e` (frontmatter corrected 2026-07-19) · risk medium — first sanitized sync ran 2026-07-17; hardened by IMP-0070
 - **IMP-0069** — Data-driven site orchestration viz + fleet roster (deterministic `fleet-data.json` from pipelines.yaml + agent frontmatter → 0068 scrub path → inlined into index.html; interactive SVG w/ task-type chips + dispatch animation; ASCII kept as fallback) · `proposed` · risk low — extends IMP-0068; regenerated every publish run so site content can't rot
+- **IMP-0070** — Publish fatal full-tree leak scan (scan every tracked mirror file, not just staged; any deny-term hit blocks the publish) · `implemented 2026-07-18` · risk low — closes the IMP-0068 staging-allowlist bypass found in the 2026-07-18 security review (68 legacy files bypassed the canon; a stale rubric persona leaked). Public history also recreated clean (single-commit rewrite)
+- **IMP-0071** — Publish cadence: nightly-prepared mirror bundle (`-PrepareOnly`) + drift-threshold alerting; push stays a human hard-ask, but becomes one cheap batched approval · `proposed` (filed 2026-07-19 — drift re-accumulated to 21 commits within a day of the 07-18 sync) · risk low — extends 0068/0070/0034 Job 2; implement opportunistically after the Wave 7 execution items
 
 ## Wave 6 predecessors already shipped
 
@@ -133,12 +135,18 @@ entry or a passing post-eval per the `validated` bar in `README.md`). Run `imp` 
 mode (or retro IMP Evidence Mode) when a qualifying session exists.
 
 - **IMP-0038** — Port the IMP improvement workflow to the Copilot CLI · manual · meta
-- **IMP-0039** — Run resume + notifications · structural · QB/meta — 4/4 structural + 18 pytest; needs one real kill-and-resume session
+- **IMP-0039** — Run resume + notifications · structural · QB/meta — 4/4 structural + 18 pytest; needs one real kill-and-resume session (note: the 2026-07-19 review resolved the reconstructed fanout record active→complete per its own caveat — that was bookkeeping, not the owed live resume)
 - **IMP-0017** — /IMP orchestrator command · manual · meta
 - **IMP-0020** — Evidence-backed recommended option at QB checkpoints · rubric · QB
+- **IMP-0064** — Governed-tenant deploy/auth preflight · structural · INFRA/QA/retro/REPO — deterministic gate green; needs the next deploy-bearing run at ≤2 auth iterations
+- **IMP-0058** — Cost telemetry + phase timing · structural · meta/retro — post snapshot green; open boxes are elapsed-time (one week of KPIs, IMP-0049 retro cite ~07-21) and 0053-gated (delegation spend)
+- **IMP-0065** — CLI hook guardrails · structural · DEV/REPO/meta — deterministic rehearsal green; live preToolUse fire blocked on 1.0.72-1 (retest each CLI update; `--deny-tool` interim mandatory for 0061 — now canonized as `cli_deny_tools` and wired into the dispatcher; version re-checked 2026-07-19, unchanged)
+- **IMP-0061** — Parallel DEV track execution · structural · QB/DEV/REPO/meta — 9/9 structural + 22 pytest (waves + stub rehearsal with observed worker overlap); needs the first real ≥2-independent-track wave with DEV segment < serial track sum (also discharges IMP-0033's owed 2-track validation)
+- **IMP-0062** — Rigor dial · structural · QB/ARCH/DEV/QA — 9/9 structural + 4 pytest; needs the behavioral rigor-pair (scorer key missing from the behavioral vocabulary) and one real `poc`-rigor run with a materially shorter DEV segment
+- **IMP-0068** — Public-mirror pipeline · structural · meta — shipped 07-17, frontmatter corrected 07-19; owes its structural eval snapshot
 
 ## Closed
 
-- **Validated:** IMP-0001, 0002, 0003, 0005, 0006, 0012, 0013, 0014, 0015, 0016, 0018, 0019, 0021, 0022, 0023, 0024, 0025, **0026, 0027, 0030, 0036** (2026-07-15, real-session evidence via IMP-0052), **0052** (2026-07-15)
+- **Validated:** IMP-0001, 0002, 0003, 0005, 0006, 0012, 0013, 0014, 0015, 0016, 0018, 0019, 0021, 0022, 0023, 0024, 0025, **0026, 0027, 0030, 0036** (2026-07-15, real-session evidence via IMP-0052), **0052** (2026-07-15), **0063** (2026-07-18)
 - **Superseded:** IMP-0004 → IMP-0024 (validated). Criterion 2 permanently reverted by `d77b918`; can never meet the 4-point bar — removed from the awaiting-validation queue 2026-07-15, evidence retained in the file.
 - **Rejected:** IMP-0007, 0008, 0009, 0010, 0011 (see each file's verdict for the reason)

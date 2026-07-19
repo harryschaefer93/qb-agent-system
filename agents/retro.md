@@ -373,6 +373,7 @@ For each recommendation:
 - [draft notes per agents/knowledge/README.md: scope, triggers, the fact, source session —
   present for approval; on approval write to agents/knowledge/<scope>/. Facts change what the
   next engagement does; IMPs change how an agent works.]
+- If run reports show repeated deploy/auth iteration, propose a sourced update to `agents/knowledge/global/azure-governed-tenant.md`; never write it without approval.
 
 ## Action Items
 - [ ] [specific, actionable items with priority]

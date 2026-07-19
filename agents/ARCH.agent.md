@@ -85,23 +85,31 @@ Explicit tracks QB uses to fan out parallel DEV calls. Use this exact format:
 
 ```yaml
 tracks:
+  - name: foundation
+    owned_paths: [src/shared/]
+    framework: TypeScript library
+    env_contract: []
+    depends_on: []
+    test_budget: "smoke only (~5 tests)"
   - name: frontend
-    owns: [web/, public/]
+    owned_paths: [web/, public/]
     framework: Next.js 14 (App Router)
-    depends_on_env: [API_BASE_URL]
+    env_contract: [API_BASE_URL]
+    depends_on: [foundation]
+    test_budget: "critical-path E2E of the demo flow (~10 tests)"
   - name: backend-api
-    owns: [api/, src/api/]
+    owned_paths: [api/, src/api/]
     framework: FastAPI (Python 3.12)
-    depends_on_env: [COSMOS_ENDPOINT, FOUNDRY_PROJECT_ENDPOINT]
-  - name: ai-pipeline
-    owns: [ai/, prompts/]
-    framework: Foundry SDK + Prompty
-    depends_on_env: [FOUNDRY_PROJECT_ENDPOINT, AI_SEARCH_ENDPOINT]
+    env_contract: [COSMOS_ENDPOINT, FOUNDRY_PROJECT_ENDPOINT]
+    depends_on: [foundation]
+    test_budget: "happy path + auth negative per endpoint (~15 tests)"
 ```
 
-Rules:
+Rules (field names are the `tracks-block` schema contract — a drifted block gate-bounces back to you):
 - **Tracks must own non-overlapping file paths.** If two tracks share files, they cannot run in parallel — collapse them or restructure.
-- **Tracks declare env-var dependencies, not service dependencies.** INFRA produces those env vars as outputs; DEV consumes them.
+- **Tracks declare env-var contracts, not service dependencies.** INFRA produces those env vars as outputs; DEV consumes them (`env_contract`).
+- **`depends_on` names tracks that must complete first (IMP-0061).** The driver computes concurrent dispatch waves from it: tracks with `depends_on: []` are independent and run in the same wave (≤3 workers). Declare it deliberately on every track — omitting it everywhere makes QB run all tracks serially (the conservative default). Never use it to express env-var needs.
+- **`test_budget` sizes DEV's tests to the plan's rigor (IMP-0062).** The approved plan carries `rigor: poc | hardened | production`; size structure AND budgets to it. `poc`: smallest structure that demos (single track unless size forces fan-out, no monorepo ceremony), budgets of smoke + critical-path only — order of 10s, not 100s; no warning-as-error. `hardened`: + error handling and happy-path coverage per endpoint. `production`: full rigor, only on explicit request. DEV honors the budget; QA reports material over-delivery as a finding. FDPO/identity constraints are rigor-independent — never sized down.
 - **One track is fine.** If the work doesn't decompose, declare a single track. QB will run DEV serially.
 
 ### 9. Risks & Open Questions

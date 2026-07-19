@@ -1,19 +1,19 @@
 ---
 id: IMP-0062
 title: Rigor dial — right-size ARCH/DEV/QA output to the deliverable class
-status: proposed
+status: implemented
 source: review-2026-07-16
 affects: [QB, ARCH, DEV, QA]
 risk: medium
 created: 2026-07-16
-updated: 2026-07-16
-commit: null
+updated: 2026-07-19
+commit: 1b30ae0
 eval_type: structural
 skip_validation: false
 eval_id: imp_0062
 eval_seed: 42
 baseline_run: null
-post_run: null
+post_run: baselines/IMP-0062/20260719-175521-1b30ae0-post.json
 validation_evidence: []
 manual_evidence: []
 ---
@@ -51,16 +51,21 @@ artifact records what rigor was *intended*.
 
 ## Acceptance criteria
 
-- [ ] CP2 Delivery line carries `rigor`; run-state records it; QB within line cap
-- [ ] ARCH `tracks:` block includes per-track test budget derived from rigor; BRIEF
-      template + 3 playbooks carry rigor defaults
-- [ ] DEV + QA prompt sections implement budget/depth scaling; FDPO explicitly exempted
-      from the dial
+- [x] CP2 Delivery line carries `rigor`; run-state records it (`pipeline start --rigor`,
+      schema enum, status/resume exposure, `by_rigor` KPI segmentation); QB 438/440 lines
+- [x] ARCH `tracks:` block includes per-track `test_budget` derived from rigor (tracks-block
+      schema + run-state ledger both accept it; `set_tracks` carries it to worker prompts);
+      BRIEF template + 3 playbooks carry rigor defaults
+- [x] DEV + QA prompt sections implement budget/depth scaling; FDPO explicitly exempted
+      from the dial ("rigor-independent" stated on every dial surface)
 - [ ] Behavioral scenario: a "personal V1" prompt yields a plan with single/few tracks and
-      a budgeted test plan (no warning-as-error, no 3-digit test counts)
-- [ ] Negative: `rigor: poc` never weakens FDPO/auth/secret constraints in the plan
+      a budgeted test plan (no warning-as-error, no 3-digit test counts) — **pending: the
+      behavioral evaluator's expected_behavior vocabulary has no budget key; add the
+      scenario pair with a rigor scorer at the next behavioral-eval run**
+- [x] Negative: `rigor: poc` never weakens FDPO/auth/secret constraints in the plan
+      (structural `fdpo_never_dialed` check; prompt text pins the exemption)
 - [ ] One real `poc`-rigor run records a materially shorter DEV segment than the 07-13
-      baseline shape (needs IMP-0058 phase timing)
+      baseline shape (needs IMP-0058 phase timing) — elapsed-time criterion
 
 ## Validation plan
 
@@ -86,3 +91,14 @@ user verdict at handoff.
   shrinks the work itself; together they attack the 80–97%-of-wall-clock DEV segment.
 - Touches 4 agent prompts → ship alone per working-order rule, after IMP-0058 addendum
   (measurement first) and around the IMP-0053 pilot (pilot tasks can run at `poc`).
+- **2026-07-19 — IMPLEMENTED** (same session as IMP-0061, separate commit per ship-alone
+  rule). Dial surfaces: QB CP2 Delivery line (`rigor:` token + defaults + FDPO exemption),
+  ARCH §8 (`test_budget` per track + rigor sizing rules), DEV (Principle 2b honors the
+  budget; no warning-as-error at `poc`), QA (depth scaling + over-delivery as a 🟡 finding),
+  BRIEF §3 `Rigor:` field, 3 playbooks + README (`scope_defaults.rigor: hardened`).
+  Plumbing: `pipeline start --rigor` (enum-refused), run-state `rigor` property,
+  status/resume exposure, tracks-block + run-state schemas accept `test_budget`,
+  `set_tracks` carries budgets into the ledger, `by_rigor` KPI segmentation
+  (cycle time + DEV segment means; `dev_segment_minutes` from IMP-0058/0061 is the
+  baseline metric). 4 new pytest cases; structural eval 9/9. Remaining: behavioral
+  scenario pair (needs a rigor scorer key) + the first real `poc`-rigor run.

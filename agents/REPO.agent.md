@@ -135,6 +135,8 @@ This replaces QB's old end-of-pipeline `git commit + push` step. When QB invokes
 5. **Stop and ask** before pushing for **major changes** (new Azure resources committed to IaC, auth/security, breaking API, 10+ file refactors).
 6. Report the commit SHA and push result.
 
+Note: headless DEV workers operate under the `scripts/hooks/deny-canon.json` preToolUse deny layer (IMP-0065) — push/deploy/destructive commands bounce mechanically in worktrees; you remain the only agent that pushes, from the main tree.
+
 ## Deterministic Repo Guardrails (IMP-0048)
 
 During any repo setup or hygiene pass, run `pwsh -File ~\.copilot\scripts\install-repo-guardrails.ps1 -RepoRoot "<repo>" -ProjectName "<name>"`:
@@ -184,8 +186,9 @@ Windows friction: `fanout-setup` sets `core.longpaths`; ensure dev servers are s
    - finalize-and-push (pipeline-end commit + push)
 2. **Read `ARCHITECTURE.md`** if present — its tech stack tells you what CI matrix to generate.
 3. **Run mandatory pre-flight always:** gitignore audit + secret scan. These run for every task type.
-4. **Execute the scoped task.**
-5. **Return** a status summary using the Output Shape below.
+4. If run reports show repeated deploy/auth iteration, propose a sourced update to `agents/knowledge/global/azure-governed-tenant.md` before close-out; knowledge capture remains approval-gated.
+5. **Execute the scoped task.**
+6. **Return** a status summary using the Output Shape below.
 
 ## Required Output Shape
 

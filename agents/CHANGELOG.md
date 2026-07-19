@@ -23,6 +23,78 @@ Format:
 
 ---
 
+## 2026-07-19 — IMP-0062: rigor dial — right-size ARCH/DEV/QA output to the deliverable class
+- Agent: QB, ARCH, DEV, QA (+ BRIEF template, playbooks, driver, schemas, telemetry)
+- Type: prompt + infra
+- Source: IMP-0062
+- Rationale: the fleet builds everything at production rigor regardless of ask (evidence: "Personal V1" delivered as a 4-track monorepo with ~576 .NET + 53 frontend tests consuming most of a ~6h DEV segment). Shipped the `rigor: poc|hardened|production` dial: pinned on QB's CP2 Delivery line (defaults poc personal / hardened customer-facing / production explicit-only), recorded via `pipeline start --rigor` (run-state enum + status/resume + `by_rigor` KPI segmentation over the IMP-0058 dev_segment metric), sized by ARCH via per-track `test_budget` in the tracks block (tracks-block + run-state schemas extended; set_tracks carries budgets to worker prompts), honored by DEV (Principle 2b: budgeted tests, no warning-as-error at poc), policed by QA (depth scaling; material over-delivery is a 🟡 finding, not praise). FDPO/auth/secret rules explicitly rigor-independent on every dial surface (structural negative check). 4 new pytest cases; structural eval 9/9. Pending: behavioral rigor-pair scorer + first real poc-rigor run.
+- Commit: 1b30ae0
+
+---
+
+## 2026-07-19 — IMP-0061: parallel DEV track execution (dependency waves + headless worker pool)
+- Agent: QB, ARCH, DEV, REPO, meta (pipeline driver, schema, telemetry, dispatch scripts)
+- Type: infra + prompt
+- Source: IMP-0061
+- Rationale: DEV is 80–97% of run wall clock with independent tracks executing serially (~36% projected cut on the 07-13 shape). Driver now computes topological waves from the ARCHITECTURE.md tracks block (`compute_waves` + `pipeline tracks` verb + run-state `tracks` ledger; no `depends_on` anywhere = conservative serial waves so existing runs are unchanged) and refuses out-of-wave dispatch (`track_dependency_unfinished`). Backend decision per implementation-time verification: **pool, not fleet-native** — 1.0.72-1 has no subagent-concurrency setting (full settings schema enumerated) and the fleet RPC (`session.fleet.start {sessionId, prompt?}`) cannot pin work items to worktrees or carry per-worker flags. `fanout-dispatch.ps1` launches ≤3 `copilot -p` workers (config cap, WIP-cap mirror), each cwd-pinned to its IMP-0033 worktree with canon-sourced `--deny-tool` flags (mandatory IMP-0065 interim), worktree hook install, `QB_RUN_ID`/`QB_TRACK_PHASE` env, driver-gated launch, and per-track advance recording; worker failure = track bounce, not run abort. Telemetry derives `track_serial_sum/track_wall/track_parallel_savings` minutes (savings proof for the dev_segment KPI). QB DEV Fan-Out rewired to wave dispatch (438/440 lines). In passing: ARCH §8 tracks template fixed to the IMP-0029 schema field names (`owned_paths`/`env_contract`; had drifted as `owns`/`depends_on_env` — every real block would have gate-bounced) and now documents `depends_on` wave semantics. 22 new pytest cases (19 wave incl. YAML-block parse + 3 stub rehearsal incl. observed ≥2-worker overlap); structural eval 9/9. Owed: first real ≥2-track wave (doubles as IMP-0033's validation evidence).
+- Commit: 312b131
+
+---
+
+## 2026-07-19 — IMP-0065: CLI hook guardrails + worker telemetry (deny canon, preToolUse guard, session timing)
+- Agent: DEV, REPO, meta (scripts/hooks, rehearsal tests)
+- Type: infra
+- Source: IMP-0065
+- Rationale: IMP-0061's headless workers were fenced only by prompt prose and per-invocation flags. Shipped a single deny canon (friction-doc set, enforced: git push incl. -C/--force, az mutate, rm -rf/Remove-Item -Recurse/reset --hard, npm publish, secret reads) with an exit-2 preToolUse guard (audit ndjson, deny-and-continue), sessionStart/End/subagentStop telemetry that lands IMP-0058 dispatch stamps + run-id linkage (untracked sessions logged for the nightly scan), and a worktree-scoped installer (deliberately not global — REPO owns push). 7-test deterministic rehearsal green. Live-fire verification on 1.0.72-1: lifecycle hooks fire in -p mode, preToolUse does not (Defender policy hook set present) — per-worker --deny-tool flags remain the interim enforcement for 0061; retest each CLI update.
+- Commit: b9aec6b
+
+---
+
+## 2026-07-19 — IMP-0058: cost telemetry + per-phase wall time (dispatch verb, cost proxy, DEV-segment KPI)
+- Agent: QB, meta (pipeline driver, telemetry, config, nightly)
+- Type: infra + prompt
+- Source: IMP-0058
+- Rationale: cost_estimate_total was null on every record and cycle time could not be decomposed (started==finished). Added an idempotent `pipeline dispatch` verb stamping real phase starts (QB one-liner; legacy fallback unchanged), a config-driven cost proxy (weighted request counts from IMP-0052 sessions; tiers per IMP-0049) persisted by `runner.telemetry cost --write` and refreshed nightly before kpi, and phase_durations/dev_segment_minutes(+mean) in kpi/safe outputs. July runs backfilled: 96.0 + 51.25 weighted requests; -0837 DEV segment 419.4 min from reconstructed starts (provenance recorded; schema gained the missing IMP-0063 reconstructed/reconstruction fields). Units documented as counts-not-dollars in schema + EVAL-SYSTEM-PLAN.
+- Commit: a977df5
+
+---
+
+## 2026-07-19 — Backlog review: IMP-0071 filed (publish cadence), IMP-0068 frontmatter corrected, stalled fanout record resolved
+- Agent: meta
+- Type: infra
+- Source: review-2026-07-19
+- Rationale: quarterly-style backlog pass confirmed the Wave 7 + 0053-pilot priority. Filed IMP-0071 (nightly -PrepareOnly mirror bundle + drift-threshold alerting; drift hit 21 commits one day after sync). IMP-0068 frontmatter had drifted (proposed/commit-null though shipped 07-17) — corrected to implemented @ 817e50e. The reconstructed PilotApp-fanout-20260715 record was flipped active→complete per its own caveat (track A's owner-auth incident closed with a QA PASS 07-16); 7d KPIs now show 7/7 complete, zero abandoned.
+- Commit: 22b96df
+
+---
+
+## 2026-07-18 — IMP-0064: governed-tenant deploy preflight, Entra auth smoke, and sourced landmine knowledge
+- Agent: INFRA, QA, retro, REPO, meta
+- Type: prompt + infra
+- Source: IMP-0064
+- Rationale: PilotApp's three-day deploy/auth tail repeatedly rediscovered governed-tenant policy, storage reachability, Easy Auth audience, managed-identity ID, and fail-closed JWT issues. Added a read-only six-check preflight with deterministic fixture mode, a token-safe 401/403-negative + 200-positive auth smoke with local stub, a six-source governed-tenant knowledge file, and minimal INFRA/QA/retro/REPO wiring. No resources were changed.
+- Commit: 7f09d14
+
+---
+
+## 2026-07-18 — IMP-0063: authoritative run-record coverage and canonical artifact resolution
+- Agent: QB, meta (pipeline driver, telemetry, nightly)
+- Type: prompt + infra
+- Source: IMP-0063
+- Rationale: Pipeline-bypass work and workspace-relative report paths made completion KPIs survivorship-biased. The driver now stores stable `{workspace}/` artifact references and resolves absolute plus legacy workspace/home-relative records; telemetry performs the deduplicated home/workspace coverage and dangling-artifact scan; KPI text/JSON and nightly share the same safe aggregate; QB forbids DEV/INFRA dispatch without an active run ID. Three reconstructed July records remain present; current coverage is 100% with zero dangling artifacts.
+- Commit: 3094d9e
+
+---
+
+## 2026-07-18 — IMP-0070: publish pipeline hardening (fatal full-tree leak scan) + public-repo security review
+- Agent: meta (publish tooling; no agent behavior change)
+- Type: infra
+- Source: IMP-0070 (user: "confirm the public repo isn't exposing confidential secrets")
+- Rationale: Security review of the public mirror found IMP-0068's manifest was a staging allowlist, not a tree allowlist — 68 legacy files from pre-0068 manual syncs bypassed the redaction canon. A stale eval-rubric example (evals/evaluators/rubrics/imp_0018.md) leaked a named sponsor persona + engagement financials ("the sponsor, VP Claims Automation… $3B annual claims spend"); gitleaks + staged-lint passed because it wasn't staged and the name wasn't a deny term. No credentials ever exposed (gitleaks clean across all history). Fixes: publish-public-mirror.ps1 now leak-lints EVERY tracked mirror file (git ls-files) with any hit FATAL (tracked-only, so gitignored __pycache__/*.pyc build artifacts don't false-fail); canon gains person-name coverage (the sponsor deny + substitution); imp_0018.md/imp_0020.md/imp_0020.calibration.jsonl added as scrub targets so clean private versions propagate; .bak cruft pruned. Negative test: planting a customer name in a non-target tracked file now blocks the publish (tree_lint_hits=2). Separately, the pre-June public git history still carried the real customer list + real maintainer name → repo recreated with a clean single-commit history. Structural eval imp_0070 added.
+- Commit: 87a268a
+
+---
+
 ## 2026-07-17 — IMP-0069: public site goes data-driven (interactive orchestration viz + generated fleet roster)
 - Agent: meta (site/publish tooling; no agent behavior change)
 - Type: infra

@@ -54,6 +54,8 @@ Resources provisioned with key-based auth will be non-functional. Provisioning s
 
 ## When Building Infrastructure
 
+**Governed-tenant preflight (IMP-0064):** Before provisioning or deploying, load `skills/deploy-preflight/SKILL.md`, read `agents/knowledge/global/azure-governed-tenant.md`, and run the read-only `scripts/deploy-preflight.ps1`. A `fail` blocks provisioning; surface every `warn`/`fail` item and mitigation at CP2 rather than discovering it during deploy.
+
 1. Ask what Azure services the POC needs and which IaC tool the customer prefers (Bicep or Terraform).
 2. Create a modular structure: `main.bicep` + parameter files, or `main.tf` + `variables.tf` + `outputs.tf`.
 3. Include a README explaining what gets deployed, required parameters, and deployment commands.

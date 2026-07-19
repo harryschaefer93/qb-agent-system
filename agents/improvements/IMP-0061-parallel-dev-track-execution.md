@@ -1,19 +1,19 @@
 ---
 id: IMP-0061
 title: Parallel DEV track execution — dependency waves over worktrees, not serial runSubagent
-status: proposed
+status: implemented
 source: review-2026-07-16
 affects: [QB, DEV, REPO, meta]
 risk: medium
 created: 2026-07-16
-updated: 2026-07-17
-commit: null
+updated: 2026-07-19
+commit: 312b131
 eval_type: structural
 skip_validation: false
 eval_id: imp_0061
 eval_seed: 42
 baseline_run: null
-post_run: null
+post_run: baselines/IMP-0061/20260719-173835-312b131-post.json
 validation_evidence: []
 manual_evidence: []
 ---
@@ -89,6 +89,29 @@ is exactly what IMP-0033 worktrees already solve.
   tier — set ≤3 to mirror the WIP cap (depth 4 suffices; we need 2); (c) a stub 2-track
   fleet run in a scratch repo confirms work items respect worktree pinning and ≥2 workers
   overlap.
+- **VERIFICATION RESULTS (2026-07-19, CLI 1.0.72-1, from the installed bundle + live CLI):**
+  - (a) `/fleet` present — GA in the bundle (`"/fleet"` command string in app.js;
+    `session.fleet.start` RPC in schemas/api.schema.json; changelog "Autopilot mode and
+    /fleet command now available to all users"). **BUT** the fleet API contract takes only
+    `{sessionId, prompt?}` — no work-item list, no per-item working root, no per-worker
+    env or tool flags. Worktree pinning would be prose-only and unenforceable; the
+    per-worker `--deny-tool` layer (mandatory per IMP-0065) cannot be expressed at all.
+  - (b) **FAIL** — the full settings schema was enumerated from the installed bundle
+    (app.js zod config schema + the `writeKey` set): **no subagent-concurrency or
+    nesting-depth key exists on 1.0.72-1**, and no CLI flag either
+    (`--max-autopilot-continues` counts continuation messages, not workers). The 07-17
+    sweep's "configurable since 1.0.66" claim did not materialize as a config surface on
+    this build.
+  - (c) Re-scoped to the chosen backend: the deterministic pool rehearsal
+    (`evals/pipeline/tests/test_dispatch_rehearsal.py`, stub workers, no model) proves
+    ≥2 overlapping workers (marker timestamps: every worker started before the first
+    finished), per-process cwd pinning to each worktree, deny flags + `--no-ask-user` on
+    every worker argv, worktree hook install, and `track_parallel_savings_minutes > 0`.
+  - **DECISION: Option 2 — `fanout-dispatch.ps1` pool** (per this addendum's own rule:
+    Option 1 iff (a)(b)(c) all pass; (b) failed and (a)'s API gap is disqualifying).
+    Revisit fleet-native when a CLI update exposes work-item pinning + a concurrency
+    setting. Bonus finding: `--max-ai-credits <n>` exists on 1.0.72-1 — wired into the
+    dispatcher config as an optional per-worker spend cap.
 - Native `/worktree <task>` (creates worktree + branch, runs the sentence as first prompt)
   is noted as a fallback simplification only — `fanout-setup.ps1` remains canonical for
   naming + the integration branch.
@@ -97,19 +120,26 @@ is exactly what IMP-0033 worktrees already solve.
 
 ## Acceptance criteria
 
-- [ ] Driver computes waves from `tracks:` + `depends_on:`; pytest covers diamond, serial,
-      and no-deps track graphs
-- [ ] The dispatch step (fleet-native or `fanout-dispatch.ps1` pool) launches ≤3
-      concurrent headless workers, each confined to its worktree, deny layer enforced
-      (IMP-0065 hooks, or `--deny-tool` interim); worker failure surfaces as a track
-      bounce, not a run abort
+- [x] Driver computes waves from `tracks:` + `depends_on:`; pytest covers diamond, serial,
+      and no-deps track graphs (`test_waves.py`, 19 cases: diamond/serial/explicit-no-deps/
+      conservative-default + cycle/unknown-dep/duplicate refusals + ledger/status wiring +
+      ARCH YAML-block parse)
+- [x] The dispatch step (`fanout-dispatch.ps1` pool) launches ≤3 concurrent headless
+      workers, each confined to its worktree, deny layer enforced (`--deny-tool` interim
+      from the canon's `cli_deny_tools` — mandatory while preToolUse is dead in `-p` mode —
+      plus the worktree hook config for defense in depth); worker failure surfaces as a
+      track bounce, not a run abort (`test_dispatch_rehearsal.py::test_worker_failure_is_a_track_bounce_not_a_run_abort`)
 - [ ] One real ≥2-independent-track run executes a wave concurrently; measured DEV segment
-      < serial sum of its track durations (per-track timing from run-state)
-- [ ] Merge gate attributes conflicts per track exactly as in the IMP-0033 rehearsal tests
-- [ ] Negative: driver refuses to dispatch a track whose `depends_on` is unfinished
-- [ ] Backend decision (fleet-native / pool / hybrid) recorded in the addendum with the
-      account-tier verification evidence (concurrency setting visible, stub-run overlap
-      observed)
+      < serial sum of its track durations (per-track timing from run-state) — **owed: the
+      next multi-track `new-poc-setup`; doubles as IMP-0033's owed 2-track validation**
+- [x] Merge gate attributes conflicts per track exactly as in the IMP-0033 rehearsal tests
+      (merge path untouched; `test_worktree_scripts.py` unchanged and green)
+- [x] Negative: driver refuses to dispatch a track whose `depends_on` is unfinished
+      (`track_dependency_unfinished`, wave-order gate — subsumes named deps and enforces
+      the conservative serial default; covered in both suites)
+- [x] Backend decision (pool) recorded in the addendum with the verification evidence
+      (concurrency setting does NOT exist on 1.0.72-1; stub-run overlap observed via
+      rehearsal markers)
 
 ## Validation plan
 
@@ -143,3 +173,23 @@ the next multi-track `new-poc-setup` — which simultaneously discharges IMP-003
 - **2026-07-17:** dispatch-backend addendum added (native `/fleet` preferred, pool as
   fallback). IMP-0065 (hook deny layer + worker telemetry) is the safety prerequisite for
   the first real dispatched wave. Rehearsal may use a stub fleet run with no-op tracks.
+- **2026-07-19 — IMPLEMENTED (pool backend).** Shipped: `compute_waves`/`set_tracks` +
+  track routing in `dispatch`/`advance` + `pipeline tracks` verb + run-state `tracks`
+  ledger (schema extension) + status/resume wave exposure; `scripts/fanout-dispatch.ps1`
+  (+ config + stub worker) with the canon-sourced `--deny-tool` layer, per-worktree hook
+  install, `QB_RUN_ID`/`QB_TRACK_PHASE` env, driver-gated launches, and per-track
+  advance recording; telemetry `track_serial_sum/track_wall/track_parallel_savings`
+  KPIs (kpi + nightly safe outputs); QB DEV Fan-Out rewired to wave dispatch (438/440
+  lines); `fanout-setup.ps1` now installs worker hooks per worktree (closes the 0065
+  install hand-off). Bug found + fixed in passing: ARCH's §8 tracks template had drifted
+  from the IMP-0029 `tracks-block` schema (`owns:`/`depends_on_env:` vs the schema's
+  `owned_paths`/`env_contract`) — every real ARCH block would have gate-bounced at
+  `pipeline tracks`. Template now schema-conformant and documents `depends_on` +
+  wave semantics; YAML-block parse covered in `test_waves.py`. CLI version re-checked this session: still 1.0.72-1, so the
+  IMP-0065 preToolUse retest was not triggered and `--deny-tool` remains the mandatory
+  enforcement layer. Known interim gaps (recorded in the canon's `cli_deny_tools.source`):
+  prefix flags can't express `git -C <path> push` or argument-content secret reads —
+  mitigated by worktree isolation, REPO owning the only push, and the hook layer arming
+  on a fixed CLI. Deterministic evidence: 22 new pytest cases green (19 wave incl.
+  YAML-block parse + 3 rehearsal); structural eval 9/9. Remaining acceptance box = the
+  first real ≥2-track wave (discharges IMP-0033's owed validation too).

@@ -1,13 +1,13 @@
 ---
 id: IMP-0068
 title: Public-mirror graduation pipeline — manifest-driven sanitized publish of the QB system
-status: proposed
+status: implemented
 source: review-2026-07-17
 affects: [meta]
 risk: medium
 created: 2026-07-17
-updated: 2026-07-17
-commit: null
+updated: 2026-07-19
+commit: 817e50e
 eval_type: structural
 skip_validation: false
 eval_id: imp_0068
@@ -120,3 +120,11 @@ doubles as the rehearsal-at-scale. Irreducibly manual: the human diff review bef
 - Mirror facts: public repo `harryschaefer93/qb-agent-system` (Pages serves from
   `docs/`), local clone at `~/qb-agent-system`; private canonical `dot-copilot` confirmed
   private. June sync precedent: fictional placeholders, mail-agent excluded.
+- **2026-07-19 bookkeeping fix:** frontmatter had drifted — pipeline shipped 2026-07-17
+  in `817e50e` (CHANGELOG entry exists; first sanitized sync ran the same day; IMP-0070
+  hardened it 2026-07-18 and IMP-0069 extended it), but status was still `proposed` with
+  `commit: null`. Corrected to `implemented`/`817e50e`. Graduation still owes the
+  structural eval snapshot per the 4-point bar.
+- **Follow-up filed 2026-07-19:** [[IMP-0071]] — the drift signal works (nightly showed
+  21 commits of drift one day after sync) but the publish prep is still a manual chore;
+  0071 automates bundle prep + batched approval while keeping push a human hard-ask.

@@ -2,7 +2,7 @@
   "meta": {
     "schema_version": 1,
     "generator": "scripts/generate_fleet_data.py",
-    "source_fingerprint": "aa1cbc5b4d3fa1b2",
+    "source_fingerprint": "19f93786bdf25065",
     "sources": [
       "agents/ARCH.agent.md",
       "agents/DEV.agent.md",
